@@ -1,0 +1,2875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <title>Focus — Daily Productivity</title>
+  <script>
+    try {
+      if (localStorage.getItem('fp_ob_done')) {
+        document.documentElement.classList.add('ob-done');
+      }
+    } catch(e){}
+  </script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#F5F3EF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Focus">
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --bg: #F5F3EF;
+  --bg-card: #FFFFFF;
+  --bg-dark: #1A1C22;
+  --bg-darker: #13141A;
+  --dock: #1A1C22;
+
+  --accent: #FF6A00;
+  --accent-light: rgba(255,106,0,0.12);
+  --accent-glow: rgba(255,106,0,0.3);
+  --accent-grad: linear-gradient(135deg, #FF8C00 0%, #FF4500 100%);
+
+  --lime: #A8D060;
+  --lime-bg: #E8F5D0;
+  --purple-bg: #EDE9FE;
+  --purple: #7C3AED;
+  --blue-bg: #DBEAFE;
+  --blue: #2563EB;
+  --red-bg: #FEE2E2;
+  --red: #DC2626;
+  --amber-bg: #FEF3C7;
+  --amber: #D97706;
+  --green-bg: #D1FAE5;
+  --green: #059669;
+
+  --text: #11141D;
+  --text-2: #6B7280;
+  --text-3: #9CA3AF;
+  --border: rgba(0,0,0,0.07);
+
+  --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --mono: 'Space Mono', monospace;
+
+  --r-sm: 10px; --r-md: 16px; --r-lg: 24px; --r-xl: 32px; --r-full: 9999px;
+
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+/* ===== RESET ===== */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html, body{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+input,textarea,select{user-select:auto;font-family:var(--sans);}
+button{cursor:pointer;font-family:var(--sans);}
+img{display:block;}
+
+/* ===== APP SHELL ===== */
+#app{
+  max-width: 430px;
+  width: 100%;
+  height: 100%;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg);
+  overscroll-behavior: none;
+}
+
+/* ===== SCREEN SYSTEM ===== */
+.screen{
+  display: none;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  padding: calc(var(--safe-t) + 16px) 20px calc(var(--safe-b) + 115px);
+  animation: fadein .2s ease;
+}
+.screen.active{ display: flex; }
+.screen::-webkit-scrollbar{ width: 4px; }
+.screen::-webkit-scrollbar-thumb{ background: rgba(0,0,0,0.12); border-radius: 4px; }
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== DOCK ===== */
+.dock{
+  position: fixed;
+  bottom: calc(var(--safe-b) + 12px);
+  left: 50%; transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 390px;
+  background: var(--dock);
+  border-radius: var(--r-full);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 200;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+}
+.dock-btn{
+  width:46px;height:46px;border-radius:50%;
+  background:none;border:none;color:#6B7280;
+  display:grid;place-items:center;transition:all .2s;
+}
+.dock-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;}
+.dock-btn.active{background:var(--accent);color:#fff;box-shadow:0 4px 16px var(--accent-glow);}
+.dock-center-btn{
+  width:50px;height:50px;border-radius:50%;
+  background:var(--accent);border:none;color:#fff;
+  font-size:26px;line-height:1;display:grid;place-items:center;
+  box-shadow:0 4px 14px var(--accent-glow);transition:transform .15s;
+}
+.dock-center-btn:active{transform:scale(.92);}
+
+/* ===== BUTTONS ===== */
+.btn{border:none;cursor:pointer;font-family:var(--sans);font-weight:700;border-radius:var(--r-full);transition:all .15s;}
+.btn:active{transform:scale(.96);}
+.btn-primary{background:var(--accent-grad);color:#fff;padding:14px 24px;font-size:15px;box-shadow:0 6px 20px var(--accent-glow);}
+.btn-dark{background:var(--bg-dark);color:#fff;padding:14px 24px;font-size:15px;}
+.btn-ghost{background:#fff;border:1px solid var(--border);color:var(--text);padding:10px 18px;font-size:13px;}
+.btn-circle{width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--border);color:var(--text);display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+.btn-circle.dark{background:var(--bg-dark);color:#fff;border-color:transparent;}
+.btn-circle svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* ===== CARDS ===== */
+.card{background:#fff;border-radius:var(--r-lg);padding:18px;box-shadow:0 4px 16px rgba(0,0,0,0.04);border:1px solid var(--border);}
+.card-dark{background:var(--bg-dark);border-radius:var(--r-lg);padding:18px;}
+
+/* ===== FORM ELEMENTS ===== */
+.field-label{font-size:12.5px;font-weight:700;color:var(--text-2);margin-bottom:7px;display:block;letter-spacing:.02em;}
+.field-input{width:100%;background:#F9FAFB;border:1.5px solid #E5E7EB;color:var(--text);padding:13px 15px;border-radius:var(--r-md);font-size:14px;outline:none;transition:border-color .2s;}
+.field-input:focus{border-color:var(--accent);background:#fff;}
+textarea.field-input{resize:none;min-height:80px;}
+select.field-input{appearance:none;-webkit-appearance:none;cursor:pointer;}
+
+/* ===== SWITCH ===== */
+.sw{position:relative;width:46px;height:26px;flex-shrink:0;}
+.sw input{opacity:0;width:0;height:0;position:absolute;}
+.sw-track{position:absolute;inset:0;background:#E5E7EB;border-radius:13px;cursor:pointer;transition:background .2s;}
+.sw-track::before{content:'';position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 2px 4px rgba(0,0,0,.2);}
+.sw input:checked+.sw-track{background:var(--accent);}
+.sw input:checked+.sw-track::before{transform:translateX(20px);}
+
+/* ===== TOAST ===== */
+#toast{
+  position:fixed;top:calc(var(--safe-t) + 16px);left:50%;
+  transform:translateX(-50%) translateY(-20px);
+  background:var(--bg-dark);color:#fff;padding:10px 20px;
+  border-radius:var(--r-full);font-size:13px;font-weight:700;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:9999;
+  opacity:0;pointer-events:none;transition:all .25s;white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ===== MODAL BACKDROP ===== */
+.modal-back{
+  position:fixed;inset:0;background:rgba(17,20,29,.65);
+  backdrop-filter:blur(8px);z-index:500;
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.modal-back.open{opacity:1;pointer-events:auto;}
+#date-picker-modal, #time-picker-modal{ z-index: 600; }
+#sp-setup-modal, #sp-reminder-modal{ z-index: 600; }
+#sp-playlist-modal{ z-index: 650; }
+@keyframes maomao-float{
+  0%,100%{ transform:translateX(-50%) translateY(0); }
+  50%{ transform:translateX(-50%) translateY(-3px); }
+}
+.modal-sheet{
+  width:100%;max-width:430px;background:#fff;
+  border-radius:28px 28px 0 0;padding:20px 22px calc(var(--safe-b) + 24px);
+  box-shadow:0 -8px 32px rgba(0,0,0,.25);
+  transform:translateY(100%);transition:transform .28s cubic-bezier(.16,1,.3,1);
+  max-height:92vh;max-height:92dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+}
+.modal-back.open .modal-sheet{transform:translateY(0);}
+.sheet-handle{width:36px;height:4px;background:#E5E7EB;border-radius:2px;margin:0 auto 18px;}
+
+/* ===== DATE/TIME PICKER SHEET ===== */
+.picker-sheet{
+  width:100%;max-width:430px;background:#fff;
+  border-radius:28px 28px 0 0;padding:20px 22px calc(var(--safe-b) + 24px);
+  transform:translateY(100%);transition:transform .28s cubic-bezier(.16,1,.3,1);
+}
+.modal-back.open .picker-sheet{transform:translateY(0);}
+
+/* ===========================
+   ONBOARDING
+   =========================== */
+html.ob-done #onboarding,
+#onboarding.done{
+  display:none !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+#onboarding{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  background:#FFA030;
+}
+.ob-slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  padding:calc(var(--safe-t) + 20px) 24px calc(var(--safe-b) + 28px);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s,transform .35s;
+  transform:translateX(40px);
+}
+.ob-slide.active{opacity:1;pointer-events:auto;transform:translateX(0);}
+.ob-slide.exit{opacity:0;transform:translateX(-40px);}
+
+/* Slide 1 & 2: orange gradient */
+#ob1{background:linear-gradient(170deg,#FFA030 0%,#FF5500 100%);color:#fff;}
+#ob2{background:linear-gradient(170deg,#FFAF45 0%,#FF6A00 100%);color:#fff;}
+/* Slide 3: white */
+#ob3{background:#FAFAFA;color:var(--text);}
+
+.ob-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:auto;}
+.ob-dashes{display:flex;gap:6px;}
+.ob-dash{height:4px;width:22px;border-radius:2px;background:rgba(255,255,255,.35);transition:all .3s;}
+.ob-dash.on{width:30px;background:#fff;}
+#ob3 .ob-dash{background:rgba(0,0,0,.15);}
+#ob3 .ob-dash.on{background:var(--text);}
+.ob-skip{background:rgba(255,255,255,.22);border:none;color:#fff;padding:6px 16px;border-radius:var(--r-full);font-size:13px;font-weight:700;backdrop-filter:blur(8px);}
+#ob3 .ob-skip{background:rgba(0,0,0,.07);color:var(--text);}
+
+.ob-content{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:16px;}
+.ob-label{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;opacity:.9;}
+.ob-title{font-size:32px;font-weight:800;line-height:1.12;letter-spacing:-.03em;margin-bottom:12px;}
+.ob-sub{font-size:14px;line-height:1.5;opacity:.88;max-width:320px;}
+
+/* Glass cards for slide 1 */
+.ob-cards{display:flex;flex-direction:column;gap:10px;margin-top:22px;}
+.ob-card-glass{
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);
+  border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:12px;
+  backdrop-filter:blur(14px);
+}
+.ob-card-icon{width:42px;height:42px;border-radius:50%;background:#fff;color:var(--accent);display:grid;place-items:center;font-size:18px;flex-shrink:0;}
+.ob-card-glass h4{font-size:15px;font-weight:700;}
+.ob-card-glass p{font-size:12px;opacity:.88;margin-top:2px;}
+
+/* Slide 2 preview card */
+.ob-preview-card{
+  background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.3);
+  border-radius:20px;padding:18px;margin-bottom:22px;backdrop-filter:blur(14px);
+}
+.ob-preview-tag{background:rgba(0,0,0,.25);display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--r-full);font-size:11.5px;font-weight:800;margin-bottom:10px;}
+.ob-preview-tag .arr{background:rgba(255,255,255,.3);border-radius:4px;padding:2px 6px;}
+.ob-preview-title{font-size:19px;font-weight:800;margin-bottom:10px;}
+.ob-chips{display:flex;gap:8px;}
+.ob-chip{background:rgba(0,0,0,.2);border-radius:var(--r-full);padding:4px 12px;font-size:12px;font-weight:700;}
+
+/* Fan badges slide 3 */
+.ob-fan{position:relative;height:200px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:16px;}
+.fan-b{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:22px;position:absolute;box-shadow:0 8px 20px rgba(0,0,0,.15);}
+.fan-b.f1{background:#3B82F6;transform:translate(-105px,-10px) rotate(-25deg);}
+.fan-b.f2{background:#EF4444;transform:translate(-58px,-60px) rotate(-12deg);}
+.fan-b.f3{background:#F59E0B;transform:translate(0,-78px);width:62px;height:62px;font-size:26px;}
+.fan-b.f4{background:#06B6D4;transform:translate(58px,-60px) rotate(12deg);}
+.fan-b.f5{background:#8B5CF6;transform:translate(105px,-10px) rotate(25deg);}
+#ob3 .ob-label{color:var(--accent);}
+
+/* CTA button */
+.ob-cta{
+  width:100%;background:var(--bg-dark);color:#fff;border:none;
+  padding:17px 24px;border-radius:var(--r-full);font-size:15px;font-weight:700;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);margin-top:16px;
+}
+#ob1 .ob-cta,#ob2 .ob-cta{background:rgba(0,0,0,.28);backdrop-filter:blur(8px);}
+
+/* ===========================
+   HOME SCREEN
+   =========================== */
+.home-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;flex-shrink:0;width:100%;min-height:48px;
+}
+.home-user{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.home-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+/* Profile modal */
+.profile-modal-sheet{
+  background:linear-gradient(170deg,#1A1C22 0%,#0F1015 100%);
+  border-radius:28px 28px 0 0;
+  padding:20px 22px calc(var(--safe-b) + 28px);
+  color:#fff;
+}
+.profile-avatar-ring{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),#FF8C00);
+  display:grid;place-items:center;
+  font-size:38px;
+  box-shadow:0 8px 24px var(--accent-glow);
+  margin:0 auto 10px;
+  cursor:pointer;
+  transition:transform .15s;
+  position:relative;
+}
+.profile-avatar-ring:active{transform:scale(.95);}
+.profile-avatar-edit{
+  position:absolute;bottom:0;right:0;
+  background:#fff;color:var(--text);
+  border-radius:50%;width:22px;height:22px;
+  display:grid;place-items:center;font-size:11px;
+  box-shadow:0 2px 6px rgba(0,0,0,.3);
+}
+.profile-name-edit{
+  background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);
+  border-radius:var(--r-full);padding:10px 18px;
+  text-align:center;font-size:16px;font-weight:700;
+  color:#fff;outline:none;width:100%;margin-bottom:14px;
+}
+.profile-name-edit:focus{border-color:var(--accent);}
+.profile-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+.psg-item{background:rgba(255,255,255,.07);border-radius:var(--r-md);padding:12px 8px;text-align:center;}
+.psg-val{font-size:20px;font-weight:800;font-family:var(--mono);}
+.psg-lbl{font-size:10.5px;color:rgba(255,255,255,.55);margin-top:3px;font-weight:600;}
+.emoji-picker-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:10px 0;}
+.ep-opt{font-size:28px;cursor:pointer;width:46px;height:46px;display:grid;place-items:center;border-radius:12px;transition:all .15s;border:2px solid transparent;}
+.ep-opt.sel{background:var(--accent-light);border-color:var(--accent);}
+.avatar{width:42px;height:42px;border-radius:50%;background:#E5E7EB;display:grid;place-items:center;font-size:18px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.07);flex-shrink:0;}
+.user-sub{font-size:12px;color:var(--text-2);font-weight:600;line-height:1.2;}
+.user-name{font-size:15px;font-weight:700;line-height:1.2;}
+
+.hero-title{font-size:28px;font-weight:800;line-height:1.15;letter-spacing:-.03em;margin-bottom:18px;margin-top:0;flex-shrink:0;}
+
+/* Progress card */
+.progress-card{
+  background:var(--bg-dark);border-radius:var(--r-lg);
+  padding:20px;display:flex;align-items:center;
+  gap:0;margin-bottom:22px;
+  box-shadow:0 10px 28px rgba(26,28,34,.3);
+  flex-shrink:0;width:100%;
+}
+.ring-wrap{position:relative;width:96px;height:96px;flex-shrink:0;display:grid;place-items:center;}
+.ring-svg{width:96px;height:96px;transform:rotate(-90deg);}
+.ring-track{fill:none;stroke:rgba(255,255,255,.12);stroke-width:7;}
+.ring-fill{fill:none;stroke:#A3E635;stroke-width:7;stroke-linecap:round;stroke-dasharray:251.2;stroke-dashoffset:70;transition:stroke-dashoffset .6s ease;}
+.ring-pct{position:absolute;font-size:17px;font-weight:800;color:#fff;}
+
+.prog-stats{flex:1;padding-left:22px;display:flex;flex-direction:column;gap:11px;}
+.prog-row{display:flex;align-items:center;justify-content:space-between;}
+.prog-lbl{display:flex;align-items:center;gap:7px;font-size:12.5px;color:rgba(255,255,255,.55);}
+.prog-lbl svg{width:14px;height:14px;stroke:currentColor;flex-shrink:0;}
+.prog-val{font-size:14px;font-weight:800;color:#fff;font-family:var(--mono);}
+
+/* Section header */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-shrink:0;width:100%;}
+.sec-hdr h3{font-size:17px;font-weight:700;}
+.sec-hdr button{background:none;border:none;font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer;}
+
+/* Status pills */
+.pills-row{
+  display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;
+  padding-bottom:8px;padding-top:2px;margin-bottom:18px;
+  scrollbar-width:none;flex-shrink:0;width:100%;
+}
+.pills-row::-webkit-scrollbar{display:none;}
+.spill{
+  display:flex;align-items:center;gap:6px;padding:8px 14px;
+  border-radius:var(--r-full);font-size:12.5px;font-weight:700;
+  white-space:nowrap;cursor:pointer;transition:all .15s;border:1.5px solid transparent;
+  flex-shrink:0;line-height:1.2;
+}
+.spill.todo{background:var(--lime-bg);color:var(--color-todo-dark,#4A6310);}
+.spill.progress{background:var(--purple-bg);color:var(--purple);}
+.spill.review{background:var(--blue-bg);color:var(--blue);}
+.spill.muted{background:#fff;color:var(--text-2);border-color:var(--border);}
+.spill.sel{border-color:currentColor;}
+
+/* Task card & feed */
+#tasks-feed{display:flex;flex-direction:column;gap:12px;width:100%;flex-shrink:0;margin-top:4px;padding-bottom:30px;}
+.task-card{background:#fff;border-radius:var(--r-lg);padding:17px 18px;margin-bottom:0;box-shadow:0 4px 14px rgba(0,0,0,.04);border:1px solid var(--border);flex-shrink:0;width:100%;}
+.task-card:active{transform:scale(.99);}
+.tc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.prio-tag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:var(--r-full);font-size:11.5px;font-weight:700;}
+.prio-tag.high{background:var(--red-bg);color:var(--red);}
+.prio-tag.medium{background:var(--amber-bg);color:var(--amber);}
+.prio-tag.low{background:var(--green-bg);color:var(--green);}
+.prio-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+.tc-title{font-size:16px;font-weight:700;margin-bottom:10px;line-height:1.25;}
+.tc-bottom{display:flex;align-items:center;justify-content:space-between;}
+.tc-time{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text-2);}
+.avatars{display:flex;}
+.av-mini{width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-7px;background:#D1D5DB;display:grid;place-items:center;font-size:10px;font-weight:700;}
+.av-mini:first-child{margin-left:0;}
+.av-count{background:var(--bg-dark);color:#fff;font-size:9px;}
+.tc-arrow{width:30px;height:30px;border-radius:50%;background:#F3F4F6;border:none;display:grid;place-items:center;font-size:13px;}
+.tc-status-badge{padding:3px 10px;border-radius:var(--r-full);font-size:11px;font-weight:700;}
+.tc-status-badge.todo{background:var(--lime-bg);color:#4A6310;}
+.tc-status-badge.progress{background:var(--purple-bg);color:var(--purple);}
+.tc-status-badge.review{background:var(--blue-bg);color:var(--blue);}
+.tc-status-badge.done{background:var(--green-bg);color:var(--green);}
+
+.empty-state{padding:30px 20px;text-align:center;color:var(--text-2);flex-shrink:0;width:100%;}
+.empty-state .icon{font-size:44px;margin-bottom:12px;}
+.empty-state h4{font-size:16px;font-weight:700;margin-bottom:6px;color:var(--text);}
+.empty-state p{font-size:13px;line-height:1.4;}
+
+/* ===========================
+   CALENDAR / SCHEDULE SCREEN
+   =========================== */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-shrink:0;width:100%;}
+.cal-header h2{font-size:20px;font-weight:800;}
+.cal-tabs{display:flex;background:#EBEBEB;border-radius:var(--r-full);padding:4px;gap:4px;margin-bottom:20px;flex-shrink:0;width:100%;}
+.cal-tab{flex:1;background:transparent;border:none;padding:9px 16px;border-radius:var(--r-full);font-size:13px;font-weight:700;color:var(--text-2);transition:all .2s;}
+.cal-tab.active{background:var(--bg-dark);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+
+.cal-title-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px;flex-shrink:0;width:100%;}
+.cal-title-row h2{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1;}
+.cal-title-row h2 span{color:var(--text-3);}
+.month-btn{background:#F3F4F6;border:none;border-radius:var(--r-full);padding:6px 14px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;}
+
+/* Month calendar grid */
+.cal-grid-days{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:8px;flex-shrink:0;width:100%;}
+.cal-day-header{font-size:12px;font-weight:700;color:var(--text-3);padding:4px 0;}
+.cal-day-header.sat,.cal-day-header.sun{color:var(--accent);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;flex-shrink:0;width:100%;}
+.cal-cell{
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  border-radius:var(--r-sm);cursor:pointer;position:relative;
+  font-size:13px;font-weight:600;color:var(--text);transition:all .15s;
+}
+.cal-cell.other-month{color:var(--text-3);}
+.cal-cell.today{font-weight:800;}
+.cal-cell.today .cell-num{background:var(--bg-dark);color:#fff;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;}
+.cal-cell.selected .cell-num{background:var(--accent);color:#fff;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;}
+.cal-cell.sat,.cal-cell.sun{color:var(--accent);}
+.cal-cell.has-event::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--accent);}
+
+/* Event spans on calendar */
+.cal-event-row{margin-top:4px;overflow:hidden;flex-shrink:0;width:100%;}
+.cal-event-pill{
+  border-radius:4px;padding:2px 6px;font-size:10.5px;font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-bottom:2px;
+}
+.cal-event-pill.orange{background:rgba(255,106,0,.15);color:var(--accent);}
+.cal-event-pill.blue{background:var(--blue-bg);color:var(--blue);}
+.cal-event-pill.green{background:var(--green-bg);color:var(--green);}
+
+/* Calendar add task row */
+.cal-action-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0 4px;gap:10px;flex-shrink:0;width:100%;
+}
+.btn-add-task-cal{
+  background:var(--accent);color:#fff;border:none;
+  padding:12px 20px;border-radius:var(--r-full);
+  font-size:14px;font-weight:700;
+  display:flex;align-items:center;gap:7px;
+  box-shadow:0 4px 14px var(--accent-glow);flex-shrink:0;
+}
+.filter-task-btn{
+  background:#fff;border:1px solid var(--border);
+  padding:12px 18px;border-radius:var(--r-full);
+  font-size:13px;font-weight:700;color:var(--text);
+  display:flex;align-items:center;gap:6px;flex-shrink:0;
+}
+
+/* Day Timeline (visible below calendar when day is selected) */
+.timeline-section{margin-top:16px;flex-shrink:0;width:100%;}
+.timeline-group-title{font-size:13px;font-weight:700;color:var(--text-2);margin-bottom:10px;display:flex;justify-content:space-between;flex-shrink:0;width:100%;}
+.timeline-entry{display:flex;gap:12px;margin-bottom:12px;flex-shrink:0;width:100%;}
+.t-time{width:56px;font-size:12px;font-weight:700;color:var(--text);display:flex;flex-direction:column;padding-top:4px;flex-shrink:0;}
+.t-time span{font-size:10px;color:var(--text-3);font-weight:600;}
+.t-card{flex:1;background:#fff;border-radius:var(--r-md);padding:14px 16px;box-shadow:0 3px 12px rgba(0,0,0,.04);border:1px solid var(--border);}
+.t-card h4{font-size:14px;font-weight:700;margin-bottom:4px;}
+.t-card p{font-size:12px;color:var(--text-2);line-height:1.35;margin-bottom:10px;}
+.t-actions{display:flex;align-items:center;justify-content:space-between;}
+.btn-meet{background:var(--blue);color:#fff;border:none;padding:5px 12px;border-radius:var(--r-full);font-size:11.5px;font-weight:700;display:inline-flex;align-items:center;gap:5px;flex-shrink:0;}
+
+/* Activity Tab */
+.activity-empty{padding:30px 10px;text-align:center;color:var(--text-2);flex-shrink:0;width:100%;}
+.activity-item{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:#fff;border-radius:var(--r-md);margin-bottom:8px;border:1px solid var(--border);flex-shrink:0;width:100%;}
+.ai-left{display:flex;align-items:center;gap:10px;}
+.ai-icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:15px;flex-shrink:0;}
+.ai-meta{font-size:13px;font-weight:700;}
+.ai-sub{font-size:11.5px;color:var(--text-2);margin-top:2px;}
+.ai-time{font-size:11px;color:var(--text-3);font-family:var(--mono);flex-shrink:0;}
+
+/* ===========================
+   FOCUS SCREEN
+   =========================== */
+.focus-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-shrink:0;width:100%;}
+.focus-header h2{font-size:26px;font-weight:800;letter-spacing:-.03em;}
+
+/* Groove tunes */
+.groove-bar{
+  background:#fff;border:1.5px solid var(--border);border-radius:var(--r-full);
+  padding:10px 16px;display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;cursor:pointer;flex-shrink:0;width:100%;
+}
+.groove-bar.playing{border-color:var(--accent);}
+.groove-l{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:700;}
+.wave-bars{display:flex;align-items:center;gap:3px;height:14px;}
+.wb{width:3px;background:var(--accent);border-radius:2px;animation:wa .7s infinite alternate ease-in-out;}
+.wb:nth-child(2){animation-delay:.15s;}
+.wb:nth-child(3){animation-delay:.3s;height:6px;}
+@keyframes wa{0%{height:4px}100%{height:14px}}
+.groove-bar:not(.playing) .wb{animation:none;height:6px;}
+
+/* Task info center */
+.focus-task-center{text-align:center;margin-bottom:14px;flex-shrink:0;width:100%;}
+.focus-task-name{font-size:20px;font-weight:800;letter-spacing:-.02em;}
+.focus-task-range{font-size:13px;color:var(--text-2);font-weight:600;margin-top:3px;}
+
+/* Timer Dial — exact image 2 reference */
+.dial-outer{
+  position:relative;width:240px;height:240px;
+  margin:0 auto 22px;display:grid;place-items:center;flex-shrink:0;
+}
+.dial-glow{
+  position:absolute;inset:-10px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,110,0,.22) 0%,transparent 70%);
+  animation:glow-pulse 3s infinite ease-in-out;
+}
+@keyframes glow-pulse{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.1);opacity:1}}
+.dial-disc{
+  width:220px;height:220px;border-radius:50%;
+  background:linear-gradient(135deg,#FFA040 0%,#FF5500 100%);
+  box-shadow:0 16px 40px rgba(255,85,0,.35),inset 0 2px 8px rgba(255,255,255,.45);
+  display:grid;place-items:center;position:relative;
+  border:8px solid rgba(255,255,255,.85);
+}
+.dial-inner{
+  width:162px;height:162px;border-radius:50%;
+  background:var(--bg-darker);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:inset 0 6px 16px rgba(0,0,0,.5);cursor:pointer;
+}
+.dial-digits{font-family:var(--mono);font-size:36px;font-weight:700;color:#fff;letter-spacing:-.04em;line-height:1;}
+.dial-status{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-top:7px;}
+
+/* Controls */
+.dial-controls{display:flex;align-items:center;justify-content:center;gap:22px;margin-bottom:22px;flex-shrink:0;width:100%;}
+.btn-dial-sub{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);font-size:17px;color:var(--text);display:grid;place-items:center;box-shadow:0 3px 10px rgba(0,0,0,.05);}
+.btn-dial-main{width:60px;height:60px;border-radius:50%;background:var(--bg-dark);color:#fff;border:none;font-size:20px;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.3);transition:transform .15s;}
+.btn-dial-main:active{transform:scale(.92);}
+
+/* Feature pills — exact image 2 */
+.feat-pills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:22px;flex-shrink:0;width:100%;}
+.feat-pill{
+  background:#fff;border:1.5px solid #E5E7EB;border-radius:var(--r-md);
+  padding:11px 4px;text-align:center;font-size:11px;font-weight:700;
+  color:var(--text-2);display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.03);
+}
+.feat-pill svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+.feat-pill.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent);}
+.feat-pill:active{transform:scale(.96);}
+
+/* Compact height responsive adjustments for Focus screen */
+@media (max-height: 740px) {
+  .focus-header{ margin-bottom: 10px; }
+  .groove-bar{ margin-bottom: 10px; padding: 8px 14px; }
+  #sp-focus-banner{ margin-bottom: 10px; padding: 8px 12px; }
+  .focus-task-center{ margin-bottom: 10px; }
+  .focus-task-name{ font-size: 17px; }
+  .dial-outer{ width: 200px; height: 200px; margin: 0 auto 14px; }
+  .dial-disc{ width: 185px; height: 185px; }
+  .dial-inner{ width: 138px; height: 138px; }
+  .dial-digits{ font-size: 30px; }
+  .dial-controls{ gap: 16px; margin-bottom: 14px; }
+  .btn-dial-main{ width: 52px; height: 52px; font-size: 18px; }
+  .btn-dial-sub{ width: 40px; height: 40px; font-size: 15px; }
+  .feat-pills{ margin-bottom: 16px; }
+}
+
+/* Custom timer input modal */
+.timer-input-wrap{display:flex;align-items:center;justify-content:center;gap:12px;margin:20px 0;}
+.timer-spinbox{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.timer-spinbox label{font-size:12px;font-weight:600;color:var(--text-2);}
+.timer-spinbox-val{
+  width:80px;height:80px;border-radius:var(--r-md);
+  background:#F3F4F6;border:none;text-align:center;
+  font-family:var(--mono);font-size:30px;font-weight:700;
+  color:var(--text);outline:none;
+}
+.timer-sep{font-size:28px;font-weight:700;color:var(--text-2);padding-bottom:18px;}
+
+/* ===========================
+   SETTINGS SCREEN
+   =========================== */
+/* ===== SPOTIFY ===== */
+.sp-card{
+  background:linear-gradient(135deg,#1DB954 0%,#17a548 100%);
+  border-radius:var(--r-lg);padding:18px;color:#fff;
+  margin-bottom:16px;
+}
+.sp-card h4{font-size:18px;font-weight:800;margin-bottom:4px;}
+.sp-card p{font-size:12.5px;opacity:.85;line-height:1.4;margin-bottom:14px;}
+.sp-logo{height:22px;filter:brightness(0) invert(1);margin-bottom:12px;}
+.btn-sp-connect{
+  background:#fff;color:#1DB954;border:none;
+  padding:12px 22px;border-radius:var(--r-full);
+  font-size:14px;font-weight:800;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);transition:transform .15s;
+}
+.btn-sp-connect:active{transform:scale(.96);}
+.btn-sp-disconnect{
+  background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.4);
+  padding:9px 18px;border-radius:var(--r-full);font-size:13px;font-weight:700;cursor:pointer;
+}
+.sp-connected-info{display:flex;align-items:center;justify-content:space-between;}
+.sp-user-badge{display:flex;align-items:center;gap:9px;}
+.sp-user-badge .sp-av{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.3);display:grid;place-items:center;font-size:16px;}
+/* Playlist picker */
+.sp-playlist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-bottom:8px;}
+.sp-pl-card{background:#F9FAFB;border-radius:var(--r-md);padding:10px;cursor:pointer;border:2px solid transparent;transition:all .15s;}
+.sp-pl-card:active{transform:scale(.97);}
+.sp-pl-card.active{border-color:#1DB954;background:rgba(29,185,84,.07);}
+/* Track rows */
+.sp-track-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;border-radius:var(--r-sm);padding-left:4px;}
+.sp-track-row:last-child{border-bottom:none;}
+.sp-track-row.active{background:rgba(29,185,84,.08);}
+.sp-track-row:hover{background:#F9FAFB;}
+/* Client ID setup */
+.sp-setup-card{background:#fff;border:1.5px dashed #D1D5DB;border-radius:var(--r-lg);padding:18px;}
+.sp-setup-card h4{font-size:15px;font-weight:700;margin-bottom:6px;}
+.sp-setup-card p{font-size:12.5px;color:var(--text-2);line-height:1.5;margin-bottom:12px;}
+.sp-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.sp-step{display:flex;align-items:flex-start;gap:10px;font-size:12.5px;line-height:1.4;}
+.sp-step-num{width:22px;height:22px;border-radius:50%;background:#1DB954;color:#fff;font-weight:800;font-size:11px;display:grid;place-items:center;flex-shrink:0;margin-top:1px;}
+.sp-clientid-row{display:flex;gap:8px;}
+.sp-clientid-row input{flex:1;background:#F9FAFB;border:1.5px solid #E5E7EB;padding:10px 12px;border-radius:var(--r-md);font-size:13px;outline:none;}
+.sp-clientid-row input:focus{border-color:#1DB954;}
+.btn-sp-go{background:#1DB954;color:#fff;border:none;padding:10px 18px;border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.settings-section{margin-bottom:24px;flex-shrink:0;width:100%;}
+.settings-section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:10px;padding:0 4px;flex-shrink:0;}
+.settings-group{background:#fff;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);flex-shrink:0;width:100%;}
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);gap:14px;}
+.settings-row:last-child{border-bottom:none;}
+.settings-row-text h4{font-size:14px;font-weight:700;}
+.settings-row-text p{font-size:12px;color:var(--text-2);margin-top:2px;}
+.settings-sel{background:#F3F4F6;border:none;border-radius:var(--r-sm);padding:7px 12px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;}
+.btn-test-sound{background:var(--accent-light);color:var(--accent);border:1.5px solid var(--accent);border-radius:var(--r-full);padding:6px 14px;font-size:12.5px;font-weight:700;flex-shrink:0;}
+.btn-danger{background:var(--red-bg);color:var(--red);border:none;border-radius:var(--r-full);padding:8px 16px;font-size:13px;font-weight:700;flex-shrink:0;}
+
+/* ===========================
+   STATUS / INSIGHTS SCREEN
+   =========================== */
+.status-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-shrink:0;width:100%;}
+.settings-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-shrink:0;width:100%;}
+.status-header h2{font-size:22px;font-weight:800;}
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;flex-shrink:0;width:100%;}
+.status-stat-card{background:#fff;border-radius:var(--r-lg);padding:18px;border:1px solid var(--border);}
+.ss-label{font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:6px;}
+.ss-val{font-size:24px;font-weight:800;font-family:var(--mono);}
+.ss-sub{font-size:11px;color:var(--text-3);margin-top:3px;}
+
+/* Chart */
+.chart-card{background:#fff;border-radius:var(--r-lg);padding:18px;margin-bottom:20px;border:1px solid var(--border);flex-shrink:0;width:100%;}
+.chart-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.chart-hdr h4{font-size:15px;font-weight:700;}
+.chart-body{display:grid;grid-template-columns:repeat(7,1fr);align-items:flex-end;height:140px;gap:6px;border-bottom:1px dashed #E5E7EB;padding-bottom:8px;margin-bottom:8px;}
+.chart-col{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;}
+.chart-bar{width:100%;border-radius:6px 6px 0 0;background:#FED7AA;min-height:4px;transition:height .4s ease;}
+.chart-bar.active{background:var(--accent-grad);}
+.chart-bar.target{background:repeating-linear-gradient(45deg,#FF8A00,#FF8A00 4px,#FF6000 4px,#FF6000 8px);}
+.chart-day{font-size:10.5px;font-weight:600;color:var(--text-2);}
+
+/* Top tasks in status */
+.status-task-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border-radius:var(--r-md);margin-bottom:8px;border:1px solid var(--border);flex-shrink:0;width:100%;}
+.sti-left{display:flex;align-items:center;gap:10px;}
+.sti-num{width:30px;height:30px;border-radius:50%;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:800;display:grid;place-items:center;}
+
+/* ===========================
+   ADD TASK MODAL
+   =========================== */
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.modal-hdr h3{font-size:18px;font-weight:700;}
+.btn-modal-x{width:32px;height:32px;border-radius:50%;background:#F3F4F6;border:none;font-size:15px;display:grid;place-items:center;}
+.form-group{margin-bottom:16px;}
+.date-time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.dt-btn{display:flex;align-items:center;gap:8px;background:#F9FAFB;border:1.5px solid #E5E7EB;padding:12px 14px;border-radius:var(--r-full);font-size:13px;font-weight:700;color:var(--text);cursor:pointer;width:100%;transition:border-color .2s;}
+.dt-btn:active{border-color:var(--accent);}
+.prio-sel{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.prio-pill{padding:10px;text-align:center;border-radius:var(--r-full);font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid transparent;transition:all .15s;}
+.prio-pill.low{background:var(--green-bg);color:var(--green);}
+.prio-pill.medium{background:var(--amber-bg);color:var(--amber);}
+.prio-pill.high{background:var(--red-bg);color:var(--red);}
+.prio-pill.sel{border-color:currentColor;font-weight:800;}
+.tags-row{display:flex;flex-wrap:wrap;gap:8px;}
+.tag-chip{display:inline-flex;align-items:center;gap:5px;background:var(--purple-bg);color:var(--purple);padding:5px 12px;border-radius:var(--r-full);font-size:12px;font-weight:700;cursor:pointer;}
+.tag-chip.add{background:#F3F4F6;color:var(--text-2);}
+.tag-chip .remove{opacity:.6;font-size:11px;}
+</style>
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div id="onboarding">
+
+  <!-- Slide 1 -->
+  <div class="ob-slide active" id="ob1">
+    <div class="ob-topbar">
+      <div class="ob-dashes"><div class="ob-dash on" id="d1"></div><div class="ob-dash" id="d2"></div><div class="ob-dash" id="d3"></div></div>
+      <button class="ob-skip" id="ob-skip">Skip</button>
+    </div>
+    <div class="ob-content">
+      <div class="ob-label">FOCUS</div>
+      <h1 class="ob-title">Stay Focused,<br>One <b>Pomodoro</b><br>at a Time</h1>
+      <p class="ob-sub">Smart focus sessions and habits with distraction-free timers.</p>
+      <div class="ob-cards">
+        <div class="ob-card-glass"><div class="ob-card-icon">🎯</div><div><h4>Focus</h4><p>Deep work sessions with a distraction-free timer.</p></div></div>
+        <div class="ob-card-glass"><div class="ob-card-icon">☕</div><div><h4>Break</h4><p>Healthy breaks for better long-term productivity.</p></div></div>
+      </div>
+      <button class="ob-cta" id="ob-next1">Continue &nbsp;›› <span>🍅</span></button>
+    </div>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="ob-slide" id="ob2">
+    <div class="ob-topbar">
+      <div class="ob-dashes"><div class="ob-dash" id="d1b"></div><div class="ob-dash on" id="d2b"></div><div class="ob-dash" id="d3b"></div></div>
+      <button class="ob-skip">Skip</button>
+    </div>
+    <div class="ob-content">
+      <div class="ob-preview-card">
+        <div class="ob-preview-tag">Focus Mode <span class="arr">↗</span></div>
+        <div class="ob-preview-title">Pomodoro Focus Session</div>
+        <div class="ob-chips"><span class="ob-chip">25 min</span><span class="ob-chip">Today</span></div>
+      </div>
+      <div class="ob-label">FOCUS</div>
+      <h1 class="ob-title">Tasks, Tags,&amp;<br>Projects Combined</h1>
+      <p class="ob-sub">Tag and organize your tasks by projects to track progress and stay structured, even on hectic days.</p>
+      <button class="ob-cta" id="ob-next2">Continue &nbsp;›› <span>🍅</span></button>
+    </div>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="ob-slide" id="ob3">
+    <div class="ob-topbar">
+      <div class="ob-dashes"><div class="ob-dash" id="d1c"></div><div class="ob-dash" id="d2c"></div><div class="ob-dash on" id="d3c"></div></div>
+      <button class="ob-skip" style="background:rgba(0,0,0,.07);color:var(--text);">Skip</button>
+    </div>
+    <div class="ob-content">
+      <div class="ob-fan">
+        <div class="fan-b f1">🏃</div><div class="fan-b f2">🏋️</div>
+        <div class="fan-b f3">🏆</div>
+        <div class="fan-b f4">🌐</div><div class="fan-b f5">📖</div>
+      </div>
+      <div class="ob-label">FOCUS</div>
+      <h1 class="ob-title">Visualize Your<br>Focus &amp; Growth</h1>
+      <p class="ob-sub">Monitor productivity, celebrate achievements, and stay inspired with detailed reports.</p>
+      <button class="ob-cta" style="background:var(--bg-dark);" id="ob-finish">Let's Get Started &nbsp;›› <span>🍅</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+
+  <!-- ===== HOME ===== -->
+  <div class="screen active" id="s-home">
+    <div class="home-header">
+      <div class="home-user">
+        <div class="profile-avatar-ring" id="home-avatar" onclick="App.openProfileModal()" style="width:46px;height:46px;font-size:24px;box-shadow:0 4px 12px var(--accent-glow);margin:0;">
+          <span id="home-avatar-emoji">😊</span>
+        </div>
+        <div><div class="user-sub" id="greet-text">Good Morning</div><div class="user-name" id="user-name-disp">You</div></div>
+      </div>
+      <div class="home-actions">
+        <button class="btn-circle dark" id="btn-add-home">+</button>
+        <button class="btn-circle" id="btn-notif">
+          <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <h1 class="hero-title">Let's Make<br>Today Productive</h1>
+
+    <div class="progress-card" id="progress-card">
+      <div class="ring-wrap">
+        <svg class="ring-svg" viewBox="0 0 96 96">
+          <circle class="ring-track" cx="48" cy="48" r="40"/>
+          <circle class="ring-fill" id="ring-fill" cx="48" cy="48" r="40"/>
+        </svg>
+        <div class="ring-pct" id="ring-pct">0%</div>
+      </div>
+      <div class="prog-stats">
+        <div class="prog-row">
+          <div class="prog-lbl"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Total Task</div>
+          <span class="prog-val" id="cnt-total">0</span>
+        </div>
+        <div class="prog-row">
+          <div class="prog-lbl"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Completed</div>
+          <span class="prog-val" id="cnt-done">0</span>
+        </div>
+        <div class="prog-row">
+          <div class="prog-lbl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pending</div>
+          <span class="prog-val" id="cnt-pending">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-hdr">
+      <h3>Today's Tasks</h3>
+      <button onclick="App.showAllTasks()">View All</button>
+    </div>
+    <div class="pills-row" id="home-filters">
+      <div class="spill todo sel" data-f="todo" onclick="App.setHomeFilter('todo',this)"><span id="cnt-todo">0</span> To Do</div>
+      <div class="spill progress" data-f="progress" onclick="App.setHomeFilter('progress',this)"><span id="cnt-progress">0</span> In Progress</div>
+      <div class="spill review" data-f="review" onclick="App.setHomeFilter('review',this)"><span id="cnt-review">0</span> In Review</div>
+      <div class="spill muted" data-f="all" onclick="App.setHomeFilter('all',this)">All</div>
+    </div>
+    <div id="tasks-feed"></div>
+  </div>
+
+  <!-- ===== CALENDAR / SCHEDULE ===== -->
+  <div class="screen" id="s-cal">
+    <div class="cal-header">
+      <h2>Schedule</h2>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-circle" onclick=""><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+        <button class="btn-circle"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+      </div>
+    </div>
+
+    <div class="cal-tabs">
+      <button class="cal-tab active" id="tab-calendar" onclick="App.switchCalTab('calendar')">Calendar</button>
+      <button class="cal-tab" id="tab-activity" onclick="App.switchCalTab('activity')">Activity</button>
+    </div>
+
+    <!-- Calendar view -->
+    <div id="cal-view">
+      <div class="cal-title-row">
+        <h2>Track Your<br><span>Schedule</span></h2>
+        <button class="month-btn" id="month-btn" onclick="App.showMonthPicker()">
+          <span id="month-label">Sep 2026</span> ▾
+        </button>
+      </div>
+
+      <!-- Day headers -->
+      <div class="cal-grid-days">
+        <div class="cal-day-header">Mon</div><div class="cal-day-header">Tue</div>
+        <div class="cal-day-header">Wed</div><div class="cal-day-header">Thu</div>
+        <div class="cal-day-header">Fri</div>
+        <div class="cal-day-header sat">Sat</div><div class="cal-day-header sun">Sun</div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+
+      <div class="cal-action-row">
+        <button class="btn-add-task-cal" onclick="App.openAddTask()">+ Add task</button>
+        <button class="filter-task-btn" id="cal-filter-btn">All Task ▾</button>
+      </div>
+
+      <!-- Timeline for selected day -->
+      <div class="timeline-section" id="cal-timeline"></div>
+    </div>
+
+    <!-- Activity view -->
+    <div id="act-view" style="display:none;">
+      <div class="sec-hdr" style="margin-top:4px;"><h3>Recent Activity</h3></div>
+      <div id="activity-feed"></div>
+    </div>
+  </div>
+
+  <!-- ===== FOCUS ===== -->
+  <div class="screen" id="s-focus">
+    <div class="focus-header">
+      <h2>Focus</h2>
+      <button class="btn-circle" id="btn-focus-settings" onclick="App.openFocusSettings()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+
+    <div class="groove-bar" id="groove-bar" onclick="App.toggleGroove()">
+      <div class="groove-l">
+        <div class="wave-bars"><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
+        <span>♫ Groove Tunes</span>
+      </div>
+      <span style="font-size:13px;color:var(--text-2);" id="groove-x">✕</span>
+    </div>
+
+    <!-- Spotify quick-connect (shows when not connected) -->
+    <div id="sp-focus-banner" onclick="App.openSpotifySetup()" style="background:linear-gradient(135deg,#1DB954,#17a548);border-radius:var(--r-md);padding:11px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;cursor:pointer;box-shadow:0 4px 14px rgba(29,185,84,.28);transition:transform 0.15s ease;">
+      <div style="display:flex;align-items:center;gap:9px;">
+        <svg viewBox="0 0 168 168" width="20" height="20"><path fill="#fff" d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741C167.74 37.77 130.25.277 83.996.277zm38.404 120.78a5.217 5.217 0 0 1-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 0 1-6.249-3.93 5.222 5.222 0 0 1 3.93-6.249c31.9-7.291 59.263-4.15 81.337 9.325a5.217 5.217 0 0 1 1.726 7.194zm10.25-22.805c-2.1 3.4-6.5 4.469-9.9 2.369-22.5-13.831-56.823-17.843-83.448-9.761-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 0 1 4.35-8.148c30.427-9.234 68.2-4.755 94.096 11.141 3.4 2.1 4.468 6.502 2.05 9.749zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684a7.838 7.838 0 0 1-9.799-5.23 7.835 7.835 0 0 1 5.229-9.8c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 0 1 2.66 10.744 7.835 7.835 0 0 1-10.631 2.768z"/></svg>
+        <div><div style="font-size:13px;font-weight:700;color:#fff;">Connect Spotify</div><div style="font-size:11px;color:rgba(255,255,255,.85);">Play music while you focus</div></div>
+      </div>
+      <button onclick="event.stopPropagation();App.openSpotifySetup()" style="background:rgba(255,255,255,.25);border:none;color:#fff;padding:7px 14px;border-radius:var(--r-full);font-size:12.5px;font-weight:700;cursor:pointer;">Set Up →</button>
+    </div>
+
+    <div class="focus-task-center">
+      <div class="focus-task-name" id="focus-task-name">Social Media Design</div>
+      <div class="focus-task-range" id="focus-task-range">13:15 – 13:45</div>
+    </div>
+
+    <div class="dial-outer">
+      <div class="dial-glow"></div>
+      <div class="dial-disc">
+        <div class="dial-inner" onclick="App.openCustomTimer()" title="Tap to set custom time">
+          <div class="dial-digits" id="dial-digits">25:00</div>
+          <div class="dial-status" id="dial-status">Start</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dial-controls">
+      <button class="btn-dial-sub" onclick="App.timerReset()" title="Reset">↺</button>
+      <button class="btn-dial-main" id="btn-timer-play" onclick="App.timerToggle()">▶</button>
+      <button class="btn-dial-sub" onclick="App.timerSkip()" title="Next">⏭</button>
+    </div>
+
+    <!-- Feature pills — image 2 reference, all functional -->
+    <div class="feat-pills">
+      <button class="feat-pill" id="pill-strict" onclick="App.toggleStrict()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        <span>Strict Mode</span>
+      </button>
+      <button class="feat-pill active" id="pill-timer" onclick="App.toggleTimerMode()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Timer Mode</span>
+      </button>
+      <button class="feat-pill" id="pill-fullscreen" onclick="App.toggleFullscreen()">
+        <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        <span>Full Screen</span>
+      </button>
+      <button class="feat-pill" id="pill-noise" onclick="App.toggleWhiteNoise()">
+        <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <span>White Noise</span>
+      </button>
+    </div>
+
+    <div class="sec-hdr"><h4 style="font-size:16px;">Recent Tasks</h4><button>View All</button></div>
+    <div id="recent-tasks-feed"></div>
+  </div>
+
+  <!-- ===== SETTINGS ===== -->
+  <div class="screen" id="s-settings">
+    <div class="settings-header sec-hdr" style="margin-bottom:20px;">
+      <h2 style="font-size:22px;font-weight:800;">Settings</h2>
+    </div>
+
+    <!-- Profile -->
+    <div class="settings-section">
+      <div class="settings-section-title">Profile</div>
+      <div class="settings-group">
+        <div class="settings-row">
+          <div class="settings-row-text"><h4>Display Name</h4><p>Shown on the home screen</p></div>
+          <input type="text" id="set-name" value="Olivia Reed" style="background:#F3F4F6;border:none;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:600;width:120px;text-align:right;" oninput="App.saveName()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio -->
+    <div class="settings-section">
+      <div class="settings-section-title">Audio &amp; Alerts</div>
+      <div class="settings-group">
+        <div class="settings-row">
+          <div class="settings-row-text"><h4>Master Sound</h4><p>Enable chime for reminders</p></div>
+          <label class="sw"><input type="checkbox" id="set-sound" checked onchange="App.saveSettings()"><span class="sw-track"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text"><h4>Sound Profile</h4></div>
+          <select class="settings-sel" id="set-sound-theme" onchange="App.saveSettings()">
+            <option value="crystal">Crystal Chime</option>
+            <option value="zen">Zen Bowl</option>
+            <option value="marimba">Marimba</option>
+            <option value="digital">Digital Ping</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text"><h4>Test Sound</h4></div>
+          <button class="btn-test-sound" onclick="App.testSound()">▶ Play</button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text"><h4>Haptic Vibration</h4><p>On supported devices</p></div>
+          <label class="sw"><input type="checkbox" id="set-vibrate" checked onchange="App.saveSettings()"><span class="sw-track"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Focus -->
+    <div class="settings-section">
+      <div class="settings-section-title">Focus Timer</div>
+      <div class="settings-group">
+        <div class="settings-row">
+          <div class="settings-row-text"><h4>Default Focus Length</h4></div>
+          <select class="settings-sel" id="set-focus-dur" onchange="App.saveSettings()">
+            <option value="15">15 min</option>
+            <option value="25" selected>25 min</option>
+            <option value="45">45 min</option>
+            <option value="60">60 min</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text"><h4>Do Not Disturb</h4><p>Silence system notifications</p></div>
+          <label class="sw"><input type="checkbox" id="set-dnd" checked onchange="App.saveSettings()"><span class="sw-track"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text"><h4>Mute Reminders in Focus</h4></div>
+          <label class="sw"><input type="checkbox" id="set-mute-focus" checked onchange="App.saveSettings()"><span class="sw-track"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="settings-section">
+      <div class="settings-section-title">Notifications</div>
+      <div class="settings-group">
+        <div class="settings-row">
+          <div class="settings-row-text"><h4>System Notifications</h4><p id="notif-status-text">Checking...</p></div>
+          <button class="btn-ghost" id="btn-notif-enable" onclick="App.requestNotif()">Enable</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MAOMAO PET SETTINGS ===== -->
+    <div class="settings-section" id="set-pet-section">
+      <div class="settings-section-title">🐾 Companion Pet (Maomao)</div>
+      <div class="settings-group">
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h4>Show Pet</h4>
+            <p>Display Maomao anime pet companion</p>
+          </div>
+          <label class="sw"><input type="checkbox" id="set-pet-enabled" checked onchange="App.savePetSettings()"><span class="sw-track"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h4>Mobile Touch Mode</h4>
+            <p>How Maomao behaves on touch screens</p>
+          </div>
+          <select class="settings-sel" id="set-pet-mobile-mode" onchange="App.savePetSettings()">
+            <option value="corner" selected>Corner Companion (Watches Taps)</option>
+            <option value="follow">Follow Touch &amp; Swipes</option>
+            <option value="wander">Living Pet (Wanders Gently)</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h4>Touch to Drag</h4>
+            <p>Hold &amp; move Maomao anywhere with your finger</p>
+          </div>
+          <label class="sw"><input type="checkbox" id="set-pet-draggable" checked onchange="App.savePetSettings()"><span class="sw-track"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h4>Pet Size</h4>
+            <p>Scale for your screen</p>
+          </div>
+          <select class="settings-sel" id="set-pet-size" onchange="App.savePetSettings()">
+            <option value="compact">Compact (66px)</option>
+            <option value="normal" selected>Normal (82px)</option>
+            <option value="large">Large (98px)</option>
+          </select>
+        </div>
+        <div class="settings-row" style="cursor:pointer;" onclick="if(window._maomao){ _maomao.resetToCorner(); showToast('Maomao returned to bottom corner 📍'); }">
+          <div class="settings-row-text">
+            <h4>Reset Position</h4>
+            <p>Return to default bottom-right corner</p>
+          </div>
+          <button class="btn-ghost" style="padding:6px 14px;border-radius:var(--r-full);font-size:12.5px;font-weight:700;">Reset 📍</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Onboarding -->
+    <!-- ===== SPOTIFY SETTINGS ===== -->
+    <div class="settings-section">
+      <div class="settings-section-title">🎵 Spotify</div>
+
+      <!-- Connected state -->
+      <div id="sp-connected-section" style="display:none;">
+        <div class="sp-card">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <svg viewBox="0 0 168 168" width="22" height="22"><path fill="#fff" d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741C167.74 37.77 130.25.277 83.996.277zm38.404 120.78a5.217 5.217 0 0 1-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 0 1-6.249-3.93 5.222 5.222 0 0 1 3.93-6.249c31.9-7.291 59.263-4.15 81.337 9.325a5.217 5.217 0 0 1 1.726 7.194zm10.25-22.805c-2.1 3.4-6.5 4.469-9.9 2.369-22.5-13.831-56.823-17.843-83.448-9.761-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 0 1 4.35-8.148c30.427-9.234 68.2-4.755 94.096 11.141 3.4 2.1 4.468 6.502 2.05 9.749zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684a7.838 7.838 0 0 1-9.799-5.23 7.835 7.835 0 0 1 5.229-9.8c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 0 1 2.66 10.744 7.835 7.835 0 0 1-10.631 2.768z"/></svg>
+            <span style="font-size:15px;font-weight:800;">Spotify Connected</span>
+          </div>
+          <div class="sp-connected-info">
+            <div class="sp-user-badge">
+              <div class="sp-av">🎵</div>
+              <div><div style="font-size:13.5px;font-weight:700;" id="sp-user-name">Loading...</div><div style="font-size:11px;opacity:.75;">Spotify Free · Connect Mode</div></div>
+            </div>
+            <button class="btn-sp-disconnect" onclick="Spotify.disconnect()">Disconnect</button>
+          </div>
+        </div>
+        <!-- Selected playlist + reminder track -->
+        <div class="settings-group" style="margin-top:-4px;">
+          <div class="settings-row" style="cursor:pointer;" onclick="Spotify.openPlaylistPicker()">
+            <div class="settings-row-text">
+              <h4>Focus Playlist</h4>
+              <p id="sp-selected-pl-name">Tap to pick a playlist</p>
+            </div>
+            <span style="font-size:18px;">🎵 →</span>
+          </div>
+          <div class="settings-row" style="cursor:pointer;" onclick="Spotify.openReminderPicker()">
+            <div class="settings-row-text">
+              <h4>Timer Reminder Tone</h4>
+              <p id="set-reminder-track-name">Tap to pick a track</p>
+            </div>
+            <span style="font-size:18px;">🔔 →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disconnected / setup state -->
+      <div id="sp-disconnected-section">
+        <div class="sp-setup-card">
+          <h4>Connect Your Spotify</h4>
+          <p>Control Spotify from Focus mode. Music plays through your Spotify phone or desktop app — no Premium required for Spotify Connect.</p>
+          <div class="sp-steps">
+            <div class="sp-step"><div class="sp-step-num">1</div><div>Go to <strong>developer.spotify.com/dashboard</strong> → Log in (free) → Create App → Copy <strong>Client ID</strong></div></div>
+            <div class="sp-step"><div class="sp-step-num">2</div><div>In your Spotify app settings, add Redirect URI: <strong>http://localhost:3000</strong></div></div>
+            <div class="sp-step"><div class="sp-step-num">3</div><div>Paste your Client ID below and tap Connect</div></div>
+          </div>
+          <div class="sp-clientid-row">
+            <input type="text" id="sp-client-id-input" placeholder="Paste Client ID here..." autocomplete="off" spellcheck="false">
+            <button class="btn-sp-go" onclick="Spotify.connect(document.getElementById('sp-client-id-input').value)">Connect →</button>
+          </div>
+          <div style="margin-top:10px;font-size:11.5px;color:var(--text-2);">💡 Already have a Client ID saved? <button onclick="Spotify.connect(document.getElementById('sp-client-id-input').value)" style="background:none;border:none;color:var(--accent);font-weight:700;cursor:pointer;">Connect</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">App</div>
+      <div class="settings-group">
+        <div class="settings-row" onclick="App.reopenOnboarding()" style="cursor:pointer;">
+          <div class="settings-row-text"><h4>View Onboarding Walkthrough</h4></div>
+          <span>↗</span>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text"><h4 style="color:var(--red);">Erase All Data</h4><p>Remove all tasks &amp; settings</p></div>
+          <button class="btn-danger" onclick="App.eraseData()">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STATUS / INSIGHTS ===== -->
+  <div class="screen" id="s-status">
+    <div class="status-header">
+      <h2>Status &amp; Insights</h2>
+      <select style="background:#F3F4F6;border:none;border-radius:var(--r-full);padding:6px 14px;font-size:13px;font-weight:700;" id="status-range" onchange="App.renderStatus()">
+        <option value="7">Last 7 days</option>
+        <option value="14">Last 14 days</option>
+        <option value="30">Last 30 days</option>
+      </select>
+    </div>
+
+    <div class="status-grid">
+      <div class="status-stat-card"><div class="ss-label">Today Focus</div><div class="ss-val" id="st-focus">0h 0m</div><div class="ss-sub">focus sessions</div></div>
+      <div class="status-stat-card"><div class="ss-label">Tasks Done</div><div class="ss-val" id="st-done">0</div><div class="ss-sub">completed today</div></div>
+      <div class="status-stat-card"><div class="ss-label">Current Streak</div><div class="ss-val" id="st-streak">0d</div><div class="ss-sub">days active</div></div>
+      <div class="status-stat-card"><div class="ss-label">Total Sessions</div><div class="ss-val" id="st-sessions">0</div><div class="ss-sub">focus sessions</div></div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-hdr"><h4>Your Focus Journey</h4><span style="font-size:11.5px;color:var(--text-2);">Focus per day (mins)</span></div>
+      <div class="chart-body" id="focus-chart"></div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;" id="focus-chart-labels"></div>
+    </div>
+
+    <div class="sec-hdr"><h3>Recent Completions</h3></div>
+    <div id="completions-feed"></div>
+  </div>
+
+  <!-- Maomao pet is created by maomao-pet.js as a canvas element -->
+
+  <!-- ===== DOCK ===== -->
+  <nav class="dock">
+    <button class="dock-btn active" data-screen="s-home" onclick="App.navigate('s-home',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </button>
+    <button class="dock-btn" data-screen="s-cal" onclick="App.navigate('s-cal',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </button>
+    <button class="dock-center-btn" onclick="App.openAddTask()">+</button>
+    <button class="dock-btn" data-screen="s-focus" onclick="App.navigate('s-focus',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </button>
+    <button class="dock-btn" onclick="App.openProfileModal()">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </button>
+  </nav>
+</div>
+
+<!-- ===== ADD TASK MODAL ===== -->
+<div class="modal-back" id="add-task-modal">
+  <div class="modal-sheet">
+    <div class="sheet-handle"></div>
+    <div class="modal-hdr">
+      <button class="btn-modal-x" onclick="App.closeAddTask()">✕</button>
+      <h3 id="modal-title-text">Add New Task</h3>
+      <button class="btn-modal-x" style="background:var(--green-bg);color:var(--green);" onclick="App.submitTask()">✓</button>
+    </div>
+
+    <div class="form-group">
+      <label class="field-label">Task Title</label>
+      <input type="text" class="field-input" id="t-title" placeholder="e.g. Design landing page" maxlength="80">
+    </div>
+    <div class="form-group">
+      <label class="field-label">Description</label>
+      <textarea class="field-input" id="t-desc" placeholder="Add details about this task..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="field-label">Due Date &amp; Time</label>
+      <div class="date-time-row">
+        <button class="dt-btn" id="btn-due-date" onclick="App.openDatePicker('due')">📅 <span id="due-date-lbl">Pick date</span></button>
+        <button class="dt-btn" id="btn-due-time" onclick="App.openTimePicker('due')">⏰ <span id="due-time-lbl">Pick time</span></button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="field-label">Start Date &amp; Time</label>
+      <div class="date-time-row">
+        <button class="dt-btn" onclick="App.openDatePicker('start')">📅 <span id="start-date-lbl">Pick date</span></button>
+        <button class="dt-btn" onclick="App.openTimePicker('start')">⏰ <span id="start-time-lbl">Pick time</span></button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="field-label">Priority</label>
+      <div class="prio-sel">
+        <div class="prio-pill low" data-prio="low" onclick="App.setPrio('low')">Low</div>
+        <div class="prio-pill medium" data-prio="medium" onclick="App.setPrio('medium')">Medium</div>
+        <div class="prio-pill high sel" data-prio="high" onclick="App.setPrio('high')">High</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="field-label">Status</label>
+      <select class="field-input" id="t-status">
+        <option value="todo">To Do</option>
+        <option value="progress">In Progress</option>
+        <option value="review">In Review</option>
+        <option value="done">Done</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="field-label">Project</label>
+      <select class="field-input" id="t-project">
+        <option value="">No Project</option>
+        <option value="Website Redesign">📁 Website Redesign</option>
+        <option value="Mobile App">📱 Mobile App</option>
+        <option value="Branding">🎨 Branding</option>
+        <option value="Research">🔬 Research</option>
+        <option value="Other">⚡ Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="field-label">Tags</label>
+      <div class="tags-row" id="tags-display">
+        <span class="tag-chip add" onclick="App.addTag()">+ Add Tag</span>
+      </div>
+      <input type="text" id="t-tag-input" placeholder="Press Enter to add tag" class="field-input" style="display:none;margin-top:8px;" onkeydown="App.onTagKeydown(event)">
+    </div>
+    <button class="btn btn-dark" style="width:100%;border-radius:var(--r-full);margin-top:6px;" onclick="App.submitTask()">Create Task</button>
+    <input type="hidden" id="editing-task-id" value="">
+  </div>
+</div>
+
+<!-- ===== DATE PICKER MODAL ===== -->
+<div class="modal-back" id="date-picker-modal">
+  <div class="modal-sheet" style="max-height:70vh;">
+    <div class="sheet-handle"></div>
+    <div class="modal-hdr">
+      <button class="btn-modal-x" onclick="App.closeDatePicker()">✕</button>
+      <h3 id="dp-title">Select Date</h3>
+      <button class="btn-modal-x" style="background:var(--green-bg);color:var(--green);" onclick="App.confirmDate()">✓</button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <button class="btn-circle" onclick="App.dpPrevMonth()">←</button>
+      <span style="font-size:15px;font-weight:700;" id="dp-month-label"></span>
+      <button class="btn-circle" onclick="App.dpNextMonth()">→</button>
+    </div>
+    <div class="cal-grid-days" style="margin-bottom:6px;">
+      <div class="cal-day-header">Mon</div><div class="cal-day-header">Tue</div>
+      <div class="cal-day-header">Wed</div><div class="cal-day-header">Thu</div>
+      <div class="cal-day-header">Fri</div>
+      <div class="cal-day-header sat">Sat</div><div class="cal-day-header sun">Sun</div>
+    </div>
+    <div class="cal-grid" id="dp-grid" style="gap:4px;"></div>
+  </div>
+</div>
+
+<!-- ===== TIME PICKER MODAL ===== -->
+<div class="modal-back" id="time-picker-modal">
+  <div class="modal-sheet" style="max-height:50vh;">
+    <div class="sheet-handle"></div>
+    <div class="modal-hdr">
+      <button class="btn-modal-x" onclick="App.closeTimePicker()">✕</button>
+      <h3>Select Time</h3>
+      <button class="btn-modal-x" style="background:var(--green-bg);color:var(--green);" onclick="App.confirmTime()">✓</button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <button onclick="App.adjustTime('h',1)" style="background:#F3F4F6;border:none;width:44px;height:44px;border-radius:var(--r-md);font-size:18px;cursor:pointer;">▲</button>
+        <input type="number" id="tp-hours" value="10" min="0" max="23" style="width:72px;height:70px;background:#F3F4F6;border:none;border-radius:var(--r-md);text-align:center;font-size:28px;font-weight:700;font-family:var(--mono);">
+        <button onclick="App.adjustTime('h',-1)" style="background:#F3F4F6;border:none;width:44px;height:44px;border-radius:var(--r-md);font-size:18px;cursor:pointer;">▼</button>
+        <span style="font-size:12px;font-weight:600;color:var(--text-2);">Hour</span>
+      </div>
+      <span style="font-size:32px;font-weight:700;color:var(--text-2);padding-bottom:24px;">:</span>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <button onclick="App.adjustTime('m',5)" style="background:#F3F4F6;border:none;width:44px;height:44px;border-radius:var(--r-md);font-size:18px;cursor:pointer;">▲</button>
+        <input type="number" id="tp-mins" value="0" min="0" max="59" style="width:72px;height:70px;background:#F3F4F6;border:none;border-radius:var(--r-md);text-align:center;font-size:28px;font-weight:700;font-family:var(--mono);">
+        <button onclick="App.adjustTime('m',-5)" style="background:#F3F4F6;border:none;width:44px;height:44px;border-radius:var(--r-md);font-size:18px;cursor:pointer;">▼</button>
+        <span style="font-size:12px;font-weight:600;color:var(--text-2);">Min</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CUSTOM TIMER MODAL ===== -->
+<div class="modal-back" id="custom-timer-modal">
+  <div class="modal-sheet" style="max-height:55vh;">
+    <div class="sheet-handle"></div>
+    <div class="modal-hdr">
+      <button class="btn-modal-x" onclick="App.closeCustomTimer()">✕</button>
+      <h3>Set Custom Timer</h3>
+      <button class="btn-modal-x" style="background:var(--green-bg);color:var(--green);" onclick="App.confirmCustomTimer()">✓</button>
+    </div>
+    <p style="font-size:13px;color:var(--text-2);text-align:center;margin-bottom:16px;">Tap the dial to set a custom duration</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <button onclick="App.adjustCustom('m',1)" style="background:#F3F4F6;border:none;width:44px;height:44px;border-radius:var(--r-md);font-size:18px;cursor:pointer;">▲</button>
+        <input type="number" id="ct-mins" value="25" min="1" max="180" style="width:80px;height:70px;background:#F3F4F6;border:none;border-radius:var(--r-md);text-align:center;font-size:30px;font-weight:700;font-family:var(--mono);">
+        <button onclick="App.adjustCustom('m',-1)" style="background:#F3F4F6;border:none;width:44px;height:44px;border-radius:var(--r-md);font-size:18px;cursor:pointer;">▼</button>
+        <span style="font-size:12px;font-weight:600;color:var(--text-2);">Minutes</span>
+      </div>
+      <span style="font-size:32px;font-weight:700;color:var(--text-2);padding-bottom:24px;">:</span>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <button onclick="App.adjustCustom('s',5)" style="background:#F3F4F6;border:none;width:44px;height:44px;border-radius:var(--r-md);font-size:18px;cursor:pointer;">▲</button>
+        <input type="number" id="ct-secs" value="0" min="0" max="59" style="width:80px;height:70px;background:#F3F4F6;border:none;border-radius:var(--r-md);text-align:center;font-size:30px;font-weight:700;font-family:var(--mono);">
+        <button onclick="App.adjustCustom('s',-5)" style="background:#F3F4F6;border:none;width:44px;height:44px;border-radius:var(--r-md);font-size:18px;cursor:pointer;">▼</button>
+        <span style="font-size:12px;font-weight:600;color:var(--text-2);">Seconds</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:18px;">
+      <button onclick="App.setPresetTimer(15)" class="btn btn-ghost" style="flex:1;border-radius:var(--r-full);">15 min</button>
+      <button onclick="App.setPresetTimer(25)" class="btn btn-ghost" style="flex:1;border-radius:var(--r-full);">25 min</button>
+      <button onclick="App.setPresetTimer(45)" class="btn btn-ghost" style="flex:1;border-radius:var(--r-full);">45 min</button>
+      <button onclick="App.setPresetTimer(60)" class="btn btn-ghost" style="flex:1;border-radius:var(--r-full);">60 min</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOCUS SETTINGS MODAL ===== -->
+<div class="modal-back" id="focus-settings-modal">
+  <div class="modal-sheet">
+    <div class="sheet-handle"></div>
+    <div class="modal-hdr">
+      <button class="btn-modal-x" onclick="App.closeFocusSettings()">←</button>
+      <h3>Timer Settings</h3>
+      <div style="width:32px;"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
+      <div class="dur-card-fs active" data-mins="25" onclick="App.setFocusDur(25,this)">
+        <div style="font-size:11px;font-weight:600;color:var(--text-2);margin-bottom:6px;">Select Task</div>
+        <div style="font-family:var(--mono);font-size:30px;font-weight:800;color:var(--text);">25</div>
+      </div>
+      <div class="dur-card-fs" data-mins="5" onclick="App.setFocusDur(5,this)">
+        <div style="font-size:11px;font-weight:600;color:var(--text-2);margin-bottom:6px;">Short Break</div>
+        <div style="font-family:var(--mono);font-size:30px;font-weight:800;color:var(--text);">5</div>
+      </div>
+      <div class="dur-card-fs" data-mins="15" onclick="App.setFocusDur(15,this)">
+        <div style="font-size:11px;font-weight:600;color:var(--text-2);margin-bottom:6px;">Long Break</div>
+        <div style="font-family:var(--mono);font-size:30px;font-weight:800;color:var(--text);">15</div>
+      </div>
+    </div>
+    <style>
+    .dur-card-fs{background:#fff;border-radius:var(--r-md);padding:14px 10px;text-align:center;border:1.5px solid var(--border);cursor:pointer;transition:all .15s;}
+    .dur-card-fs.active{border-color:var(--accent);background:rgba(255,106,0,.07);}
+    </style>
+    <div style="background:#fff;border-radius:var(--r-lg);padding:16px 18px;border:1px solid var(--border);margin-bottom:14px;">
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text-2)" stroke-width="2" style="margin-top:2px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div><div style="font-size:14px;font-weight:700;">Session length</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Focus intervals in one session: <span id="session-intervals">4</span></div></div>
+      </div>
+      <div style="height:16px;border-radius:8px;overflow:hidden;background:#E5E7EB;display:flex;">
+        <div style="width:75%;background:var(--accent-grad);"></div>
+        <div style="width:25%;background:repeating-linear-gradient(-45deg,#10B981,#10B981 5px,#059669 5px,#059669 10px);"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;">
+        <span style="font-size:11px;color:var(--text-2);">Focus time</span>
+        <span style="font-size:11px;color:var(--green);">Break</span>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:var(--r-md);padding:14px 16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div><div style="font-size:14px;font-weight:700;">Do not Disturb</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Turn on DND when running a Focus Timer</div></div>
+      <label class="sw"><input type="checkbox" id="fs-dnd" checked><span class="sw-track"></span></label>
+    </div>
+    <div style="background:#fff;border-radius:var(--r-md);padding:14px 16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+      <div><div style="font-size:14px;font-weight:700;">Always On Display</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Tap anywhere when viewing time to switch to AOD mode</div></div>
+      <label class="sw"><input type="checkbox" id="fs-aod" checked><span class="sw-track"></span></label>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SPOTIFY SETUP MODAL ===== -->
+<div class="modal-back" id="sp-setup-modal">
+  <div class="modal-sheet" style="max-height:92vh;overflow-y:auto;">
+    <div class="sheet-handle"></div>
+    <div class="modal-hdr" style="margin-bottom:12px;">
+      <button class="btn-modal-x" onclick="App.closeSpotifySetup()">✕</button>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <svg viewBox="0 0 168 168" width="22" height="22"><path fill="#1DB954" d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741C167.74 37.77 130.25.277 83.996.277zm38.404 120.78a5.217 5.217 0 0 1-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 0 1-6.249-3.93 5.222 5.222 0 0 1 3.93-6.249c31.9-7.291 59.263-4.15 81.337 9.325a5.217 5.217 0 0 1 1.726 7.194zm10.25-22.805c-2.1 3.4-6.5 4.469-9.9 2.369-22.5-13.831-56.823-17.843-83.448-9.761-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 0 1 4.35-8.148c30.427-9.234 68.2-4.755 94.096 11.141 3.4 2.1 4.468 6.502 2.05 9.749zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684a7.838 7.838 0 0 1-9.799-5.23 7.835 7.835 0 0 1 5.229-9.8c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 0 1 2.66 10.744 7.835 7.835 0 0 1-10.631 2.768z"/></svg>
+        <h3 style="margin:0;font-size:17px;font-weight:800;">Connect Spotify</h3>
+      </div>
+      <div style="width:32px;"></div>
+    </div>
+    
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:16px;line-height:1.45;">
+      Control background tunes right from your Focus timer. Works with <strong>Free</strong> and <strong>Premium</strong> Spotify accounts.
+    </p>
+
+    <div class="sp-steps" style="margin-bottom:16px;background:#f8fafc;border-radius:var(--r-md);padding:14px;border:1px solid #e2e8f0;">
+      <div class="sp-step" style="margin-bottom:10px;">
+        <div class="sp-step-num">1</div>
+        <div style="font-size:12.5px;">Go to <a href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener" style="color:#1DB954;font-weight:800;text-decoration:underline;">developer.spotify.com/dashboard</a> (free) → Create App</div>
+      </div>
+      <div class="sp-step" style="margin-bottom:10px;">
+        <div class="sp-step-num">2</div>
+        <div style="font-size:12.5px;">Add Redirect URI: <code id="sp-modal-uri" style="background:#e2e8f0;padding:2px 6px;border-radius:4px;font-size:11px;user-select:all;font-weight:700;">http://localhost:3000</code> <button onclick="navigator.clipboard.writeText(document.getElementById('sp-modal-uri').textContent);showToast('Copied Redirect URI! 📋')" style="background:none;border:none;color:#1DB954;font-weight:800;cursor:pointer;font-size:12px;margin-left:4px;">Copy 📋</button></div>
+      </div>
+      <div class="sp-step">
+        <div class="sp-step-num">3</div>
+        <div style="font-size:12.5px;">Paste your <strong>Client ID</strong> below and tap Connect:</div>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:14px;">
+      <label class="field-label" style="font-size:12px;font-weight:700;margin-bottom:6px;display:block;">Spotify Client ID</label>
+      <input type="text" class="field-input" id="sp-modal-client-id" placeholder="Paste your 32-character Client ID..." autocomplete="off" spellcheck="false" style="font-size:13.5px;padding:12px 14px;border:1.5px solid #cbd5e1;border-radius:var(--r-md);width:100%;box-sizing:border-box;">
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button class="btn" onclick="Spotify.connect(document.getElementById('sp-modal-client-id').value)" style="background:#1DB954;color:#fff;padding:14px;border-radius:var(--r-full);font-size:14px;font-weight:800;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(29,185,84,.35);">
+        <span>Connect with Spotify →</span>
+      </button>
+      <button class="btn" onclick="App.goToSettings('sp-disconnected-section')" style="background:transparent;border:none;color:var(--text-2);font-size:12.5px;font-weight:700;cursor:pointer;padding:8px;">
+        Open Full Settings Screen
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SPOTIFY PLAYLIST PICKER ===== -->
+<div class="modal-back" id="sp-playlist-modal">
+  <div class="modal-sheet" style="max-height:90vh;">
+    <div class="sheet-handle"></div>
+    <div class="modal-hdr" style="margin-bottom:6px;">
+      <button class="btn-modal-x" onclick="closeModal('sp-playlist-modal')">←</button>
+      <h3 style="display:flex;align-items:center;gap:8px;">
+        <svg viewBox="0 0 168 168" width="20" height="20"><path fill="#1DB954" d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741C167.74 37.77 130.25.277 83.996.277zm38.404 120.78a5.217 5.217 0 0 1-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 0 1-6.249-3.93 5.222 5.222 0 0 1 3.93-6.249c31.9-7.291 59.263-4.15 81.337 9.325a5.217 5.217 0 0 1 1.726 7.194zm10.25-22.805c-2.1 3.4-6.5 4.469-9.9 2.369-22.5-13.831-56.823-17.843-83.448-9.761-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 0 1 4.35-8.148c30.427-9.234 68.2-4.755 94.096 11.141 3.4 2.1 4.468 6.502 2.05 9.749zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684a7.838 7.838 0 0 1-9.799-5.23 7.835 7.835 0 0 1 5.229-9.8c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 0 1 2.66 10.744 7.835 7.835 0 0 1-10.631 2.768z"/></svg>
+        Choose Playlist
+      </h3>
+      <button class="btn-modal-x" style="background:rgba(29,185,84,.12);color:#1DB954;" onclick="Spotify.playSelectedPlaylist()">▶ Play</button>
+    </div>
+    <p style="font-size:12.5px;color:var(--text-2);margin-bottom:16px;">Select a playlist to play during your focus session. Music plays through your Spotify app.</p>
+    <div class="sp-playlist-grid" id="sp-playlist-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-2);">Loading your playlists...</div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:16px;padding:14px;" onclick="Spotify.playSelectedPlaylist()">▶ Play Selected Playlist</button>
+  </div>
+</div>
+
+<!-- ===== SPOTIFY REMINDER TRACK PICKER ===== -->
+<div class="modal-back" id="sp-reminder-modal">
+  <div class="modal-sheet" style="max-height:85vh;">
+    <div class="sheet-handle"></div>
+    <div class="modal-hdr">
+      <button class="btn-modal-x" onclick="closeModal('sp-reminder-modal')">←</button>
+      <h3>Reminder Tone</h3>
+      <div style="width:32px;"></div>
+    </div>
+    <p style="font-size:12.5px;color:var(--text-2);margin-bottom:16px;">Pick a song to play when your timer finishes. Tap ▶ to preview on your Spotify app.</p>
+    <div id="sp-reminder-feed"></div>
+    <button class="btn btn-dark" style="width:100%;margin-top:14px;padding:14px;border-radius:var(--r-full);" onclick="closeModal('sp-reminder-modal')">Confirm Selection</button>
+  </div>
+</div>
+
+<!-- ===== PROFILE MODAL ===== -->
+<div class="modal-back" id="profile-modal">
+  <div class="modal-sheet profile-modal-sheet">
+    <div class="sheet-handle" style="background:rgba(255,255,255,.2);"></div>
+
+    <!-- Maomao pet inside profile -->
+    <div style="display:flex;align-items:flex-end;justify-content:center;gap:16px;margin-bottom:20px;">
+      <div style="text-align:center;flex:1;">
+        <!-- Avatar -->
+        <div id="profile-avatar-big" class="profile-avatar-ring" onclick="App.toggleEmojiPicker()" style="cursor:pointer;">
+          <span id="profile-avatar-emoji">😊</span>
+          <div class="profile-avatar-edit">✏️</div>
+        </div>
+        <input type="text" class="profile-name-edit" id="profile-name-input" placeholder="Your name" oninput="App.profileNameChange()">
+      </div>
+      <!-- Maomao still companion with greeting bubble -->
+      <div id="profile-maomao-wrap" onclick="App.maomaoProfileGreeting()" style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;margin-bottom:20px;cursor:pointer;position:relative;" title="Tap Maomao to say hi!">
+        <!-- Greeting Speech Bubble -->
+        <div id="profile-maomao-bubble" style="background:#fff;color:var(--text);font-size:11.5px;font-weight:800;padding:6px 11px;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.25);white-space:nowrap;position:absolute;bottom:calc(100% + 2px);left:50%;transform:translateX(-50%);animation:maomao-float 2.4s ease-in-out infinite;pointer-events:none;">
+          Hi! How are you? 🌸
+          <div style="position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid #fff;"></div>
+        </div>
+        <!-- Still Sprite -->
+        <div id="profile-maomao-sprite" style="width:68px;height:84px;image-rendering:pixelated;background:url('maomao.webp') no-repeat;background-size:800% 1100%;background-position:0% 0%;transition:transform 0.15s ease;"></div>
+        <div style="margin-top:3px;background:rgba(255,255,255,.16);backdrop-filter:blur(8px);border-radius:10px;padding:3px 9px;font-size:10px;font-weight:700;color:#fff;">Maomao 🌿</div>
+      </div>
+    </div>
+
+    <!-- Emoji picker (hidden by default) -->
+    <div id="emoji-picker-panel" style="display:none;margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;">Choose Avatar</div>
+      <div class="emoji-picker-row" id="emoji-picker-grid"></div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="profile-stats-grid" id="profile-stats-grid">
+      <div class="psg-item"><div class="psg-val" id="ps-total">0</div><div class="psg-lbl">Tasks</div></div>
+      <div class="psg-item"><div class="psg-val" id="ps-done">0</div><div class="psg-lbl">Done</div></div>
+      <div class="psg-item"><div class="psg-val" id="ps-streak">0d</div><div class="psg-lbl">Streak</div></div>
+    </div>
+
+    <!-- Spotify status -->
+    <div id="profile-sp-status" onclick="App.openSpotifyFromProfile()" style="background:rgba(255,255,255,.07);border-radius:var(--r-md);padding:13px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;cursor:pointer;transition:background 0.15s ease;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg viewBox="0 0 168 168" width="22" height="22"><path fill="#1DB954" d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741C167.74 37.77 130.25.277 83.996.277zm38.404 120.78a5.217 5.217 0 0 1-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 0 1-6.249-3.93 5.222 5.222 0 0 1 3.93-6.249c31.9-7.291 59.263-4.15 81.337 9.325a5.217 5.217 0 0 1 1.726 7.194zm10.25-22.805c-2.1 3.4-6.5 4.469-9.9 2.369-22.5-13.831-56.823-17.843-83.448-9.761-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 0 1 4.35-8.148c30.427-9.234 68.2-4.755 94.096 11.141 3.4 2.1 4.468 6.502 2.05 9.749zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684a7.838 7.838 0 0 1-9.799-5.23 7.835 7.835 0 0 1 5.229-9.8c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 0 1 2.66 10.744 7.835 7.835 0 0 1-10.631 2.768z"/></svg>
+        <div><div style="font-size:13px;font-weight:700;" id="profile-sp-text">Spotify not connected</div><div style="font-size:11px;color:rgba(255,255,255,.5);" id="profile-sp-sub">Tap to set up &amp; connect</div></div>
+      </div>
+      <span id="profile-sp-icon" style="font-size:18px;">⚙️ →</span>
+    </div>
+
+    <!-- Action buttons -->
+    <div style="display:flex;gap:10px;">
+      <button class="btn" style="flex:1;background:rgba(255,255,255,.12);color:#fff;padding:14px;border-radius:var(--r-full);font-size:14px;font-weight:700;" onclick="App.closeProfileModal();App.navigate('s-settings',null);">⚙️ Settings</button>
+      <button class="btn btn-primary" style="flex:1;padding:14px;" onclick="App.saveProfileModal()">Save Profile</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script src="spotify.js"></script>
+
+<script>
+'use strict';
+
+/* ===================================================
+   DATA STORE
+   =================================================== */
+const DB = {
+  save(k,v){try{localStorage.setItem('fp_'+k,JSON.stringify(v));}catch(e){}},
+  load(k,def){try{const s=localStorage.getItem('fp_'+k);return s?JSON.parse(s):def;}catch(e){return def;}}
+};
+
+/* ===================================================
+   AUDIO ENGINE
+   =================================================== */
+let _audioCtx = null;
+let _grooveOscs = [];
+let _noiseNode = null;
+let _isGroovePlaying = false;
+let _isNoisePlaying = false;
+
+function getAudioCtx(){
+  if(!_audioCtx){
+    const AC = window.AudioContext||window.webkitAudioContext;
+    if(AC) _audioCtx = new AC();
+  }
+  if(_audioCtx && _audioCtx.state === 'suspended') _audioCtx.resume();
+  return _audioCtx;
+}
+
+function playChime(theme){
+  const ctx = getAudioCtx(); if(!ctx) return;
+  const settings = DB.load('settings',{});
+  if(settings.sound === false) return;
+  const t = theme || settings.soundTheme || 'crystal';
+  const now = ctx.currentTime;
+  const profiles = {
+    crystal: [523,659,784,1047],
+    zen: [440,880,1320],
+    marimba: [440,554,659],
+    digital: [880,1760]
+  };
+  const notes = profiles[t] || profiles.crystal;
+  notes.forEach((freq,i) => {
+    const delay = i * 0.08;
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.type = t==='marimba'?'triangle':'sine';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(.001, now+delay);
+    gain.gain.linearRampToValueAtTime(.15/(i+1), now+delay+.02);
+    gain.gain.exponentialRampToValueAtTime(.0001, now+delay+.5);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(now+delay); osc.stop(now+delay+.55);
+  });
+}
+
+function startGroove(){
+  const ctx = getAudioCtx(); if(!ctx) return;
+  stopGroove();
+  _isGroovePlaying = true;
+  // Ambient lo-fi chord: Cmaj7
+  [261.63,329.63,392,493.88].forEach(freq => {
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.type='sine'; osc.frequency.value=freq;
+    gain.gain.value=0.012;
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); _grooveOscs.push({osc,gain});
+  });
+}
+
+function stopGroove(){
+  _isGroovePlaying = false;
+  _grooveOscs.forEach(({osc})=>{try{osc.stop();}catch(e){}});
+  _grooveOscs = [];
+}
+
+function startWhiteNoise(){
+  const ctx = getAudioCtx(); if(!ctx) return;
+  stopWhiteNoise();
+  _isNoisePlaying = true;
+  const buf = ctx.createBuffer(1, ctx.sampleRate*2, ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  let b0=0,b1=0,b2=0;
+  for(let i=0;i<data.length;i++){
+    const w = Math.random()*2-1;
+    b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759; b2=.96900*b2+w*.1538520;
+    data[i]=(b0+b1+b2)*.04;
+  }
+  const src = ctx.createBufferSource();
+  src.buffer=buf; src.loop=true;
+  const gain = ctx.createGain(); gain.gain.value=.06;
+  const filter = ctx.createBiquadFilter(); filter.type='lowpass'; filter.frequency.value=500;
+  src.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+  src.start(); _noiseNode = src;
+}
+
+function stopWhiteNoise(){
+  _isNoisePlaying = false;
+  if(_noiseNode){try{_noiseNode.stop();}catch(e){} _noiseNode=null;}
+}
+
+/* ===================================================
+   TIMER ENGINE
+   =================================================== */
+let _timerSecs = 25*60;
+let _timerRunning = false;
+let _timerInterval = null;
+let _timerMode = 'countdown'; // 'countdown' | 'stopwatch'
+let _isStrictMode = false;
+let _focusSessionStart = null;
+let _isBreak = false;
+
+function timerDisplay(s){
+  const m = Math.floor(s/60), sc = s%60;
+  return `${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+}
+function setDialDisplay(){
+  document.getElementById('dial-digits').textContent = timerDisplay(_timerSecs);
+}
+
+/* ===================================================
+   APP CONTROLLER
+   =================================================== */
+const App = {
+  currentScreen: 's-home',
+  homeFilter: 'todo',
+  calYear: new Date().getFullYear(),
+  calMonth: new Date().getMonth(),
+  calSelectedDay: new Date().getDate(),
+  calView: 'calendar', // 'calendar' | 'activity'
+  editingTaskId: null,
+  dpMode: 'due', // date picker mode: 'due'|'start'
+  tpMode: 'due', // time picker mode
+  dpYear: new Date().getFullYear(),
+  dpMonth: new Date().getMonth(),
+  dpSelectedDate: null,
+  formDueDate: null, formDueTime: null,
+  formStartDate: null, formStartTime: null,
+  formPrio: 'high',
+  formTags: [],
+  focusStrictMode: false,
+  focusTimerMode: 'countdown',
+  groovePlaying: false,
+  noisePlaying: false,
+
+  /* --- NAVIGATION --- */
+  navigate(screenId, btn){
+    if(this.focusStrictMode && screenId !== 's-focus'){
+      showToast('Strict Mode active — finish your session first!');
+      return;
+    }
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    const target = document.getElementById(screenId);
+    if(target){
+      target.classList.add('active');
+      target.scrollTop = 0;
+    }
+    document.querySelectorAll('.dock-btn[data-screen]').forEach(b=>b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+    this.currentScreen = screenId;
+    if(screenId==='s-home') this.renderHome();
+    if(screenId==='s-cal') this.renderCalendar();
+    if(screenId==='s-focus') this.renderRecentTasks();
+    if(screenId==='s-status') this.renderStatus();
+    if(screenId==='s-settings') this.renderSettings();
+  },
+
+  /* --- ONBOARDING --- */
+  ob_slide: 1,
+  goObSlide(n){
+    const slides = ['', 'ob1', 'ob2', 'ob3'];
+    const dashes1 = ['', 'd1', 'd2', 'd3'];
+    const dashes2 = ['', 'd1b', 'd2b', 'd3b'];
+    const dashes3 = ['', 'd1c', 'd2c', 'd3c'];
+    for(let i=1;i<=3;i++){
+      const el=document.getElementById(slides[i]);
+      el.classList.remove('active','exit');
+      if(i===this.ob_slide && i!==n) el.classList.add('exit');
+    }
+    setTimeout(()=>{
+      this.ob_slide=n;
+      const next=document.getElementById(slides[n]);
+      next.classList.remove('exit');
+      next.classList.add('active');
+      // Reset dashes for active slide
+      [[dashes1],[dashes2],[dashes3]].forEach((d,si)=>{
+        if(si+1===n){
+          d[0].forEach((id,i)=>{
+            const el=document.getElementById(id);
+            if(el) el.classList.toggle('on',i+1===n);
+          });
+        }
+      });
+    }, this.ob_slide!==n ? 20 : 0);
+  },
+  finishOnboarding(){
+    const ob = document.getElementById('onboarding');
+    if(ob){
+      ob.classList.add('done');
+      ob.style.display = 'none';
+    }
+    document.documentElement.classList.add('ob-done');
+    DB.save('ob_done',true);
+    getAudioCtx(); // unlock audio
+    this.renderHome();
+  },
+  reopenOnboarding(){
+    this.ob_slide=1;
+    document.documentElement.classList.remove('ob-done');
+    const ob = document.getElementById('onboarding');
+    if(ob){
+      ob.classList.remove('done');
+      ob.style.display = 'flex';
+    }
+    document.getElementById('ob1').classList.add('active');
+    document.getElementById('ob2').classList.remove('active','exit');
+    document.getElementById('ob3').classList.remove('active','exit');
+  },
+
+  /* --- HOME SCREEN --- */
+  renderHome(){
+    const tasks = this.getTasks();
+    const today = this.getToday();
+    const completed = tasks.filter(t=>t.status==='done').length;
+    const total = tasks.length;
+    const pct = total > 0 ? Math.round(completed/total*100) : 0;
+    const pending = total - completed;
+
+    document.getElementById('cnt-total').textContent = total;
+    document.getElementById('cnt-done').textContent = completed;
+    document.getElementById('cnt-pending').textContent = pending;
+    document.getElementById('ring-pct').textContent = pct+'%';
+
+    const circ = 2*Math.PI*40;
+    const offset = circ - (pct/100)*circ;
+    document.getElementById('ring-fill').style.strokeDasharray = circ;
+    document.getElementById('ring-fill').style.strokeDashoffset = offset;
+
+    const cntTodo = tasks.filter(t=>t.status==='todo').length;
+    const cntProg = tasks.filter(t=>t.status==='progress').length;
+    const cntRev  = tasks.filter(t=>t.status==='review').length;
+    document.getElementById('cnt-todo').textContent = cntTodo;
+    document.getElementById('cnt-progress').textContent = cntProg;
+    document.getElementById('cnt-review').textContent = cntRev;
+
+    // Greeting + dynamic profile
+    const h = new Date().getHours();
+    const greet = h<12?'Good Morning':h<17?'Good Afternoon':'Good Evening';
+    document.getElementById('greet-text').textContent = greet;
+    const s = DB.load('settings',{});
+    const name = s.userName || 'You';
+    const emoji = s.avatarEmoji || '😊';
+    document.getElementById('user-name-disp').textContent = name;
+    document.getElementById('home-avatar-emoji').textContent = emoji;
+
+    let filtered = tasks;
+    if(this.homeFilter !== 'all') filtered = tasks.filter(t=>t.status===this.homeFilter);
+
+    const feed = document.getElementById('tasks-feed');
+    if(!filtered.length){
+      feed.innerHTML = `<div class="empty-state"><div class="icon">📋</div><h4>${this.homeFilter==='all'?'No tasks yet':'No '+this.homeFilter+' tasks'}</h4><p>Tap the + button to add your first task</p></div>`;
+      return;
+    }
+    feed.innerHTML = filtered.map(t=>this.renderTaskCard(t)).join('');
+  },
+
+  renderTaskCard(t){
+    const timeStr = t.startTime && t.dueTime ? `${t.startTime} – ${t.dueTime}` : (t.dueDate ? this.fmtDate(t.dueDate) : '');
+    return `
+    <div class="task-card">
+      <div class="tc-top">
+        <span class="prio-tag ${t.priority||'medium'}"><span class="prio-dot"></span>${cap(t.priority||'medium')} Priority</span>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <span class="tc-status-badge ${t.status||'todo'}">${t.status==='todo'?'To Do':t.status==='progress'?'In Progress':t.status==='review'?'In Review':'Done'}</span>
+          <button class="tc-arrow" onclick="App.editTask('${t.id}')">✏️</button>
+          <button class="tc-arrow" onclick="App.deleteTask('${t.id}')" style="background:var(--red-bg);color:var(--red);">✕</button>
+        </div>
+      </div>
+      <div class="tc-title">${esc(t.title)}</div>
+      <div class="tc-bottom">
+        <div class="tc-time">${timeStr?`⏰ ${timeStr}`:''}</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          ${t.project?`<span style="font-size:11px;background:#F3F4F6;padding:3px 9px;border-radius:var(--r-full);font-weight:600;">📁 ${esc(t.project)}</span>`:''}
+          <button class="tc-arrow" style="background:var(--accent);color:#fff;" onclick="App.focusOnTask('${t.id}')">▶</button>
+          ${t.status!=='done'?`<button class="tc-arrow" style="background:var(--green-bg);color:var(--green);" onclick="App.markDone('${t.id}')">✓</button>`:''}
+        </div>
+      </div>
+    </div>`;
+  },
+
+  setHomeFilter(f, el){
+    this.homeFilter = f;
+    document.querySelectorAll('.spill').forEach(p=>p.classList.remove('sel'));
+    if(el) el.classList.add('sel');
+    this.renderHome();
+  },
+  showAllTasks(){
+    this.setHomeFilter('all', document.querySelector('.spill[data-f="all"]'));
+  },
+
+  /* --- TASKS CRUD --- */
+  getTasks(){ return DB.load('tasks', []); },
+  saveTasks(t){ DB.save('tasks', t); },
+  getToday(){ const d=new Date(); return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; },
+  fmtDate(iso){ const [y,m,d]=iso.split('-'); return `${parseInt(d)} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m)-1]} ${y}`; },
+
+  markDone(id){
+    const tasks = this.getTasks();
+    const t = tasks.find(x=>x.id===id);
+    if(!t) return;
+    t.status='done';
+    t.completedAt = Date.now();
+    this.saveTasks(tasks);
+    // Log completion for analytics
+    const sessions = DB.load('completions',[]);
+    sessions.unshift({id:uid(),taskId:id,taskTitle:t.title,at:Date.now(),category:t.project||''});
+    DB.save('completions',sessions.slice(0,100));
+    this.renderHome();
+    showToast('Task marked complete! ✓');
+    if(DB.load('settings',{}).sound !== false) playChime();
+    if(navigator.vibrate) navigator.vibrate([120,80,120]);
+
+    // Living Companion Pet celebratory reaction
+    if(window._maomao){
+      window._maomao.row = 4; // ROWS.JUMP
+      window._maomao.frame = 0;
+      window._maomao.isLooking = false;
+      window._maomao._updateBadge('Great job! 🌸');
+      if(typeof window._maomao._showBubble === 'function'){
+        window._maomao._showBubble('idle');
+      }
+      setTimeout(()=>{
+        if(!window._maomao.isDragging){
+          window._maomao.row = 6; // ROWS.WAITING
+          window._maomao._updateBadge('Waiting');
+        }
+      }, 1800);
+    }
+  },
+
+  deleteTask(id){
+    if(!confirm('Delete this task?')) return;
+    const tasks = this.getTasks().filter(x=>x.id!==id);
+    this.saveTasks(tasks);
+    this.renderHome();
+    showToast('Task deleted');
+  },
+
+  focusOnTask(id){
+    const t = this.getTasks().find(x=>x.id===id);
+    if(!t) return;
+    document.getElementById('focus-task-name').textContent = t.title;
+    const range = (t.startTime && t.dueTime) ? `${t.startTime} – ${t.dueTime}` : '';
+    document.getElementById('focus-task-range').textContent = range;
+    // navigate to focus
+    const btn = document.querySelector('.dock-btn[data-screen="s-focus"]');
+    this.navigate('s-focus', btn);
+  },
+
+  /* --- ADD TASK MODAL --- */
+  openAddTask(preDate){
+    this.editingTaskId = null;
+    this.formTags = [];
+    this.formPrio = 'high';
+    this.formDueDate = preDate || null;
+    this.formDueTime = null;
+    this.formStartDate = preDate || null;
+    this.formStartTime = null;
+    document.getElementById('modal-title-text').textContent = 'Add New Task';
+    document.getElementById('t-title').value='';
+    document.getElementById('t-desc').value='';
+    document.getElementById('t-status').value='todo';
+    document.getElementById('t-project').value='';
+    document.getElementById('editing-task-id').value='';
+    this.updateDueLbls(); this.updateStartLbls();
+    this.syncPrioUI(); this.renderTags();
+    document.querySelector('.modal-sheet .btn-dark').textContent='Create Task';
+    openModal('add-task-modal');
+    setTimeout(()=>document.getElementById('t-title').focus(),250);
+  },
+  closeAddTask(){ closeModal('add-task-modal'); },
+
+  editTask(id){
+    const t = this.getTasks().find(x=>x.id===id);
+    if(!t) return;
+    this.editingTaskId = id;
+    this.formTags = t.tags || [];
+    this.formPrio = t.priority || 'high';
+    this.formDueDate = t.dueDate || null;
+    this.formDueTime = t.dueTime || null;
+    this.formStartDate = t.startDate || null;
+    this.formStartTime = t.startTime || null;
+    document.getElementById('modal-title-text').textContent = 'Edit Task';
+    document.getElementById('t-title').value = t.title;
+    document.getElementById('t-desc').value = t.description || '';
+    document.getElementById('t-status').value = t.status || 'todo';
+    document.getElementById('t-project').value = t.project || '';
+    document.getElementById('editing-task-id').value = id;
+    this.updateDueLbls(); this.updateStartLbls();
+    this.syncPrioUI(); this.renderTags();
+    document.querySelector('.modal-sheet .btn-dark').textContent='Save Changes';
+    openModal('add-task-modal');
+  },
+
+  submitTask(){
+    const title = document.getElementById('t-title').value.trim();
+    if(!title){ document.getElementById('t-title').focus(); showToast('Please enter a task title'); return; }
+    const tasks = this.getTasks();
+    const editId = document.getElementById('editing-task-id').value;
+    if(editId){
+      const t = tasks.find(x=>x.id===editId);
+      if(t){
+        t.title=title; t.description=document.getElementById('t-desc').value.trim();
+        t.priority=this.formPrio; t.status=document.getElementById('t-status').value;
+        t.project=document.getElementById('t-project').value;
+        t.tags=[...this.formTags];
+        t.dueDate=this.formDueDate; t.dueTime=this.formDueTime;
+        t.startDate=this.formStartDate; t.startTime=this.formStartTime;
+      }
+      showToast('Task updated!');
+    } else {
+      tasks.unshift({
+        id:uid(), title,
+        description: document.getElementById('t-desc').value.trim(),
+        priority: this.formPrio,
+        status: document.getElementById('t-status').value,
+        project: document.getElementById('t-project').value,
+        tags: [...this.formTags],
+        dueDate: this.formDueDate,
+        dueTime: this.formDueTime,
+        startDate: this.formStartDate,
+        startTime: this.formStartTime,
+        createdAt: Date.now()
+      });
+      showToast('Task created! ✅');
+    }
+    this.saveTasks(tasks);
+    closeModal('add-task-modal');
+    this.renderHome();
+    this.renderCalendar();
+  },
+
+  setPrio(p){
+    this.formPrio = p;
+    this.syncPrioUI();
+  },
+  syncPrioUI(){
+    document.querySelectorAll('.prio-pill').forEach(el=>{
+      el.classList.toggle('sel', el.dataset.prio === this.formPrio);
+    });
+  },
+
+  addTag(){
+    const inp=document.getElementById('t-tag-input');
+    inp.style.display='block'; inp.focus();
+  },
+  onTagKeydown(e){
+    if(e.key==='Enter'||e.key===','){
+      e.preventDefault();
+      const val = e.target.value.trim().replace(/,/g,'');
+      if(val && !this.formTags.includes(val)){ this.formTags.push(val); }
+      e.target.value=''; e.target.style.display='none';
+      this.renderTags();
+    }
+    if(e.key==='Escape'){ e.target.value=''; e.target.style.display='none'; }
+  },
+  removeTag(t){ this.formTags=this.formTags.filter(x=>x!==t); this.renderTags(); },
+  renderTags(){
+    const wrap=document.getElementById('tags-display');
+    wrap.innerHTML=this.formTags.map(t=>`<span class="tag-chip" onclick="App.removeTag('${t}')">${esc(t)} <span class="remove">✕</span></span>`).join('')
+      + `<span class="tag-chip add" onclick="App.addTag()">+ Add Tag</span>`;
+  },
+
+  updateDueLbls(){
+    document.getElementById('due-date-lbl').textContent = this.formDueDate ? this.fmtDate(this.formDueDate) : 'Pick date';
+    document.getElementById('due-time-lbl').textContent = this.formDueTime || 'Pick time';
+  },
+  updateStartLbls(){
+    document.getElementById('start-date-lbl').textContent = this.formStartDate ? this.fmtDate(this.formStartDate) : 'Pick date';
+    document.getElementById('start-time-lbl').textContent = this.formStartTime || 'Pick time';
+  },
+
+  /* --- DATE PICKER --- */
+  openDatePicker(mode){
+    this.dpMode = mode;
+    this.dpYear = new Date().getFullYear();
+    this.dpMonth = new Date().getMonth();
+    this.dpSelectedDate = mode==='due' ? this.formDueDate : this.formStartDate;
+    if(this.dpSelectedDate){
+      const [y,m]=this.dpSelectedDate.split('-');
+      this.dpYear=parseInt(y); this.dpMonth=parseInt(m)-1;
+    }
+    document.getElementById('dp-title').textContent = mode==='due'?'Due Date':'Start Date';
+    this.renderDpGrid();
+    openModal('date-picker-modal');
+  },
+  closeDatePicker(){ closeModal('date-picker-modal'); },
+  confirmDate(){
+    if(!this.dpSelectedDate){ closeModal('date-picker-modal'); return; }
+    if(this.dpMode==='due') this.formDueDate = this.dpSelectedDate;
+    else this.formStartDate = this.dpSelectedDate;
+    this.updateDueLbls(); this.updateStartLbls();
+    closeModal('date-picker-modal');
+  },
+  dpPrevMonth(){ this.dpMonth--; if(this.dpMonth<0){this.dpMonth=11;this.dpYear--;} this.renderDpGrid(); },
+  dpNextMonth(){ this.dpMonth++; if(this.dpMonth>11){this.dpMonth=0;this.dpYear++;} this.renderDpGrid(); },
+  renderDpGrid(){
+    const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    document.getElementById('dp-month-label').textContent=`${months[this.dpMonth]} ${this.dpYear}`;
+    const grid=document.getElementById('dp-grid');
+    const today=this.getToday();
+    const firstDay=new Date(this.dpYear,this.dpMonth,1).getDay();
+    const offset=(firstDay===0?6:firstDay-1);
+    const daysInMonth=new Date(this.dpYear,this.dpMonth+1,0).getDate();
+    let html='';
+    for(let i=0;i<offset;i++) html+=`<div class="cal-cell other-month"></div>`;
+    for(let d=1;d<=daysInMonth;d++){
+      const iso=`${this.dpYear}-${pad2(this.dpMonth+1)}-${pad2(d)}`;
+      const isToday=iso===today;
+      const isSel=iso===this.dpSelectedDate;
+      const dow=(offset+d-1)%7; // 0=Mon, 6=Sun
+      const isSatSun=dow>=5;
+      html+=`<div class="cal-cell${isSatSun?' sat':''}" onclick="App.dpSelectDay('${iso}')">
+        <span${isToday?` style="background:var(--bg-dark);color:#fff;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;"`:''} ${isSel?` style="background:var(--accent);color:#fff;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;"`:''} >${d}</span>
+      </div>`;
+    }
+    grid.innerHTML=html;
+  },
+  dpSelectDay(iso){ this.dpSelectedDate=iso; this.renderDpGrid(); },
+
+  /* --- TIME PICKER --- */
+  openTimePicker(mode){
+    this.tpMode=mode;
+    const existing = mode==='due'?this.formDueTime:this.formStartTime;
+    if(existing){
+      const [h,m]=existing.split(':');
+      document.getElementById('tp-hours').value=parseInt(h);
+      document.getElementById('tp-mins').value=parseInt(m);
+    } else {
+      document.getElementById('tp-hours').value=10;
+      document.getElementById('tp-mins').value=0;
+    }
+    openModal('time-picker-modal');
+  },
+  closeTimePicker(){ closeModal('time-picker-modal'); },
+  confirmTime(){
+    const h=parseInt(document.getElementById('tp-hours').value)||0;
+    const m=parseInt(document.getElementById('tp-mins').value)||0;
+    const timeStr=`${pad2(Math.min(23,Math.max(0,h)))}:${pad2(Math.min(59,Math.max(0,m)))}`;
+    if(this.tpMode==='due') this.formDueTime=timeStr;
+    else this.formStartTime=timeStr;
+    this.updateDueLbls(); this.updateStartLbls();
+    closeModal('time-picker-modal');
+  },
+  adjustTime(part, delta){
+    const hEl=document.getElementById('tp-hours'), mEl=document.getElementById('tp-mins');
+    if(part==='h'){
+      let v=parseInt(hEl.value)+delta;
+      if(v<0)v=23; if(v>23)v=0;
+      hEl.value=v;
+    } else {
+      let v=parseInt(mEl.value)+delta;
+      if(v<0)v=55; if(v>59)v=0;
+      mEl.value=v;
+    }
+  },
+
+  /* --- CALENDAR SCREEN --- */
+  renderCalendar(){
+    if(this.calView==='calendar'){
+      this.renderCalGrid();
+      this.renderDayTimeline();
+    } else {
+      this.renderActivityFeed();
+    }
+  },
+  renderCalGrid(){
+    const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const fullMonths=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    document.getElementById('month-label').textContent=`${months[this.calMonth]} ${this.calYear}`;
+
+    const today=new Date(); const todayStr=this.getToday();
+    const firstDay=new Date(this.calYear,this.calMonth,1).getDay();
+    const offset=(firstDay===0?6:firstDay-1);
+    const daysInMonth=new Date(this.calYear,this.calMonth+1,0).getDate();
+    const prevDays=new Date(this.calYear,this.calMonth,0).getDate();
+
+    const tasks=this.getTasks();
+    // Build date event map
+    const eventMap={};
+    tasks.forEach(t=>{
+      if(t.dueDate){
+        if(!eventMap[t.dueDate]) eventMap[t.dueDate]=[];
+        eventMap[t.dueDate].push(t);
+      }
+    });
+
+    let html='';
+    // Prev month padding
+    for(let i=offset-1;i>=0;i--){
+      html+=`<div class="cal-cell other-month"><span>${prevDays-i}</span></div>`;
+    }
+    for(let d=1;d<=daysInMonth;d++){
+      const iso=`${this.calYear}-${pad2(this.calMonth+1)}-${pad2(d)}`;
+      const isToday=iso===todayStr;
+      const isSel=(d===this.calSelectedDay && this.calMonth===new Date().getMonth() && this.calYear===new Date().getFullYear())
+        || iso===`${this.calYear}-${pad2(this.calMonth+1)}-${pad2(this.calSelectedDay)}`;
+      const dow=(offset+d-1)%7;
+      const isSat=dow===5, isSun=dow===6;
+      const hasEv=!!eventMap[iso];
+      html+=`<div class="cal-cell${isSat?' sat':isSun?' sun':''}${hasEv?' has-event':''}" onclick="App.selectCalDay(${d})">
+        <span${isToday?` class="today-num" style="background:var(--bg-dark);color:#fff;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;margin:0 auto;"`:isSel?` style="background:var(--accent);color:#fff;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;margin:0 auto;"`:``}>${d}</span>
+      </div>`;
+    }
+    // Fill remaining
+    const total=offset+daysInMonth;
+    const rem=(7-total%7)%7;
+    for(let i=1;i<=rem;i++) html+=`<div class="cal-cell other-month"><span>${i}</span></div>`;
+
+    document.getElementById('cal-grid').innerHTML=html;
+  },
+  selectCalDay(d){
+    this.calSelectedDay=d;
+    this.renderCalGrid();
+    this.renderDayTimeline();
+  },
+  showMonthPicker(){
+    const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const cur=months[this.calMonth]+' '+this.calYear;
+    const next=(m,y)=>{
+      let nm=m+1; let ny=y; if(nm>11){nm=0;ny++;}
+      this.calMonth=nm; this.calYear=ny;
+      this.renderCalendar();
+    };
+    // Simple prev/next: just navigate month
+    // Toggle month forward/backward with the button click
+    this.calMonth++; if(this.calMonth>11){this.calMonth=0;this.calYear++;}
+    this.renderCalendar();
+  },
+  renderDayTimeline(){
+    const dateStr=`${this.calYear}-${pad2(this.calMonth+1)}-${pad2(this.calSelectedDay)}`;
+    const tasks=this.getTasks().filter(t=>t.dueDate===dateStr||t.startDate===dateStr);
+    const tl=document.getElementById('cal-timeline');
+    if(!tasks.length){ tl.innerHTML='<div class="activity-empty">No tasks scheduled for this day.<br><br><button class="btn btn-primary" style="padding:10px 20px;" onclick="App.openAddTask(\''+dateStr+'\')">+ Add Task</button></div>'; return; }
+    const morning=tasks.filter(t=>{const h=parseInt((t.startTime||'00:00').split(':')[0]);return h<12;});
+    const afternoon=tasks.filter(t=>{const h=parseInt((t.startTime||'12:00').split(':')[0]);return h>=12;});
+    let html='';
+    if(morning.length){
+      html+=`<div class="timeline-group-title"><span>☀️ Morning</span><span>Today</span></div>`;
+      html+=morning.map(t=>this.renderTimelineCard(t)).join('');
+    }
+    if(afternoon.length){
+      html+=`<div class="timeline-group-title" style="margin-top:14px;"><span>🌤 Afternoon</span></div>`;
+      html+=afternoon.map(t=>this.renderTimelineCard(t)).join('');
+    }
+    tl.innerHTML=html;
+  },
+  renderTimelineCard(t){
+    const timeStr=t.startTime||'–';
+    const ampm=parseInt((t.startTime||'00').split(':')[0])>=12?'PM':'AM';
+    return `<div class="timeline-entry">
+      <div class="t-time">${timeStr}<span>${ampm}</span></div>
+      <div class="t-card">
+        <h4>${esc(t.title)}</h4>
+        ${t.description?`<p>${esc(t.description)}</p>`:''}
+        <div class="t-actions">
+          <span class="tc-status-badge ${t.status}">${t.status==='todo'?'To Do':t.status==='progress'?'In Progress':t.status==='review'?'In Review':'Done'}</span>
+          <div style="display:flex;gap:6px;">
+            <button class="tc-arrow" style="background:var(--accent);color:#fff;" onclick="App.focusOnTask('${t.id}')">▶</button>
+            ${t.status!=='done'?`<button class="tc-arrow" style="background:var(--green-bg);color:var(--green);" onclick="App.markDone('${t.id}')">✓</button>`:''}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  },
+  switchCalTab(tab){
+    this.calView=tab;
+    document.getElementById('tab-calendar').classList.toggle('active',tab==='calendar');
+    document.getElementById('tab-activity').classList.toggle('active',tab==='activity');
+    document.getElementById('cal-view').style.display=tab==='calendar'?'block':'none';
+    document.getElementById('act-view').style.display=tab==='activity'?'block':'none';
+    if(tab==='activity') this.renderActivityFeed();
+    if(tab==='calendar') this.renderCalendar();
+  },
+  renderActivityFeed(){
+    const completions=DB.load('completions',[]);
+    const feed=document.getElementById('activity-feed');
+    if(!completions.length){
+      feed.innerHTML='<div class="activity-empty">No completed tasks yet.<br>Complete your first task to see activity!</div>';
+      return;
+    }
+    feed.innerHTML=completions.slice(0,20).map(c=>{
+      const d=new Date(c.at);
+      const timeStr=`${pad2(d.getHours())}:${pad2(d.getMinutes())} · ${d.toLocaleDateString('en',{month:'short',day:'numeric'})}`;
+      return `<div class="activity-item">
+        <div class="ai-left">
+          <div class="ai-icon" style="background:var(--green-bg);">✓</div>
+          <div><div class="ai-meta">${esc(c.taskTitle)}</div><div class="ai-sub">${c.category||'Task completed'}</div></div>
+        </div>
+        <div class="ai-time">${timeStr}</div>
+      </div>`;
+    }).join('');
+  },
+
+  /* --- FOCUS SCREEN --- */
+  renderRecentTasks(){
+    const tasks=this.getTasks().filter(t=>t.status!=='done').slice(0,5);
+    const feed=document.getElementById('recent-tasks-feed');
+    if(!tasks.length){ feed.innerHTML='<div class="empty-state"><div class="icon">⏱️</div><h4>No active tasks</h4><p>Add tasks to focus on them here</p></div>'; return; }
+    feed.innerHTML=tasks.map(t=>`
+      <div style="background:#fff;border-radius:var(--r-md);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;border:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:18px;">${t.project?'📁':'🎯'}</span>
+          <div><div style="font-size:14.5px;font-weight:700;">${esc(t.title)}</div><div style="font-size:12px;color:var(--text-2);">${t.project||''} ${t.dueDate?'· Due '+this.fmtDate(t.dueDate):''}</div></div>
+        </div>
+        <button style="width:36px;height:36px;border-radius:50%;background:var(--bg-dark);color:#fff;border:none;font-size:14px;display:grid;place-items:center;" onclick="App.focusOnTask('${t.id}')">▶</button>
+      </div>
+    `).join('');
+  },
+
+  /* --- FOCUS MODE FEATURES --- */
+  toggleGroove(){
+    // If Spotify is connected, use Spotify playlist picker
+    if(window.Spotify && Spotify.isConnected()){
+      if(Spotify.isPlaying){ Spotify.pause(); showToast('Spotify paused'); }
+      else if(Spotify.selectedPlaylist){ Spotify.resume(); showToast('▶ ' + Spotify.selectedPlaylist.name); }
+      else { Spotify.openPlaylistPicker(); }
+      return;
+    }
+    // Fallback: built-in ambient tones
+    getAudioCtx();
+    if(this.groovePlaying){ stopGroove(); this.groovePlaying=false; document.getElementById('groove-bar').classList.remove('playing'); showToast('Groove Tunes stopped'); }
+    else { startGroove(); this.groovePlaying=true; document.getElementById('groove-bar').classList.add('playing'); showToast('♫ Groove Tunes playing'); }
+  },
+  toggleWhiteNoise(){
+    getAudioCtx();
+    if(this.noisePlaying){ stopWhiteNoise(); this.noisePlaying=false; document.getElementById('pill-noise').classList.remove('active'); showToast('White Noise off'); }
+    else { startWhiteNoise(); this.noisePlaying=true; document.getElementById('pill-noise').classList.add('active'); showToast('White Noise on 🎧'); }
+  },
+  toggleStrict(){
+    this.focusStrictMode=!this.focusStrictMode;
+    document.getElementById('pill-strict').classList.toggle('active',this.focusStrictMode);
+    showToast(this.focusStrictMode?'Strict Mode: ON — Navigation locked':'Strict Mode: OFF');
+  },
+  toggleTimerMode(){
+    this.focusTimerMode = this.focusTimerMode==='countdown'?'stopwatch':'countdown';
+    document.getElementById('pill-timer').classList.toggle('active', this.focusTimerMode==='countdown');
+    if(this.focusTimerMode==='stopwatch'){
+      _timerSecs=0; document.getElementById('dial-status').textContent='Stopwatch';
+    } else {
+      _timerSecs=_timerDuration||25*60; document.getElementById('dial-status').textContent='Start';
+    }
+    if(_timerRunning) timerPause();
+    setDialDisplay();
+    showToast(this.focusTimerMode==='countdown'?'Timer Mode: Countdown':'Timer Mode: Stopwatch');
+  },
+  toggleFullscreen(){
+    if(!document.fullscreenElement){
+      document.documentElement.requestFullscreen().then(()=>{
+        document.getElementById('pill-fullscreen').classList.add('active');
+        showToast('Full Screen ON — tap again to exit');
+      }).catch(()=>showToast('Full Screen not supported in this browser'));
+    } else {
+      document.exitFullscreen();
+      document.getElementById('pill-fullscreen').classList.remove('active');
+    }
+  },
+
+  /* --- TIMER CONTROLS --- */
+  timerToggle(){ if(_timerRunning) timerPause(); else timerStart(); },
+  timerReset(){
+    timerPause();
+    _timerSecs = _timerDuration || 25*60;
+    document.getElementById('dial-status').textContent='Start';
+    document.getElementById('btn-timer-play').innerHTML='▶';
+    setDialDisplay();
+    _isBreak=false;
+  },
+  timerSkip(){
+    timerPause();
+    if(!_isBreak){ _isBreak=true; _timerSecs=5*60; _timerDuration=5*60; document.getElementById('dial-status').textContent='Break'; showToast('Short Break started'); }
+    else { _isBreak=false; _timerSecs=_origDuration||25*60; _timerDuration=_origDuration||25*60; document.getElementById('dial-status').textContent='Start'; }
+    setDialDisplay();
+  },
+  openCustomTimer(){
+    if(_timerRunning){ showToast('Pause the timer first to set a custom time'); return; }
+    const mins=Math.floor(_timerSecs/60), secs=_timerSecs%60;
+    document.getElementById('ct-mins').value=mins;
+    document.getElementById('ct-secs').value=secs;
+    openModal('custom-timer-modal');
+  },
+  closeCustomTimer(){ closeModal('custom-timer-modal'); },
+  confirmCustomTimer(){
+    const m=Math.max(0,parseInt(document.getElementById('ct-mins').value)||0);
+    const s=Math.max(0,Math.min(59,parseInt(document.getElementById('ct-secs').value)||0));
+    _timerSecs=m*60+s; _timerDuration=_timerSecs;
+    setDialDisplay(); document.getElementById('dial-status').textContent='Ready';
+    closeModal('custom-timer-modal');
+    showToast(`Timer set to ${m>0?m+'m ':''} ${s>0?s+'s':''}`);
+  },
+  adjustCustom(part,delta){
+    if(part==='m'){let v=parseInt(document.getElementById('ct-mins').value)+delta; if(v<0)v=0; document.getElementById('ct-mins').value=v;}
+    else{let v=parseInt(document.getElementById('ct-secs').value)+delta; if(v<0)v=55; if(v>59)v=0; document.getElementById('ct-secs').value=v;}
+  },
+  setPresetTimer(mins){
+    document.getElementById('ct-mins').value=mins;
+    document.getElementById('ct-secs').value=0;
+  },
+  openFocusSettings(){ openModal('focus-settings-modal'); },
+  closeFocusSettings(){ closeModal('focus-settings-modal'); },
+  setFocusDur(mins, el){
+    document.querySelectorAll('.dur-card-fs').forEach(c=>c.classList.remove('active'));
+    el.classList.add('active');
+    timerPause();
+    _timerSecs=mins*60; _timerDuration=mins*60; _origDuration=mins*60;
+    setDialDisplay(); document.getElementById('dial-status').textContent='Start';
+  },
+
+  /* --- SPOTIFY SETUP & SETTINGS NAVIGATION --- */
+  openSpotifySetup(){
+    closeModal('profile-modal');
+    openModal('sp-setup-modal');
+    const input = document.getElementById('sp-modal-client-id');
+    if(input && window.Spotify && Spotify.clientId){
+      input.value = Spotify.clientId;
+    }
+  },
+  openSpotifyFromProfile(){
+    this.closeProfileModal();
+    setTimeout(() => {
+      this.openSpotifySetup();
+    }, 80);
+  },
+  closeSpotifySetup(){
+    closeModal('sp-setup-modal');
+  },
+  goToSettings(targetId){
+    this.closeSpotifySetup();
+    this.closeProfileModal();
+    this.closeFocusSettings();
+    this.navigate('s-settings', null);
+    if(targetId){
+      setTimeout(()=>{
+        const el = document.getElementById(targetId);
+        if(el){
+          el.scrollIntoView({behavior:'smooth', block:'center'});
+          el.style.transition = 'box-shadow 0.3s ease';
+          el.style.boxShadow = '0 0 0 3px #1DB954';
+          setTimeout(()=>{ el.style.boxShadow = ''; }, 2000);
+        }
+      }, 150);
+    }
+  },
+
+  /* --- SETTINGS --- */
+  renderSettings(){
+    const s=DB.load('settings',{});
+    if(s.userName) document.getElementById('set-name').value=s.userName;
+    document.getElementById('set-sound').checked=s.sound!==false;
+    if(s.soundTheme) document.getElementById('set-sound-theme').value=s.soundTheme;
+    document.getElementById('set-vibrate').checked=s.vibrate!==false;
+    document.getElementById('set-dnd').checked=s.dnd!==false;
+    document.getElementById('set-mute-focus').checked=s.muteFocus!==false;
+
+    // Notif status
+    if(!('Notification' in window)){
+      document.getElementById('notif-status-text').textContent='Not supported';
+      document.getElementById('btn-notif-enable').style.display='none';
+    } else if(Notification.permission==='granted'){
+      document.getElementById('notif-status-text').textContent='Enabled ✓';
+      document.getElementById('btn-notif-enable').textContent='Test Alert';
+    } else if(Notification.permission==='denied'){
+      document.getElementById('notif-status-text').textContent='Blocked in browser';
+    } else {
+      document.getElementById('notif-status-text').textContent='Permission required';
+    }
+
+    // Pet settings
+    const petS = DB.load('pet_settings', { enabled: true, mobileMode: 'corner', draggable: true, size: 'normal' });
+    if(document.getElementById('set-pet-enabled')) document.getElementById('set-pet-enabled').checked = petS.enabled !== false;
+    if(document.getElementById('set-pet-mobile-mode')) document.getElementById('set-pet-mobile-mode').value = petS.mobileMode || 'corner';
+    if(document.getElementById('set-pet-draggable')) document.getElementById('set-pet-draggable').checked = petS.draggable !== false;
+    if(document.getElementById('set-pet-size')) document.getElementById('set-pet-size').value = petS.size || 'normal';
+  },
+  savePetSettings(){
+    const petS = {
+      enabled: document.getElementById('set-pet-enabled')?.checked !== false,
+      mobileMode: document.getElementById('set-pet-mobile-mode')?.value || 'corner',
+      draggable: document.getElementById('set-pet-draggable')?.checked !== false,
+      size: document.getElementById('set-pet-size')?.value || 'normal'
+    };
+    DB.save('pet_settings', petS);
+    if(window._maomao){
+      _maomao.applySettings(petS);
+    }
+  },
+  saveSettings(){
+    const s={
+      userName: document.getElementById('set-name').value,
+      sound: document.getElementById('set-sound').checked,
+      soundTheme: document.getElementById('set-sound-theme').value,
+      vibrate: document.getElementById('set-vibrate').checked,
+      dnd: document.getElementById('set-dnd').checked,
+      muteFocus: document.getElementById('set-mute-focus').checked,
+    };
+    DB.save('settings',s);
+    document.getElementById('user-name-disp').textContent=s.userName;
+  },
+  saveName(){ this.saveSettings(); },
+  testSound(){ getAudioCtx(); playChime(document.getElementById('set-sound-theme').value); },
+  async requestNotif(){
+    if(!('Notification' in window)) return;
+    if(Notification.permission==='granted'){
+      new Notification('Focus','Test alert working! 🎉');
+    } else {
+      const p=await Notification.requestPermission();
+      this.renderSettings();
+      if(p==='granted') new Notification('Focus','Notifications enabled!');
+    }
+  },
+  eraseData(){
+    if(!confirm('Erase ALL data? Tasks, history, sessions will be deleted permanently.')) return;
+    localStorage.clear();
+    showToast('All data erased');
+    this.renderHome();
+  },
+
+  /* --- STATUS / INSIGHTS (REAL DATA) --- */
+  renderStatus(){
+    const days=parseInt(document.getElementById('status-range').value)||7;
+    const sessions=DB.load('focus_sessions',[]);
+    const completions=DB.load('completions',[]);
+    const tasks=this.getTasks();
+
+    // Today's focus time
+    const todayStr=this.getToday();
+    const todaySessions=sessions.filter(s=>s.date===todayStr);
+    const todayMins=todaySessions.reduce((a,s)=>a+(s.minutes||0),0);
+    document.getElementById('st-focus').textContent=`${Math.floor(todayMins/60)}h ${todayMins%60}m`;
+
+    // Tasks done today
+    const todayDone=completions.filter(c=>{
+      const d=new Date(c.at); return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}` === todayStr;
+    }).length;
+    document.getElementById('st-done').textContent=todayDone;
+
+    // Streak
+    const streak=this.calcStreak(completions);
+    document.getElementById('st-streak').textContent=streak+'d';
+
+    // Total sessions
+    document.getElementById('st-sessions').textContent=sessions.length;
+
+    // Weekly chart
+    const DAY_LABELS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const chartData=[];
+    for(let i=6;i>=0;i--){
+      const d=new Date(); d.setDate(d.getDate()-i);
+      const dStr=`${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+      const mins=sessions.filter(s=>s.date===dStr).reduce((a,s)=>a+(s.minutes||0),0);
+      chartData.push({day:DAY_LABELS[d.getDay()],mins});
+    }
+    const maxMins=Math.max(...chartData.map(c=>c.mins),30);
+    const isToday=(i)=>i===6;
+
+    document.getElementById('focus-chart').innerHTML=chartData.map((c,i)=>{
+      const h=maxMins>0?Math.max(4,(c.mins/maxMins)*100):4;
+      return `<div class="chart-col"><div class="chart-bar${isToday(i)?' active':c.mins>20?' target':''}" style="height:${h}%;"></div></div>`;
+    }).join('');
+    document.getElementById('focus-chart-labels').innerHTML=chartData.map(c=>`<div class="chart-day" style="text-align:center;">${c.day}</div>`).join('');
+
+    // Completions
+    const feed=document.getElementById('completions-feed');
+    if(!completions.length){
+      feed.innerHTML='<div class="empty-state"><div class="icon">📊</div><h4>No completions yet</h4><p>Complete tasks to see real-time stats here</p></div>';
+      return;
+    }
+    feed.innerHTML=completions.slice(0,15).map((c,i)=>{
+      const d=new Date(c.at);
+      return `<div class="status-task-item">
+        <div class="sti-left"><div class="sti-num">${i+1}</div><div><div style="font-size:13.5px;font-weight:700;">${esc(c.taskTitle)}</div><div style="font-size:11.5px;color:var(--text-2);">${d.toLocaleDateString('en',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}</div></div></div>
+        <span style="font-size:11px;background:var(--green-bg);color:var(--green);padding:4px 10px;border-radius:var(--r-full);font-weight:700;">Done</span>
+      </div>`;
+    }).join('');
+  },
+
+  calcStreak(completions){
+    if(!completions.length) return 0;
+    const days=new Set(completions.map(c=>{const d=new Date(c.at);return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;}));
+    let streak=0; let d=new Date();
+    while(true){
+      const key=`${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+      if(days.has(key)){streak++;d.setDate(d.getDate()-1);}
+      else break;
+      if(streak>365) break;
+    }
+    return streak;
+  },
+
+  _profileGreetings: [
+    "Hi! How are you? 🌸",
+    "Hello there! 👋 Ready to focus?",
+    "You're doing great! ✨",
+    "Stay hydrated and take breaks! 💧",
+    "Need any remedies or herbs? 🍵",
+    "Let's make today productive! 🌿"
+  ],
+  _profileGreetIdx: 0,
+  maomaoProfileGreeting(){
+    this._profileGreetIdx = (this._profileGreetIdx + 1) % this._profileGreetings.length;
+    const msg = this._profileGreetings[this._profileGreetIdx];
+    const b = document.getElementById('profile-maomao-bubble');
+    const s = document.getElementById('profile-maomao-sprite');
+    if(b){
+      b.innerHTML = `${msg}<div style="position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid #fff;"></div>`;
+      b.style.animation = 'none';
+      b.offsetHeight;
+      b.style.animation = 'maomao-float 2.4s ease-in-out infinite';
+    }
+    if(s){
+      s.style.backgroundPosition = '0% 30%'; // Wave pose (Row 3)
+      s.style.transform = 'scale(1.08)';
+      setTimeout(()=>{
+        s.style.backgroundPosition = '0% 0%'; // Return to still idle pose (Row 0)
+        s.style.transform = 'scale(1)';
+      }, 700);
+    }
+  },
+
+  /* --- PROFILE MODAL --- */
+  _currentEmoji: '😊',
+  _emojiOptions: ['😊','😁','😄','🤩','😎','🤓','😏','🥵','🦖','🐉','🦁','🐼','🐺','🐱','🐶','🌟','⚡','🍀','🔥','🍪','🎯','💡','💫','🨄'],
+
+  openProfileModal(){
+    const s = DB.load('settings',{});
+    this._currentEmoji = s.avatarEmoji || '😊';
+    const name = s.userName || '';
+
+    // Populate fields
+    document.getElementById('profile-name-input').value = name;
+    document.getElementById('profile-avatar-emoji').textContent = this._currentEmoji;
+
+    // Build emoji picker grid
+    document.getElementById('emoji-picker-grid').innerHTML = this._emojiOptions.map(e=>
+      `<span class="ep-opt${e===this._currentEmoji?' sel':''}" onclick="App.selectEmoji('${e}')">${e}</span>`
+    ).join('');
+    document.getElementById('emoji-picker-panel').style.display = 'none';
+
+    // Stats
+    const tasks = this.getTasks();
+    const completions = DB.load('completions',[]);
+    document.getElementById('ps-total').textContent = tasks.length;
+    document.getElementById('ps-done').textContent = tasks.filter(t=>t.status==='done').length;
+    document.getElementById('ps-streak').textContent = this.calcStreak(completions)+'d';
+
+    // Spotify status
+    const spConnected = window.Spotify && Spotify.isConnected();
+    document.getElementById('profile-sp-text').textContent = spConnected ? 'Spotify Connected ✓' : 'Spotify not connected';
+    document.getElementById('profile-sp-sub').textContent = spConnected ? (Spotify.selectedPlaylist?.name || 'No playlist selected') : 'Connect in Settings';
+    document.getElementById('profile-sp-icon').textContent = spConnected ? '🍚' : '🔗';
+
+    openModal('profile-modal');
+  },
+
+  closeProfileModal(){ closeModal('profile-modal'); },
+
+  toggleEmojiPicker(){
+    const p = document.getElementById('emoji-picker-panel');
+    p.style.display = p.style.display === 'none' ? 'block' : 'none';
+  },
+
+  selectEmoji(e){
+    this._currentEmoji = e;
+    document.getElementById('profile-avatar-emoji').textContent = e;
+    document.getElementById('home-avatar-emoji').textContent = e;
+    document.querySelectorAll('.ep-opt').forEach(el=>el.classList.toggle('sel',el.textContent===e));
+  },
+
+  profileNameChange(){
+    // Live preview in header
+    const val = document.getElementById('profile-name-input').value;
+    document.getElementById('user-name-disp').textContent = val || 'You';
+  },
+
+  saveProfileModal(){
+    const name = document.getElementById('profile-name-input').value.trim();
+    const s = DB.load('settings',{});
+    s.userName = name || s.userName || 'You';
+    s.avatarEmoji = this._currentEmoji;
+    DB.save('settings',s);
+    // Sync set-name input if on settings screen
+    const nameInput = document.getElementById('set-name');
+    if(nameInput) nameInput.value = s.userName;
+    // Update home header
+    document.getElementById('user-name-disp').textContent = s.userName;
+    document.getElementById('home-avatar-emoji').textContent = this._currentEmoji;
+    closeModal('profile-modal');
+    showToast('Profile saved! ✨');
+  },
+
+  /* --- INIT --- */
+  init(){
+    // Handle PWA action shortcuts from URL query parameters
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const action = urlParams.get('action');
+      if(action === 'focus'){
+        setTimeout(() => {
+          const btn = document.querySelector('.dock-btn[data-screen="s-focus"]');
+          App.navigate('s-focus', btn);
+        }, 80);
+      } else if(action === 'add'){
+        setTimeout(() => {
+          App.openAddTask();
+        }, 80);
+      }
+    } catch(e){}
+
+    // Onboarding check
+    if(DB.load('ob_done',false)){
+      document.documentElement.classList.add('ob-done');
+      const ob = document.getElementById('onboarding');
+      if(ob){
+        ob.classList.add('done');
+        ob.style.display = 'none';
+      }
+    }
+
+    // Bind onboarding buttons
+    document.getElementById('ob-skip').onclick=()=>App.finishOnboarding();
+    document.getElementById('ob-next1').onclick=()=>{ App.ob_slide=1; App.goObSlide(2); };
+    document.getElementById('ob-next2').onclick=()=>{ App.ob_slide=2; App.goObSlide(3); };
+    document.getElementById('ob-finish').onclick=()=>App.finishOnboarding();
+    document.querySelectorAll('.ob-skip').forEach(b=>b.onclick=()=>App.finishOnboarding());
+
+    // Home buttons
+    document.getElementById('btn-add-home').onclick=()=>App.openAddTask();
+    document.getElementById('btn-notif').onclick=()=>{ showToast('No new notifications'); };
+
+    // Register Service Worker with seamless update handling
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('service-worker.js').then((reg) => {
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          if(newWorker){
+            newWorker.addEventListener('statechange', () => {
+              if(newWorker.state === 'installed' && navigator.serviceWorker.controller){
+                showToast('App update ready ✨');
+                newWorker.postMessage('SKIP_WAITING');
+              }
+            });
+          }
+        });
+      }).catch((err) => console.warn('[SW Reg Error]', err));
+
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if(!refreshing){
+          refreshing = true;
+          window.location.reload();
+        }
+      });
+    }
+
+    // Visibility change
+    document.addEventListener('visibilitychange',()=>{
+      if(document.visibilityState==='visible'){ this.renderHome(); if(_timerRunning) timerStart(); }
+    });
+
+    // Fullscreen change
+    document.addEventListener('fullscreenchange',()=>{
+      if(!document.fullscreenElement) document.getElementById('pill-fullscreen').classList.remove('active');
+    });
+
+    // Init timer display
+    _timerDuration=25*60; _origDuration=25*60;
+    setDialDisplay();
+
+    // Unlock audio on first tap
+    document.body.addEventListener('click',()=>getAudioCtx(),{once:true});
+
+    // Sync avatar from settings on load
+    const s = DB.load('settings',{});
+    if(s.avatarEmoji) document.getElementById('home-avatar-emoji').textContent = s.avatarEmoji;
+    if(s.userName) document.getElementById('user-name-disp').textContent = s.userName;
+
+    // Spotify focus banner: show only when not connected
+    const spBanner = document.getElementById('sp-focus-banner');
+    if(spBanner){
+      const spCfg = DB.load('spotify_cfg',{});
+      spBanner.style.display = spCfg.accessToken ? 'none' : 'flex';
+    }
+
+    this.renderHome();
+    this.renderSettings();
+    this.renderCalendar();
+    const initialScreen = document.querySelector('.screen.active');
+    if(initialScreen) initialScreen.scrollTop = 0;
+  }
+};
+
+/* ===================================================
+   TIMER INTERNALS
+   =================================================== */
+let _timerDuration = 25*60;
+let _origDuration = 25*60;
+
+function timerStart(){
+  if(_timerRunning) return;
+  _timerRunning=true;
+  _focusSessionStart=_focusSessionStart||Date.now();
+  document.getElementById('btn-timer-play').innerHTML='❚❚';
+  document.getElementById('dial-status').textContent='Focusing';
+  getAudioCtx();
+  _timerInterval=setInterval(()=>{
+    if(App.focusTimerMode==='stopwatch'){
+      _timerSecs++;
+    } else {
+      if(_timerSecs<=0){ timerComplete(); return; }
+      _timerSecs--;
+    }
+    setDialDisplay();
+  },1000);
+}
+
+function timerPause(){
+  _timerRunning=false;
+  clearInterval(_timerInterval);
+  // Save session if was running
+  if(_focusSessionStart){
+    const elapsed=Math.floor((Date.now()-_focusSessionStart)/60000);
+    if(elapsed>=1){
+      const sessions=DB.load('focus_sessions',[]);
+      sessions.unshift({id:uid(),date:App.getToday(),minutes:elapsed,at:Date.now()});
+      DB.save('focus_sessions',sessions.slice(0,500));
+    }
+    _focusSessionStart=null;
+  }
+  document.getElementById('btn-timer-play').innerHTML='▶';
+  if(document.getElementById('dial-status').textContent==='Focusing')
+    document.getElementById('dial-status').textContent='Paused';
+}
+
+function timerComplete(){
+  timerPause();
+  // Use Spotify reminder track if connected, else fall back to chime
+  if(window.Spotify && Spotify.isConnected() && Spotify.reminderTrack){
+    Spotify.playReminderTone();
+  } else {
+    playChime('crystal');
+  }
+  if(navigator.vibrate) navigator.vibrate([200,100,200,100,200]);
+  document.getElementById('dial-status').textContent='Done! 🎉';
+  showToast('Focus session complete! Great work! 🎉');
+  setTimeout(()=>App.timerSkip(),1500);
+}
+
+/* ===================================================
+   HELPERS
+   =================================================== */
+function uid(){ return crypto.randomUUID ? crypto.randomUUID() : 'id-'+Date.now()+'-'+Math.random().toString(36).slice(2); }
+function pad2(n){ return String(n).padStart(2,'0'); }
+function cap(s){ return s?s.charAt(0).toUpperCase()+s.slice(1):''; }
+function esc(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function showToast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+function openModal(id){
+  const m=document.getElementById(id);
+  m.classList.add('open');
+  // close on backdrop click
+  m._close=e=>{ if(e.target===m){ closeModal(id); m.removeEventListener('click',m._close); } };
+  m.addEventListener('click',m._close);
+}
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+/* ===================================================
+   BOOT
+   =================================================== */
+document.addEventListener('DOMContentLoaded',()=>{
+  App.init();
+  Spotify.init();
+  // Sync selected playlist name in settings if exists
+  const cfg = DB.load('spotify_cfg',{});
+  if(cfg.selectedPlaylist && document.getElementById('sp-selected-pl-name')){
+    document.getElementById('sp-selected-pl-name').textContent = cfg.selectedPlaylist.name;
+  }
+  if(cfg.reminderTrack && document.getElementById('set-reminder-track-name')){
+    document.getElementById('set-reminder-track-name').textContent = cfg.reminderTrack.name + ' — ' + cfg.reminderTrack.artist;
+  }
+  // Override playChime to also use Spotify reminder track when set
+  const _origTimerComplete = window.timerComplete;
+});
+</script>
+<script src="maomao-pet.js" defer></script>
+</body>
+</html>

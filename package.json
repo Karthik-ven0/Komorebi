@@ -1,0 +1,13 @@
+{
+  "name": "loop-pwa-v2",
+  "version": "2.0.0",
+  "description": "Loop — Habits & Recurring Reminders PWA",
+  "main": "dev-server.js",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "start": "node dev-server.js"
+  },
+  "keywords": ["pwa", "reminders", "habits", "productivity"],
+  "author": "",
+  "license": "MIT"
+}
