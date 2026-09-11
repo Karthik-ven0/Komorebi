@@ -946,6 +946,15 @@ html.ob-done #onboarding,
 <!-- MAIN APP -->
 <div id="app">
 
+  <!-- Mobile Offline Mode Status Banner -->
+  <div id="offline-banner" style="display:none;background:#FEF3C7;border-bottom:1.5px solid #F59E0B;color:#92400E;padding:8px 14px;font-size:11.5px;font-weight:700;align-items:center;justify-content:space-between;flex-shrink:0;z-index:99;box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <div style="display:flex;align-items:center;gap:7px;">
+      <span style="font-size:14px;">✈️</span>
+      <span><strong>Offline Mode</strong> · Focus timer &amp; local sounds active</span>
+    </div>
+    <span style="font-size:10px;background:#F59E0B;color:#fff;padding:2px 7px;border-radius:10px;font-weight:800;letter-spacing:0.4px;">100% OFFLINE</span>
+  </div>
+
   <!-- ===== HOME ===== -->
   <div class="screen active" id="s-home">
     <div class="home-header">
@@ -1077,9 +1086,9 @@ html.ob-done #onboarding,
       <div id="native-player-deck" style="display:flex;flex-direction:column;padding:12px 14px;gap:10px;color:#fff;">
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-            <div id="np-art" style="width:40px;height:40px;border-radius:10px;background:rgba(255,106,0,0.2);display:grid;place-items:center;font-size:22px;flex-shrink:0;">🌧️</div>
+            <div id="np-art" style="width:40px;height:40px;border-radius:10px;background:rgba(255,106,0,0.2);display:grid;place-items:center;font-size:22px;flex-shrink:0;">🌸</div>
             <div style="min-width:0;">
-              <div id="np-title" style="font-size:13.5px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Gentle Rain</div>
+              <div id="np-title" style="font-size:13.5px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Komorebi Sunbeam</div>
               <div id="np-sub" style="font-size:11px;color:#9CA3AF;">Built-in Soundscape · 100% Offline</div>
             </div>
           </div>
@@ -1094,6 +1103,9 @@ html.ob-done #onboarding,
           <button onclick="App.openMusicPicker()" style="background:rgba(255,255,255,0.12);border:none;color:#fff;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;cursor:pointer;margin-left:4px;">Browse 🎵</button>
         </div>
       </div>
+
+      <!-- HTML5 Royalty-Free Stream Audio Element -->
+      <audio id="royalty-stream-audio" preload="none"></audio>
 
       <!-- Spotify Player Iframe (Hidden when native sound is active) -->
       <iframe id="groove-spotify-iframe" 
@@ -1110,15 +1122,18 @@ html.ob-done #onboarding,
 
     <!-- Quick Station Switcher Chips -->
     <div class="music-quick-chips" id="music-quick-chips">
-      <div class="music-chip active" data-sound="rain" onclick="App.selectNativeSound('rain', 'Gentle Rain', '🌧️')">🌧️ Rain</div>
+      <div class="music-chip active" data-sound="komorebi" onclick="App.selectNativeSound('komorebi', 'Komorebi Sunbeam', '🌸')">🌸 Komorebi</div>
+      <div class="music-chip" data-sound="rain" onclick="App.selectNativeSound('rain', 'Gentle Rain', '🌧️')">🌧️ Rain</div>
+      <div class="music-chip" data-sound="lofi-beats" onclick="App.selectNativeSound('lofi-beats', 'Cozy Lofi Beats', '☕')">☕ Lofi Beats</div>
+      <div class="music-chip" data-sound="piano-calm" onclick="App.selectNativeSound('piano-calm', 'Peaceful Piano', '🎹')">🎹 Piano</div>
+      <div class="music-chip" data-sound="forest" onclick="App.selectNativeSound('forest', 'Woodland Birds', '🌲')">🌲 Forest</div>
       <div class="music-chip" data-sound="waves" onclick="App.selectNativeSound('waves', 'Ocean Waves', '🌊')">🌊 Waves</div>
       <div class="music-chip" data-sound="fire" onclick="App.selectNativeSound('fire', 'Campfire', '🔥')">🔥 Fire</div>
       <div class="music-chip" data-sound="alpha" onclick="App.selectNativeSound('alpha', 'Alpha Waves', '🧘')">🧘 10Hz Alpha</div>
       <div class="music-chip" data-sound="theta" onclick="App.selectNativeSound('theta', 'Theta Focus', '🧠')">🧠 6Hz Theta</div>
       <div class="music-chip" data-sound="brown" onclick="App.selectNativeSound('brown', 'Brown Noise', '⚡')">⚡ Brown Noise</div>
-      <div class="music-chip" data-sound="lofi" onclick="App.selectNativeSound('lofi', 'Lofi Chords', '🎶')">🎶 Lofi Chords</div>
-      <div class="music-chip" data-sound="cafe" onclick="App.selectNativeSound('cafe', 'Cozy Cafe', '☕')">☕ Cafe</div>
-      <div class="music-chip" data-id="37i9dQZF1DXdLEN7aqioXM" onclick="App.selectSpotifyPlaylist('37i9dQZF1DXdLEN7aqioXM', 'Lofi Beats')">🟢 Spotify Lofi</div>
+      <div class="music-chip" data-stream="stream-lofigirl" onclick="App.selectStream('https://stream.zeno.fm/f3wvbbqmdg8uv', 'Lofi Girl Study Stream', '📻', 'stream-lofigirl')">📻 Live Lofi</div>
+      <div class="music-chip" data-stream="stream-synthwave" onclick="App.selectStream('https://stream.nightride.fm/chill.mp3', 'Nightride Synth Chill', '🌆', 'stream-synthwave')">🌆 Synthwave</div>
       <div class="music-chip" onclick="App.openMusicPicker()" style="background:var(--accent);color:#fff;border-color:var(--accent);">+ Browse All 🎧</div>
     </div>
 
@@ -1748,22 +1763,63 @@ html.ob-done #onboarding,
 
     <!-- Source Switcher Tabs -->
     <div class="music-source-tabs">
-      <button class="music-source-btn active" id="tab-src-native" data-tab="native" onclick="App.switchMusicModalTab('native')">🌿 Indigenous Sounds (Offline)</button>
-      <button class="music-source-btn" id="tab-src-spotify" data-tab="spotify" onclick="App.switchMusicModalTab('spotify')">🟢 Spotify Stations</button>
+      <button class="music-source-btn active" id="tab-src-native" data-tab="native" onclick="App.switchMusicModalTab('native')">🌿 100% Offline</button>
+      <button class="music-source-btn" id="tab-src-stream" data-tab="stream" onclick="App.switchMusicModalTab('stream')">📻 License-Free Radio</button>
+      <button class="music-source-btn" id="tab-src-spotify" data-tab="spotify" onclick="App.switchMusicModalTab('spotify')">🟢 Spotify</button>
     </div>
 
-    <!-- NATIVE INDIGENOUS SOUNDSCAPES SECTION -->
+    <!-- NATIVE 100% OFFLINE SOUNDSCAPES SECTION -->
     <div id="music-native-section">
       <div style="font-size:11px;font-weight:800;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">
-        Generative Web Audio · Zero Internet Needed · Free &amp; Ad-Free
+        100% Generative Web Audio · Zero Internet Needed · Free &amp; Ad-Free
       </div>
 
-      <div class="music-card active native-sound-card" data-sound="rain" onclick="App.selectNativeSound('rain', 'Gentle Rainfall', '🌧️')">
+      <div class="music-card active native-sound-card" data-sound="komorebi" onclick="App.selectNativeSound('komorebi', 'Komorebi Sunbeam Zen', '🌸')">
+        <div class="music-card-art">🌸</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Komorebi Sunbeam Zen</div>
+          <div class="music-card-desc">Japanese pentatonic chimes &amp; warm breeze (sunlight filtering through trees)</div>
+          <span class="music-card-badge">#Komorebi · #ZenGarden · #100%Offline</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card native-sound-card" data-sound="rain" onclick="App.selectNativeSound('rain', 'Gentle Rainfall', '🌧️')">
         <div class="music-card-art">🌧️</div>
         <div class="music-card-info">
-          <div class="music-card-title">Gentle Rainfall</div>
-          <div class="music-card-desc">Natural rainfall and soft ambience to wash away distractions</div>
-          <span class="music-card-badge">#Rain · #WhiteNoise · #Offline</span>
+          <div class="music-card-title">Gentle Rainfall &amp; Thunder</div>
+          <div class="music-card-desc">Natural rainfall and soft ambience to wash away background distractions</div>
+          <span class="music-card-badge">#Rain · #WhiteNoise · #100%Offline</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card native-sound-card" data-sound="lofi-beats" onclick="App.selectNativeSound('lofi-beats', 'Cozy Lofi Beats &amp; Vinyl', '☕')">
+        <div class="music-card-art">☕</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Cozy Lofi Beats &amp; Vinyl</div>
+          <div class="music-card-desc">Warm Rhodes chord progression with vinyl tape crackle &amp; chill sub-beat</div>
+          <span class="music-card-badge">#Chillhop · #Vinyl · #100%Offline</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card native-sound-card" data-sound="piano-calm" onclick="App.selectNativeSound('piano-calm', 'Peaceful Piano Reflections', '🎹')">
+        <div class="music-card-art">🎹</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Peaceful Piano Reflections</div>
+          <div class="music-card-desc">Gentle rolling acoustic piano arpeggios for calm, deep productivity</div>
+          <span class="music-card-badge">#Piano · #Acoustic · #100%Offline</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card native-sound-card" data-sound="forest" onclick="App.selectNativeSound('forest', 'Woodland Breeze &amp; Birds', '🌲')">
+        <div class="music-card-art">🌲</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Woodland Breeze &amp; Birds</div>
+          <div class="music-card-desc">Organic forest canopy breeze with natural procedural birdsong</div>
+          <span class="music-card-badge">#Nature · #Birds · #100%Offline</span>
         </div>
         <button class="music-card-play">▶</button>
       </div>
@@ -1772,18 +1828,18 @@ html.ob-done #onboarding,
         <div class="music-card-art">🌊</div>
         <div class="music-card-info">
           <div class="music-card-title">Ocean Waves</div>
-          <div class="music-card-desc">Rhythmic tidal swells for relaxed focus, breathing, and deep pacing</div>
-          <span class="music-card-badge">#Ocean · #Rhythm · #Calm</span>
+          <div class="music-card-desc">Rhythmic 7.2s tidal swells for paced breathing and relaxed flow</div>
+          <span class="music-card-badge">#Ocean · #Rhythm · #100%Offline</span>
         </div>
         <button class="music-card-play">▶</button>
       </div>
 
-      <div class="music-card native-sound-card" data-sound="fire" onclick="App.selectNativeSound('fire', 'Cozy Campfire', '🔥')">
+      <div class="music-card native-sound-card" data-sound="fire" onclick="App.selectNativeSound('fire', 'Cozy Campfire Hearth', '🔥')">
         <div class="music-card-art">🔥</div>
         <div class="music-card-info">
-          <div class="music-card-title">Cozy Campfire</div>
+          <div class="music-card-title">Cozy Campfire Hearth</div>
           <div class="music-card-desc">Warm crackling wood embers and soothing hearth glow</div>
-          <span class="music-card-badge">#Hearth · #Warmth · #Offline</span>
+          <span class="music-card-badge">#Hearth · #Warmth · #100%Offline</span>
         </div>
         <button class="music-card-play">▶</button>
       </div>
@@ -1793,7 +1849,7 @@ html.ob-done #onboarding,
         <div class="music-card-info">
           <div class="music-card-title">10 Hz Binaural Alpha Waves</div>
           <div class="music-card-desc">Stereo beat difference scientifically tuned for flow state &amp; calm focus</div>
-          <span class="music-card-badge">#Binaural · #Science · #AlphaWaves</span>
+          <span class="music-card-badge">#Binaural · #Science · #100%Offline</span>
         </div>
         <button class="music-card-play">▶</button>
       </div>
@@ -1803,7 +1859,7 @@ html.ob-done #onboarding,
         <div class="music-card-info">
           <div class="music-card-title">6 Hz Binaural Theta Waves</div>
           <div class="music-card-desc">Deep meditation frequency for intense problem-solving &amp; coding</div>
-          <span class="music-card-badge">#Binaural · #Theta · #DeepState</span>
+          <span class="music-card-badge">#Binaural · #Theta · #100%Offline</span>
         </div>
         <button class="music-card-play">▶</button>
       </div>
@@ -1813,27 +1869,64 @@ html.ob-done #onboarding,
         <div class="music-card-info">
           <div class="music-card-title">Deep Brown Noise</div>
           <div class="music-card-desc">Low-frequency acoustic shield, loved by ADHD minds for pure silence</div>
-          <span class="music-card-badge">#ADHD · #BrownNoise · #Focus</span>
+          <span class="music-card-badge">#ADHD · #BrownNoise · #100%Offline</span>
         </div>
         <button class="music-card-play">▶</button>
       </div>
 
-      <div class="music-card native-sound-card" data-sound="lofi" onclick="App.selectNativeSound('lofi', 'Lo-Fi Dream Chords', '🎶')">
-        <div class="music-card-art">🎶</div>
-        <div class="music-card-info">
-          <div class="music-card-title">Lo-Fi Dream Chords</div>
-          <div class="music-card-desc">Lush warm electric piano progression with tape chorus and shimmer</div>
-          <span class="music-card-badge">#LoFi · #Harmonics · #Chill</span>
-        </div>
-        <button class="music-card-play">▶</button>
-      </div>
-
-      <div class="music-card native-sound-card" data-sound="cafe" onclick="App.selectNativeSound('cafe', 'Warm Coffeehouse', '☕')">
+      <div class="music-card native-sound-card" data-sound="cafe" onclick="App.selectNativeSound('cafe', 'Warm Coffeehouse Room', '☕')">
         <div class="music-card-art">☕</div>
         <div class="music-card-info">
-          <div class="music-card-title">Warm Coffeehouse</div>
-          <div class="music-card-desc">Muffled ambient room tone simulating a cozy third place for work</div>
-          <span class="music-card-badge">#CoffeeShop · #Ambience · #Offline</span>
+          <div class="music-card-title">Warm Coffeehouse Room</div>
+          <div class="music-card-desc">Muffled ambient room acoustics simulating a cozy study cafe</div>
+          <span class="music-card-badge">#CoffeeShop · #Ambience · #100%Offline</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+    </div>
+
+    <!-- ROYALTY-FREE LICENSE-FREE LIVE RADIO SECTION -->
+    <div id="music-stream-section" style="display:none;">
+      <div style="font-size:11px;font-weight:800;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">
+        Continuous 24/7 License-Free Focus Radio · Online Streams
+      </div>
+
+      <div class="music-card stream-card" data-stream-id="stream-lofigirl" onclick="App.selectStream('https://stream.zeno.fm/f3wvbbqmdg8uv', 'Lofi Girl Study Stream 24/7', '📻', 'stream-lofigirl')">
+        <div class="music-card-art">📻</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Lofi Girl Study Stream 24/7</div>
+          <div class="music-card-desc">24/7 live relaxing chillhop beats to study, code, and chill to</div>
+          <span class="music-card-badge" style="background:rgba(16,185,129,.12);color:#10B981;">#LicenseFree · #24/7Stream · #Chillhop</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card stream-card" data-stream-id="stream-synthwave" onclick="App.selectStream('https://stream.nightride.fm/chill.mp3', 'Nightride Chill Synth Radio', '🌆', 'stream-synthwave')">
+        <div class="music-card-art">🌆</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Nightride Chill Synth Radio</div>
+          <div class="music-card-desc">Mellow retrowave and cyberpunk chill for late night coding flow</div>
+          <span class="music-card-badge" style="background:rgba(16,185,129,.12);color:#10B981;">#LicenseFree · #Synthwave · #FlowState</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card stream-card" data-stream-id="stream-classical" onclick="App.selectStream('https://stream.srg-ssr.ch/m/rsc_de/mp3_128', 'Classical Concentration Radio', '🎻', 'stream-classical')">
+        <div class="music-card-art">🎻</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Classical Concentration Radio</div>
+          <div class="music-card-desc">Public domain Mozart, Chopin, Vivaldi &amp; Bach for deep brain focus</div>
+          <span class="music-card-badge" style="background:rgba(16,185,129,.12);color:#10B981;">#PublicDomain · #Classical · #Mozart</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card stream-card" data-stream-id="stream-jazz" onclick="App.selectStream('https://icecast.walmradio.com:8443/jazz', 'Coffeehouse Jazz Lounge', '🎷', 'stream-jazz')">
+        <div class="music-card-art">🎷</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Coffeehouse Jazz Lounge</div>
+          <div class="music-card-desc">Smooth vintage saxophone, acoustic bass, and cozy jazz cafe atmosphere</div>
+          <span class="music-card-badge" style="background:rgba(16,185,129,.12);color:#10B981;">#RoyaltyFree · #Jazz · #Acoustic</span>
         </div>
         <button class="music-card-play">▶</button>
       </div>
@@ -2173,7 +2266,202 @@ const IndigenousAudio = {
     this.activeSound = soundType;
     this.isPlaying = true;
 
-    if(soundType === 'rain'){
+    if(soundType === 'komorebi'){
+      // Komorebi Sunbeam: Japanese pentatonic chimes & warm breeze (sunlight through trees)
+      const pentatonic = [293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99];
+      const droneBuf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+      const droneData = droneBuf.getChannelData(0);
+      let lastOut = 0.0;
+      for(let i=0; i<droneData.length; i++){
+        const white = Math.random() * 2 - 1;
+        droneData[i] = (lastOut + (0.02 * white)) / 1.02;
+        lastOut = droneData[i];
+        droneData[i] *= 1.8;
+      }
+      const droneSrc = ctx.createBufferSource();
+      droneSrc.buffer = droneBuf;
+      droneSrc.loop = true;
+      const droneFilter = ctx.createBiquadFilter();
+      droneFilter.type = 'lowpass';
+      droneFilter.frequency.value = 360;
+      droneSrc.connect(droneFilter);
+      droneFilter.connect(this.masterGain);
+      droneSrc.start();
+      this.activeNodes.push(droneSrc, droneFilter);
+
+      const playChime = () => {
+        if(!this.isPlaying) return;
+        const freq = pentatonic[Math.floor(Math.random() * pentatonic.length)];
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        const now = ctx.currentTime;
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.linearRampToValueAtTime(0.02, now + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8);
+        if(pan){
+          pan.pan.value = (Math.random() * 1.6) - 0.8;
+          osc.connect(gain); gain.connect(pan); pan.connect(this.masterGain);
+          this.activeNodes.push(pan);
+        } else {
+          osc.connect(gain); gain.connect(this.masterGain);
+        }
+        osc.start(now);
+        osc.stop(now + 3.0);
+        this.activeNodes.push(osc, gain);
+      };
+      playChime();
+      this.lfoTimer = setInterval(playChime, 1400);
+    }
+    else if(soundType === 'lofi-beats' || soundType === 'lofi'){
+      // Cozy Lofi Beats: Vinyl crackle + Rhodes chords progression + chill sub-beat
+      const vinylBuf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+      const vData = vinylBuf.getChannelData(0);
+      for(let i=0; i<vData.length; i++){
+        vData[i] = (Math.random() * 2 - 1) * 0.008 + (Math.random() > 0.999 ? (Math.random()*2-1)*0.06 : 0);
+      }
+      const vSrc = ctx.createBufferSource();
+      vSrc.buffer = vinylBuf;
+      vSrc.loop = true;
+      const vFilter = ctx.createBiquadFilter();
+      vFilter.type = 'bandpass';
+      vFilter.frequency.value = 1800;
+      vSrc.connect(vFilter);
+      vFilter.connect(this.masterGain);
+      vSrc.start();
+      this.activeNodes.push(vSrc, vFilter);
+
+      const chords = [
+        [261.63, 329.63, 392.00, 493.88, 587.33], // Cmaj9
+        [220.00, 261.63, 329.63, 392.00],        // Am7
+        [174.61, 220.00, 261.63, 329.63],        // Fmaj7
+        [196.00, 246.94, 293.66, 392.00]         // G7
+      ];
+      let chordIdx = 0;
+      const playStep = () => {
+        if(!this.isPlaying) return;
+        const freqs = chords[chordIdx % chords.length];
+        chordIdx++;
+        const now = ctx.currentTime;
+        // Warm kick sub
+        const kickOsc = ctx.createOscillator();
+        const kickGain = ctx.createGain();
+        kickOsc.frequency.setValueAtTime(90, now);
+        kickOsc.frequency.exponentialRampToValueAtTime(38, now + 0.16);
+        kickGain.gain.setValueAtTime(0.06, now);
+        kickGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+        kickOsc.connect(kickGain);
+        kickGain.connect(this.masterGain);
+        kickOsc.start(now);
+        kickOsc.stop(now + 0.25);
+        this.activeNodes.push(kickOsc, kickGain);
+
+        freqs.forEach(freq => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const filter = ctx.createBiquadFilter();
+          osc.type = 'triangle';
+          osc.frequency.value = freq;
+          filter.type = 'lowpass';
+          filter.frequency.value = 580;
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(0.016, now + 0.8);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 6.0);
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.masterGain);
+          osc.start(now);
+          osc.stop(now + 6.2);
+          this.activeNodes.push(osc, gain, filter);
+        });
+      };
+      playStep();
+      this.lfoTimer = setInterval(playStep, 6000);
+    }
+    else if(soundType === 'piano-calm'){
+      // Peaceful Piano Reflections: C - Em - F - G gentle rolling arpeggios
+      const arpeggios = [
+        [261.63, 329.63, 392.00, 523.25],
+        [329.63, 392.00, 493.88, 659.25],
+        [349.23, 440.00, 523.25, 698.46],
+        [392.00, 493.88, 587.33, 783.99]
+      ];
+      let arpIdx = 0, noteStep = 0;
+      const playNextNote = () => {
+        if(!this.isPlaying) return;
+        const chord = arpeggios[arpIdx % arpeggios.length];
+        const freq = chord[noteStep % chord.length];
+        noteStep++;
+        if(noteStep >= chord.length){ noteStep = 0; arpIdx++; }
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.value = freq;
+        const now = ctx.currentTime;
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.linearRampToValueAtTime(0.018, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.0);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 2.2);
+        this.activeNodes.push(osc, gain);
+      };
+      playNextNote();
+      this.lfoTimer = setInterval(playNextNote, 620);
+    }
+    else if(soundType === 'forest'){
+      // Woodland Breeze & Birds: Forest air + procedural birdsong chirps
+      const buf = ctx.createBuffer(1, ctx.sampleRate * 2.5, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      let b0=0, b1=0, b2=0;
+      for(let i=0; i<data.length; i++){
+        const w = Math.random() * 2 - 1;
+        b0 = 0.998 * b0 + w * 0.04;
+        b1 = 0.992 * b1 + w * 0.06;
+        b2 = 0.965 * b2 + w * 0.12;
+        data[i] = (b0 + b1 + b2) * 0.04;
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = 800;
+      filter.Q.value = 0.8;
+      src.connect(filter);
+      filter.connect(this.masterGain);
+      src.start();
+      this.activeNodes.push(src, filter);
+
+      const playChirp = () => {
+        if(!this.isPlaying) return;
+        if(Math.random() > 0.45){
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          const startFreq = 2400 + Math.random() * 800;
+          const endFreq = startFreq + (Math.random() > 0.5 ? 500 : -450);
+          const now = ctx.currentTime;
+          osc.frequency.setValueAtTime(startFreq, now);
+          osc.frequency.exponentialRampToValueAtTime(endFreq, now + 0.12);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(0.012, now + 0.03);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.15);
+          osc.connect(gain);
+          gain.connect(this.masterGain);
+          osc.start(now);
+          osc.stop(now + 0.18);
+          this.activeNodes.push(osc, gain);
+        }
+      };
+      playChirp();
+      const chirpTimer = setInterval(playChirp, 1700);
+      this.activeNodes.push({ stop: () => clearInterval(chirpTimer) });
+    }
+    else if(soundType === 'rain'){
       // Natural Rain: Pink-filtered noise + soft thunder/droplet modulation
       const buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
       const data = buf.getChannelData(0);
@@ -2324,42 +2612,6 @@ const IndigenousAudio = {
       src.start();
       this.activeNodes.push(src, lp);
     }
-    else if(soundType === 'lofi'){
-      // Lo-Fi Dream Chords: Cmaj9 -> Am7 -> Fmaj7 -> G
-      const chords = [
-        [261.63, 329.63, 392.00, 493.88, 587.33],
-        [220.00, 261.63, 329.63, 392.00],
-        [174.61, 220.00, 261.63, 329.63],
-        [196.00, 246.94, 293.66, 392.00]
-      ];
-      let chordIdx = 0;
-      const playNextChord = () => {
-        if(!this.isPlaying) return;
-        const freqs = chords[chordIdx % chords.length];
-        chordIdx++;
-        freqs.forEach(freq => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          const filter = ctx.createBiquadFilter();
-          osc.type = 'triangle';
-          osc.frequency.value = freq;
-          filter.type = 'lowpass';
-          filter.frequency.value = 620;
-          const now = ctx.currentTime;
-          gain.gain.setValueAtTime(0.001, now);
-          gain.gain.linearRampToValueAtTime(0.014, now + 1.2);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + 6.6);
-          osc.connect(filter);
-          filter.connect(gain);
-          gain.connect(this.masterGain);
-          osc.start(now);
-          osc.stop(now + 6.8);
-          this.activeNodes.push(osc, gain, filter);
-        });
-      };
-      playNextChord();
-      this.lfoTimer = setInterval(playNextChord, 6800);
-    }
     else if(soundType === 'cafe'){
       // Cozy Cafe: warm mid-range room acoustics
       const buf = ctx.createBuffer(1, ctx.sampleRate * 2.5, ctx.sampleRate);
@@ -2384,6 +2636,64 @@ const IndigenousAudio = {
       src.start();
       this.activeNodes.push(src, filter);
     }
+  }
+};
+
+/* ===================================================
+   ROYALTY-FREE LICENSE-FREE STREAM ENGINE
+   Streams 24/7 focus radio with automatic offline fallback
+   =================================================== */
+const StreamAudio = {
+  audioEl: null,
+  currentUrl: null,
+  isPlaying: false,
+
+  getEl(){
+    if(!this.audioEl){
+      this.audioEl = document.getElementById('royalty-stream-audio');
+      if(this.audioEl){
+        this.audioEl.addEventListener('error', (e) => {
+          console.warn('[Stream Error]', e);
+          if(!navigator.onLine){
+            showToast('Offline: Switched to Komorebi Sunbeam 🌿', true);
+            App.selectNativeSound('komorebi', 'Komorebi Sunbeam Zen', '🌸');
+          } else {
+            showToast('Stream buffer delay — trying offline soundscape 🌸');
+            App.selectNativeSound('komorebi', 'Komorebi Sunbeam Zen', '🌸');
+          }
+        });
+      }
+    }
+    return this.audioEl;
+  },
+
+  play(url, volume = 0.7){
+    const el = this.getEl();
+    if(!el) return;
+    this.stop();
+    this.currentUrl = url;
+    el.src = url;
+    el.volume = Math.max(0, Math.min(1, volume));
+    el.play().then(() => {
+      this.isPlaying = true;
+    }).catch(err => {
+      console.warn('[Stream Play Catch]', err);
+    });
+  },
+
+  stop(){
+    const el = this.getEl();
+    if(el){
+      el.pause();
+      el.removeAttribute('src');
+      el.load();
+    }
+    this.isPlaying = false;
+  },
+
+  setVolume(vol){
+    const el = this.getEl();
+    if(el) el.volume = Math.max(0, Math.min(1, vol));
   }
 };
 
@@ -3062,13 +3372,17 @@ const App = {
     { id: '37i9dQZF1DX5trt9i14X7j', name: 'Coding Flow', emoji: '⚡', desc: 'Flow state electronic beats' },
   ],
 
-  currentAudioSource: 'native', // 'native' | 'spotify'
-  nativeSoundId: 'rain',
-  nativeSoundName: 'Gentle Rain',
-  nativeSoundEmoji: '🌧️',
+  currentAudioSource: 'native', // 'native' | 'stream' | 'spotify'
+  nativeSoundId: 'komorebi',
+  nativeSoundName: 'Komorebi Sunbeam',
+  nativeSoundEmoji: '🌸',
+  streamUrl: null,
+  streamName: null,
+  streamEmoji: null,
+  streamId: null,
 
   loadAudioState(){
-    const saved = DB.load('selected_audio_source', { source: 'native', id: 'rain', name: 'Gentle Rain', emoji: '🌧️' });
+    const saved = DB.load('selected_audio_source', { source: 'native', id: 'komorebi', name: 'Komorebi Sunbeam', emoji: '🌸' });
     const savedVol = DB.load('native_audio_vol', 0.7);
     const slider = document.getElementById('np-vol-slider');
     if(slider) slider.value = savedVol;
@@ -3088,11 +3402,33 @@ const App = {
       document.querySelectorAll('.music-chip').forEach(c => {
         c.classList.toggle('active', c.getAttribute('data-id') === saved.id);
       });
+    } else if(saved && saved.source === 'stream'){
+      this.currentAudioSource = 'stream';
+      this.streamUrl = saved.url;
+      this.streamName = saved.name;
+      this.streamEmoji = saved.emoji;
+      this.streamId = saved.streamId;
+
+      const spIframe = document.getElementById('groove-spotify-iframe');
+      const nativeDeck = document.getElementById('native-player-deck');
+      const label = document.getElementById('groove-label');
+      const npArt = document.getElementById('np-art');
+      const npTitle = document.getElementById('np-title');
+      const npSub = document.getElementById('np-sub');
+      if(spIframe) spIframe.style.display = 'none';
+      if(nativeDeck) nativeDeck.style.display = 'flex';
+      if(label) label.textContent = `♫ ${saved.emoji} ${saved.name}`;
+      if(npArt) npArt.textContent = saved.emoji;
+      if(npTitle) npTitle.textContent = saved.name;
+      if(npSub) npSub.textContent = 'Royalty-Free Live Radio · License-Free';
+      document.querySelectorAll('.music-chip').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-stream') === saved.streamId);
+      });
     } else {
       this.currentAudioSource = 'native';
-      const id = saved?.id || 'rain';
-      const name = saved?.name || 'Gentle Rain';
-      const emoji = saved?.emoji || '🌧️';
+      const id = saved?.id || 'komorebi';
+      const name = saved?.name || 'Komorebi Sunbeam';
+      const emoji = saved?.emoji || '🌸';
       this.nativeSoundId = id;
       this.nativeSoundName = name;
       this.nativeSoundEmoji = emoji;
@@ -3102,11 +3438,13 @@ const App = {
       const label = document.getElementById('groove-label');
       const npArt = document.getElementById('np-art');
       const npTitle = document.getElementById('np-title');
+      const npSub = document.getElementById('np-sub');
       if(spIframe) spIframe.style.display = 'none';
       if(nativeDeck) nativeDeck.style.display = 'flex';
       if(label) label.textContent = `♫ ${emoji} ${name}`;
       if(npArt) npArt.textContent = emoji;
       if(npTitle) npTitle.textContent = name;
+      if(npSub) npSub.textContent = 'Built-in Soundscape · 100% Offline';
       document.querySelectorAll('.music-chip').forEach(c => {
         c.classList.toggle('active', c.getAttribute('data-sound') === id);
       });
@@ -3116,8 +3454,10 @@ const App = {
   switchMusicModalTab(tab){
     document.querySelectorAll('.music-source-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
     const nativeSec = document.getElementById('music-native-section');
+    const streamSec = document.getElementById('music-stream-section');
     const spotifySec = document.getElementById('music-spotify-section');
     if(nativeSec) nativeSec.style.display = tab === 'native' ? 'block' : 'none';
+    if(streamSec) streamSec.style.display = tab === 'stream' ? 'block' : 'none';
     if(spotifySec) spotifySec.style.display = tab === 'spotify' ? 'block' : 'none';
   },
 
@@ -3126,6 +3466,9 @@ const App = {
     this.nativeSoundId = soundId;
     this.nativeSoundName = name;
     this.nativeSoundEmoji = emoji;
+
+    // Stop stream if playing
+    StreamAudio.stop();
 
     // Pause/hide spotify
     const spIframe = document.getElementById('groove-spotify-iframe');
@@ -3148,6 +3491,8 @@ const App = {
     if(npArt) npArt.textContent = emoji;
     const npTitle = document.getElementById('np-title');
     if(npTitle) npTitle.textContent = name;
+    const npSub = document.getElementById('np-sub');
+    if(npSub) npSub.textContent = 'Built-in Soundscape · 100% Offline';
     const npPlayBtn = document.getElementById('np-play-btn');
     if(npPlayBtn) npPlayBtn.textContent = '⏸';
 
@@ -3160,14 +3505,89 @@ const App = {
     document.querySelectorAll('.native-sound-card').forEach(c => {
       c.classList.toggle('active', c.getAttribute('data-sound') === soundId);
     });
+    document.querySelectorAll('.stream-card').forEach(c => c.classList.remove('active'));
 
     DB.save('selected_audio_source', { source: 'native', id: soundId, name, emoji });
     closeModal('sp-playlist-modal');
     showToast(`Playing: ${emoji} ${name} 🎧`);
   },
 
+  selectStream(url, name, emoji, streamId){
+    if(!navigator.onLine){
+      showToast('✈️ Offline Mode: Stream needs internet. Playing Komorebi Sunbeam 🌿', true);
+      this.selectNativeSound('komorebi', 'Komorebi Sunbeam Zen', '🌸');
+      return;
+    }
+    this.currentAudioSource = 'stream';
+    this.streamId = streamId;
+    this.streamUrl = url;
+    this.streamName = name;
+    this.streamEmoji = emoji;
+
+    // Stop native sound
+    IndigenousAudio.stop();
+
+    // Hide spotify
+    const spIframe = document.getElementById('groove-spotify-iframe');
+    const nativeDeck = document.getElementById('native-player-deck');
+    const container = document.getElementById('groove-player-container');
+    const icon = document.getElementById('groove-toggle-icon');
+    if(spIframe) spIframe.style.display = 'none';
+    if(nativeDeck) nativeDeck.style.display = 'flex';
+    if(container) container.style.display = 'block';
+    if(icon) icon.textContent = '▲';
+
+    StreamAudio.play(url, IndigenousAudio.volume);
+    this.groovePlaying = true;
+    document.getElementById('groove-bar')?.classList.add('playing');
+
+    // Update labels and deck
+    const label = document.getElementById('groove-label');
+    if(label) label.textContent = `♫ ${emoji} ${name}`;
+    const npArt = document.getElementById('np-art');
+    if(npArt) npArt.textContent = emoji;
+    const npTitle = document.getElementById('np-title');
+    if(npTitle) npTitle.textContent = name;
+    const npSub = document.getElementById('np-sub');
+    if(npSub) npSub.textContent = 'Royalty-Free Live Radio · License-Free';
+    const npPlayBtn = document.getElementById('np-play-btn');
+    if(npPlayBtn) npPlayBtn.textContent = '⏸';
+
+    // Update quick chips
+    document.querySelectorAll('.music-chip').forEach(c => {
+      c.classList.toggle('active', c.getAttribute('data-stream') === streamId);
+    });
+
+    // Update modal cards
+    document.querySelectorAll('.stream-card').forEach(c => {
+      c.classList.toggle('active', c.getAttribute('data-stream-id') === streamId);
+    });
+    document.querySelectorAll('.native-sound-card').forEach(c => c.classList.remove('active'));
+
+    DB.save('selected_audio_source', { source: 'stream', url, name, emoji, streamId });
+    closeModal('sp-playlist-modal');
+    showToast(`Streaming: ${emoji} ${name} 📻`);
+  },
+
   toggleNativePlay(){
     const npPlayBtn = document.getElementById('np-play-btn');
+    if(this.currentAudioSource === 'stream'){
+      if(StreamAudio.isPlaying){
+        StreamAudio.stop();
+        this.groovePlaying = false;
+        document.getElementById('groove-bar')?.classList.remove('playing');
+        if(npPlayBtn) npPlayBtn.textContent = '▶';
+        showToast('Stream paused');
+      } else {
+        StreamAudio.play(this.streamUrl, IndigenousAudio.volume);
+        this.groovePlaying = true;
+        document.getElementById('groove-bar')?.classList.add('playing');
+        if(npPlayBtn) npPlayBtn.textContent = '⏸';
+        showToast(`Streaming resumed: ${this.streamEmoji||'📻'} ${this.streamName||''}`);
+      }
+      return;
+    }
+
     if(IndigenousAudio.isPlaying){
       IndigenousAudio.stop();
       this.groovePlaying = false;
@@ -3175,7 +3595,7 @@ const App = {
       if(npPlayBtn) npPlayBtn.textContent = '▶';
       showToast('Soundscape paused');
     } else {
-      IndigenousAudio.play(this.nativeSoundId || 'rain');
+      IndigenousAudio.play(this.nativeSoundId || 'komorebi');
       this.groovePlaying = true;
       document.getElementById('groove-bar')?.classList.add('playing');
       if(npPlayBtn) npPlayBtn.textContent = '⏸';
@@ -3184,11 +3604,13 @@ const App = {
   },
 
   onNativeVolumeChange(val){
-    IndigenousAudio.setVolume(parseFloat(val));
+    const v = parseFloat(val);
+    IndigenousAudio.setVolume(v);
+    StreamAudio.setVolume(v);
   },
 
   toggleGrooveBarClick(){
-    if(this.currentAudioSource === 'native'){
+    if(this.currentAudioSource === 'native' || this.currentAudioSource === 'stream'){
       this.toggleNativePlay();
     } else {
       this.toggleGroovePlayer();
@@ -3209,15 +3631,19 @@ const App = {
   },
 
   openMusicPicker(){
-    // Highlight currently active soundscape
+    // Highlight currently active soundscape or stream
     document.querySelectorAll('.native-sound-card').forEach(c => {
       c.classList.toggle('active', c.getAttribute('data-sound') === this.nativeSoundId);
+    });
+    document.querySelectorAll('.stream-card').forEach(c => {
+      c.classList.toggle('active', c.getAttribute('data-stream-id') === this.streamId);
     });
     const curSp = DB.load('selected_music', { id: '37i9dQZF1DXdLEN7aqioXM' });
     document.querySelectorAll('#music-cards-list .music-card').forEach(c => {
       c.classList.toggle('active', c.getAttribute('data-id') === curSp.id);
     });
-    this.switchMusicModalTab(this.currentAudioSource === 'spotify' ? 'spotify' : 'native');
+    const activeTab = this.currentAudioSource === 'spotify' ? 'spotify' : (this.currentAudioSource === 'stream' ? 'stream' : 'native');
+    this.switchMusicModalTab(activeTab);
     this.filterMusicCategory('all', document.querySelector('.music-cat-btn'));
     openModal('sp-playlist-modal');
   },
@@ -3237,6 +3663,7 @@ const App = {
   selectSpotifyPlaylist(id, name, type = 'playlist'){
     this.currentAudioSource = 'spotify';
     IndigenousAudio.stop();
+    StreamAudio.stop();
     this.groovePlaying = false;
     document.getElementById('groove-bar')?.classList.remove('playing');
 
@@ -3956,6 +4383,27 @@ const App = {
     const strictBadge = document.getElementById('dial-strict-badge');
     if(strictBadge) strictBadge.classList.toggle('active', this.focusStrictMode);
     this.updateViolationBadge();
+
+    // Mobile Offline Mode Status Banner & Network Listeners
+    const updateOnlineStatus = () => {
+      const banner = document.getElementById('offline-banner');
+      const isOnline = navigator.onLine;
+      if(banner){
+        banner.style.display = isOnline ? 'none' : 'flex';
+      }
+    };
+    window.addEventListener('online', () => {
+      updateOnlineStatus();
+      showToast('Back online! 🌐', true);
+    });
+    window.addEventListener('offline', () => {
+      updateOnlineStatus();
+      showToast('Offline Mode active · Local timer & sounds ready ✈️', true);
+      if(App.currentAudioSource === 'stream' && StreamAudio.isPlaying){
+        App.selectNativeSound('komorebi', 'Komorebi Sunbeam Zen', '🌸');
+      }
+    });
+    updateOnlineStatus();
 
     // Unlock audio on first tap
     document.body.addEventListener('click',()=>getAudioCtx(),{once:true});

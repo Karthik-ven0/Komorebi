@@ -1,7 +1,7 @@
-/* Focus PWA Service Worker — v10 */
+/* Focus PWA Service Worker — v11 */
 'use strict';
 
-const CACHE_NAME = 'focus-pwa-v10';
+const CACHE_NAME = 'focus-pwa-v11';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -62,20 +62,36 @@ self.addEventListener('fetch', (event) => {
     }
   }
 
-  // 1. HTML Navigation: Network-First (with offline fallback to ./index.html)
-  if (event.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/') {
+  // 1. HTML Navigation: Network-First with 1200ms timeout for instant mobile offline load
+  if (event.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname.endsWith('/')) {
     event.respondWith(
-      fetch(event.request)
-        .then((networkRes) => {
-          if (networkRes && networkRes.status === 200) {
-            const copy = networkRes.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)).catch(() => {});
-          }
-          return networkRes;
-        })
-        .catch(() =>
-          caches.match(event.request).then((cached) => cached || caches.match('./index.html'))
-        )
+      new Promise((resolve) => {
+        let timedOut = false;
+        const timer = setTimeout(() => {
+          timedOut = true;
+          caches.match(event.request).then((cached) => {
+            if (cached) resolve(cached);
+            else caches.match('./index.html').then((fallback) => fallback && resolve(fallback));
+          });
+        }, 1200);
+
+        fetch(event.request)
+          .then((networkRes) => {
+            clearTimeout(timer);
+            if (networkRes && networkRes.status === 200) {
+              const copy = networkRes.clone();
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)).catch(() => {});
+            }
+            if (!timedOut) resolve(networkRes);
+          })
+          .catch(() => {
+            clearTimeout(timer);
+            caches.match(event.request).then((cached) => {
+              if (cached) resolve(cached);
+              else caches.match('./index.html').then((fallback) => resolve(fallback || Response.error()));
+            });
+          });
+      })
     );
     return;
   }
