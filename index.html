@@ -601,9 +601,9 @@ html.ob-done #onboarding,
 .strict-confirm-overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;
   display:none;align-items:center;justify-content:center;
-  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);pointer-events:none;
 }
-.strict-confirm-overlay.open{display:flex;}
+.strict-confirm-overlay.open{display:flex;pointer-events:auto;}
 .strict-confirm-box{
   background:#fff;border-radius:var(--r-lg);padding:28px 24px;
   max-width:320px;width:90%;text-align:center;
@@ -622,9 +622,9 @@ html.ob-done #onboarding,
   position:fixed;inset:0;background:rgba(220,38,38,.92);z-index:9998;
   display:none;align-items:center;justify-content:center;flex-direction:column;
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  animation:strictFadeIn .3s ease;
+  animation:strictFadeIn .3s ease;pointer-events:none;
 }
-.strict-return-overlay.open{display:flex;}
+.strict-return-overlay.open{display:flex;pointer-events:auto;}
 @keyframes strictFadeIn{from{opacity:0}to{opacity:1}}
 .strict-return-overlay .sro-icon{font-size:56px;margin-bottom:16px;animation:sroShake .5s ease;}
 @keyframes sroShake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
@@ -746,9 +746,9 @@ html.ob-done #onboarding,
 /* Time's Up Full Screen Celebration Overlay */
 .times-up-overlay{
   position:fixed;inset:0;background:rgba(15,23,42,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  z-index:999999;display:none;align-items:center;justify-content:center;padding:24px;
+  z-index:999999;display:none;align-items:center;justify-content:center;padding:24px;pointer-events:none !important;
 }
-.times-up-overlay.open{display:flex;animation:tuFadeIn .25s ease-out;}
+.times-up-overlay.open{display:flex;pointer-events:auto !important;animation:tuFadeIn .25s ease-out;}
 @keyframes tuFadeIn{from{opacity:0;}to{opacity:1;}}
 .times-up-card{
   background:#fff;border-radius:26px;width:100%;max-width:360px;
@@ -3053,14 +3053,15 @@ const App = {
 
   /* --- NAVIGATION --- */
   navigate(screenId, btn){
-    if(this.focusStrictMode && screenId !== 's-focus'){
-      if(_timerRunning){
-        showToast('🔒 Strict Mode active — finish your session first!', true);
-      } else {
-        showToast('🔒 Strict Mode active — disable Strict Mode to switch screens', true);
-      }
+    if(this.focusStrictMode && _timerRunning && screenId !== 's-focus'){
+      showToast('🔒 Strict Mode active — finish or give up your session first!', true);
       return;
     }
+    // Clean up any stale modal states on navigation
+    document.querySelectorAll('.modal-back.open, .times-up-overlay.open, .strict-confirm-modal.open').forEach(m => m.classList.remove('open'));
+    const sro = document.getElementById('strict-return-overlay');
+    if(sro && !_timerRunning) sro.classList.remove('open');
+
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     const target = document.getElementById(screenId);
     if(target){
@@ -4025,6 +4026,7 @@ const App = {
     }
   },
   dismissStrictWarning(){
+    _strictNeedsAlert = false;
     const overlay = document.getElementById('strict-return-overlay');
     if(overlay) overlay.classList.remove('open');
     if(this.focusStrictMode && _timerRunning){
@@ -4042,6 +4044,7 @@ const App = {
     if(_timerRunning) timerPause();
     setDialDisplay();
     showToast(this.focusTimerMode==='countdown'?'Timer Mode: Countdown':'Timer Mode: Stopwatch');
+  },
   showTimesUpModal(){
     const tuModal = document.getElementById('times-up-modal');
     const taskName = document.getElementById('focus-task-name')?.textContent || 'Focus Session';
@@ -4765,14 +4768,17 @@ function _strictBeforeUnload(e){
 }
 
 /* Strict mode visibility change tracker */
+let _strictNeedsAlert = false;
 function _strictVisibilityHandler(){
   if(!App.focusStrictMode || !_timerRunning) return;
   if(document.visibilityState === 'hidden'){
     // User left the tab/app during strict session
     App.strictViolations = (App.strictViolations || 0) + 1;
     App.updateViolationBadge();
+    _strictNeedsAlert = true;
   } else if(document.visibilityState === 'visible'){
-    if(App.strictViolations > 0){
+    if(_strictNeedsAlert && App.strictViolations > 0){
+      _strictNeedsAlert = false;
       requestWakeLock();
       const sro = document.getElementById('strict-return-overlay');
       const sroCnt = document.getElementById('sro-violation-count');
