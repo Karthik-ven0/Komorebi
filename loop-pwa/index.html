@@ -617,6 +617,54 @@ html.ob-done #onboarding,
 .strict-btn-cancel{background:#F3F4F6;color:var(--text);}
 .strict-btn-giveup{background:var(--red);color:#fff;}
 
+/* Strict violation return overlay */
+.strict-return-overlay{
+  position:fixed;inset:0;background:rgba(220,38,38,.92);z-index:9998;
+  display:none;align-items:center;justify-content:center;flex-direction:column;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  animation:strictFadeIn .3s ease;
+}
+.strict-return-overlay.open{display:flex;}
+@keyframes strictFadeIn{from{opacity:0}to{opacity:1}}
+.strict-return-overlay .sro-icon{font-size:56px;margin-bottom:16px;animation:sroShake .5s ease;}
+@keyframes sroShake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+.strict-return-overlay .sro-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;}
+.strict-return-overlay .sro-sub{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:24px;text-align:center;max-width:280px;line-height:1.5;}
+.strict-return-overlay .sro-btn{background:#fff;color:var(--red);border:none;padding:14px 36px;border-radius:var(--r-full);font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .15s;}
+.strict-return-overlay .sro-btn:active{transform:scale(.95);}
+
+/* Strict violation counter badge */
+.dial-violation-badge{
+  position:absolute;top:-6px;left:-6px;z-index:5;
+  min-width:24px;height:24px;border-radius:12px;padding:0 6px;
+  background:#FBBF24;color:#92400E;
+  display:none;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(251,191,36,.5);
+}
+.dial-violation-badge.active{display:flex;}
+
+/* Focus settings stepper cards */
+.fs-dur-card{
+  background:#fff;border-radius:var(--r-md);padding:12px 8px;text-align:center;
+  border:1.5px solid var(--border);transition:all .15s;
+}
+.fs-dur-card.active{border-color:var(--accent);background:rgba(255,106,0,.07);}
+.fs-dur-label{font-size:11px;font-weight:600;color:var(--text-2);margin-bottom:4px;}
+.fs-dur-val{font-family:var(--mono);font-size:28px;font-weight:800;color:var(--text);margin:2px 0;}
+.fs-dur-unit{font-size:10px;color:var(--text-3);margin-bottom:6px;}
+.fs-stepper{display:flex;align-items:center;justify-content:center;gap:6px;}
+.fs-stepper button{
+  width:30px;height:30px;border-radius:50%;border:1.5px solid var(--border);
+  background:#F9FAFB;font-size:16px;font-weight:700;color:var(--text-2);
+  cursor:pointer;display:grid;place-items:center;transition:all .12s;
+}
+.fs-stepper button:active{transform:scale(.9);background:var(--accent-light);color:var(--accent);border-color:var(--accent);}
+
+/* Session bar dynamic */
+.fs-session-bar{height:16px;border-radius:8px;overflow:hidden;background:#E5E7EB;display:flex;transition:all .3s ease;}
+.fs-session-focus{background:var(--accent-grad);transition:width .3s ease;}
+.fs-session-break{background:repeating-linear-gradient(-45deg,#10B981,#10B981 5px,#059669 5px,#059669 10px);transition:width .3s ease;}
+
 /* Controls */
 .dial-controls{display:flex;align-items:center;justify-content:center;gap:22px;margin-bottom:22px;flex-shrink:0;width:100%;}
 .btn-dial-sub{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);font-size:17px;color:var(--text);display:grid;place-items:center;box-shadow:0 3px 10px rgba(0,0,0,.05);}
@@ -990,6 +1038,7 @@ html.ob-done #onboarding,
       <!-- Dark center disc with digits -->
       <div class="dial-disc" onclick="App.openCustomTimer()" title="Tap to set custom time">
         <div class="dial-strict-badge" id="dial-strict-badge">🔒</div>
+        <div class="dial-violation-badge" id="dial-violation-badge" title="Strict mode violations">⚠️ <span id="violation-count">0</span></div>
         <div class="dial-digits" id="dial-digits">25:00</div>
         <div class="dial-status" id="dial-status">Start</div>
       </div>
@@ -1443,44 +1492,64 @@ html.ob-done #onboarding,
       <div style="width:32px;"></div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
-      <div class="dur-card-fs active" data-mins="25" onclick="App.setFocusDur(25,this)">
-        <div style="font-size:11px;font-weight:600;color:var(--text-2);margin-bottom:6px;">Select Task</div>
-        <div style="font-family:var(--mono);font-size:30px;font-weight:800;color:var(--text);">25</div>
+      <div class="fs-dur-card active" id="fs-card-focus" onclick="App.selectDurMode('focus', this)">
+        <div class="fs-dur-label">Focus Task</div>
+        <div class="fs-dur-val" id="fs-val-focus">25</div>
+        <div class="fs-dur-unit">minutes</div>
+        <div class="fs-stepper" onclick="event.stopPropagation()">
+          <button onclick="App.adjustFocusSetting('focus', -5)" title="Decrease 5m">−</button>
+          <button onclick="App.adjustFocusSetting('focus', 5)" title="Increase 5m">+</button>
+        </div>
       </div>
-      <div class="dur-card-fs" data-mins="5" onclick="App.setFocusDur(5,this)">
-        <div style="font-size:11px;font-weight:600;color:var(--text-2);margin-bottom:6px;">Short Break</div>
-        <div style="font-family:var(--mono);font-size:30px;font-weight:800;color:var(--text);">5</div>
+      <div class="fs-dur-card" id="fs-card-shortBreak" onclick="App.selectDurMode('shortBreak', this)">
+        <div class="fs-dur-label">Short Break</div>
+        <div class="fs-dur-val" id="fs-val-shortBreak">5</div>
+        <div class="fs-dur-unit">minutes</div>
+        <div class="fs-stepper" onclick="event.stopPropagation()">
+          <button onclick="App.adjustFocusSetting('shortBreak', -1)" title="Decrease 1m">−</button>
+          <button onclick="App.adjustFocusSetting('shortBreak', 1)" title="Increase 1m">+</button>
+        </div>
       </div>
-      <div class="dur-card-fs" data-mins="15" onclick="App.setFocusDur(15,this)">
-        <div style="font-size:11px;font-weight:600;color:var(--text-2);margin-bottom:6px;">Long Break</div>
-        <div style="font-family:var(--mono);font-size:30px;font-weight:800;color:var(--text);">15</div>
+      <div class="fs-dur-card" id="fs-card-longBreak" onclick="App.selectDurMode('longBreak', this)">
+        <div class="fs-dur-label">Long Break</div>
+        <div class="fs-dur-val" id="fs-val-longBreak">15</div>
+        <div class="fs-dur-unit">minutes</div>
+        <div class="fs-stepper" onclick="event.stopPropagation()">
+          <button onclick="App.adjustFocusSetting('longBreak', -5)" title="Decrease 5m">−</button>
+          <button onclick="App.adjustFocusSetting('longBreak', 5)" title="Increase 5m">+</button>
+        </div>
       </div>
     </div>
-    <style>
-    .dur-card-fs{background:#fff;border-radius:var(--r-md);padding:14px 10px;text-align:center;border:1.5px solid var(--border);cursor:pointer;transition:all .15s;}
-    .dur-card-fs.active{border-color:var(--accent);background:rgba(255,106,0,.07);}
-    </style>
     <div style="background:#fff;border-radius:var(--r-lg);padding:16px 18px;border:1px solid var(--border);margin-bottom:14px;">
-      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text-2)" stroke-width="2" style="margin-top:2px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <div><div style="font-size:14px;font-weight:700;">Session length</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Focus intervals in one session: <span id="session-intervals">4</span></div></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--text-2)" stroke-width="2" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div>
+            <div style="font-size:14px;font-weight:700;">Session length</div>
+            <div style="font-size:12px;color:var(--text-2);margin-top:2px;">Focus intervals: <span id="session-intervals" style="font-weight:800;color:var(--accent);">4</span> (<span id="session-total-time">2h 00m</span>)</div>
+          </div>
+        </div>
+        <div class="fs-stepper">
+          <button onclick="App.adjustFocusSetting('intervals', -1)" title="Decrease intervals">−</button>
+          <button onclick="App.adjustFocusSetting('intervals', 1)" title="Increase intervals">+</button>
+        </div>
       </div>
-      <div style="height:16px;border-radius:8px;overflow:hidden;background:#E5E7EB;display:flex;">
-        <div style="width:75%;background:var(--accent-grad);"></div>
-        <div style="width:25%;background:repeating-linear-gradient(-45deg,#10B981,#10B981 5px,#059669 5px,#059669 10px);"></div>
+      <div class="fs-session-bar">
+        <div class="fs-session-focus" id="fs-session-focus" style="width:75%;"></div>
+        <div class="fs-session-break" id="fs-session-break" style="width:25%;"></div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:6px;">
-        <span style="font-size:11px;color:var(--text-2);">Focus time</span>
-        <span style="font-size:11px;color:var(--green);">Break</span>
+        <span style="font-size:11px;color:var(--text-2);" id="fs-session-focus-lbl">Focus: 1h 40m</span>
+        <span style="font-size:11px;color:var(--green);" id="fs-session-break-lbl">Break: 20m</span>
       </div>
     </div>
     <div style="background:#fff;border-radius:var(--r-md);padding:14px 16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-      <div><div style="font-size:14px;font-weight:700;">Do not Disturb</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Turn on DND when running a Focus Timer</div></div>
-      <label class="sw"><input type="checkbox" id="fs-dnd" checked><span class="sw-track"></span></label>
+      <div><div style="font-size:14px;font-weight:700;">Do not Disturb</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Mute in-app toast alerts when focusing</div></div>
+      <label class="sw"><input type="checkbox" id="fs-dnd" checked onchange="App.toggleDND(this.checked)"><span class="sw-track"></span></label>
     </div>
     <div style="background:#fff;border-radius:var(--r-md);padding:14px 16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-      <div><div style="font-size:14px;font-weight:700;">Always On Display</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Tap anywhere when viewing time to switch to AOD mode</div></div>
-      <label class="sw"><input type="checkbox" id="fs-aod" checked><span class="sw-track"></span></label>
+      <div><div style="font-size:14px;font-weight:700;">Always On Display</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Keep screen awake during focus sessions</div></div>
+      <label class="sw"><input type="checkbox" id="fs-aod" checked onchange="App.toggleAOD(this.checked)"><span class="sw-track"></span></label>
     </div>
   </div>
 </div>
@@ -1495,6 +1564,17 @@ html.ob-done #onboarding,
       <button class="strict-btn-giveup" onclick="App.confirmStrictGiveUp()">Give Up</button>
     </div>
   </div>
+</div>
+
+<!-- ===== STRICT VIOLATION RETURN OVERLAY ===== -->
+<div class="strict-return-overlay" id="strict-return-overlay">
+  <div class="sro-icon">⚠️</div>
+  <div class="sro-title">Strict Mode Alert!</div>
+  <div class="sro-sub">You left the Focus session. Strict mode requires your full attention. Stay on task!</div>
+  <div style="font-size:13px;color:rgba(255,255,255,.9);font-weight:700;margin-bottom:20px;">
+    Total Violations: <span id="sro-violation-count">1</span>
+  </div>
+  <button class="sro-btn" onclick="App.dismissStrictWarning()">Return to Focus</button>
 </div>
 
 <!-- ===== SPOTIFY SETUP MODAL ===== -->
@@ -1801,14 +1881,27 @@ const App = {
   formPrio: 'high',
   formTags: [],
   focusStrictMode: false,
+  strictViolations: 0,
+  focusSettings: {
+    focus: 25,
+    shortBreak: 5,
+    longBreak: 15,
+    intervals: 4,
+    dnd: true,
+    aod: true,
+  },
   focusTimerMode: 'countdown',
   groovePlaying: false,
   noisePlaying: false,
 
   /* --- NAVIGATION --- */
   navigate(screenId, btn){
-    if(this.focusStrictMode && _timerRunning && screenId !== 's-focus'){
-      showToast('🔒 Strict Mode active — finish your session first!');
+    if(this.focusStrictMode && screenId !== 's-focus'){
+      if(_timerRunning){
+        showToast('🔒 Strict Mode active — finish your session first!', true);
+      } else {
+        showToast('🔒 Strict Mode active — disable Strict Mode to switch screens', true);
+      }
       return;
     }
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -2401,17 +2494,36 @@ const App = {
   },
   toggleStrict(){
     this.focusStrictMode=!this.focusStrictMode;
+    DB.save('strict_mode', this.focusStrictMode);
     document.getElementById('pill-strict').classList.toggle('active',this.focusStrictMode);
     // Update strict badge visibility
     const badge = document.getElementById('dial-strict-badge');
-    if(badge) badge.classList.toggle('active', this.focusStrictMode && _timerRunning);
-    // Manage beforeunload
+    if(badge) badge.classList.toggle('active', this.focusStrictMode);
+    this.updateViolationBadge();
+    // Manage beforeunload and wake lock
     if(this.focusStrictMode && _timerRunning){
       window.addEventListener('beforeunload', _strictBeforeUnload);
+      requestWakeLock();
     } else {
       window.removeEventListener('beforeunload', _strictBeforeUnload);
+      if(!this.focusSettings?.aod) releaseWakeLock();
     }
-    showToast(this.focusStrictMode?'🔒 Strict Mode: ON — Navigation locked when running':'Strict Mode: OFF');
+    showToast(this.focusStrictMode?'🔒 Strict Mode: ON — Navigation locked':'Strict Mode: OFF', true);
+  },
+  updateViolationBadge(){
+    const badge = document.getElementById('dial-violation-badge');
+    const cnt = document.getElementById('violation-count');
+    if(badge && cnt){
+      cnt.textContent = this.strictViolations;
+      badge.classList.toggle('active', this.strictViolations > 0 && this.focusStrictMode);
+    }
+  },
+  dismissStrictWarning(){
+    const overlay = document.getElementById('strict-return-overlay');
+    if(overlay) overlay.classList.remove('open');
+    if(this.focusStrictMode && _timerRunning){
+      requestWakeLock();
+    }
   },
   toggleTimerMode(){
     this.focusTimerMode = this.focusTimerMode==='countdown'?'stopwatch':'countdown';
@@ -2491,14 +2603,16 @@ const App = {
     const badge = document.getElementById('dial-strict-badge');
     if(badge) badge.classList.remove('active');
     window.removeEventListener('beforeunload', _strictBeforeUnload);
+    releaseWakeLock();
     if(this._strictAction === 'pause') timerPause();
     else if(this._strictAction === 'reset') this.timerReset();
     else if(this._strictAction === 'skip') this.timerSkip();
     // Re-enable strict mode toggle state
     this.focusStrictMode = wasStrict;
     document.getElementById('pill-strict').classList.toggle('active', wasStrict);
+    if(badge) badge.classList.toggle('active', wasStrict);
     this._strictAction = null;
-    showToast('Session abandoned — Strict Mode still enabled');
+    showToast('Session abandoned — Strict Mode still enabled', true);
   },
   openCustomTimer(){
     if(_timerRunning){ showToast('Pause the timer first to set a custom time'); return; }
@@ -2524,14 +2638,145 @@ const App = {
     document.getElementById('ct-mins').value=mins;
     document.getElementById('ct-secs').value=0;
   },
-  openFocusSettings(){ openModal('focus-settings-modal'); },
-  closeFocusSettings(){ closeModal('focus-settings-modal'); },
-  setFocusDur(mins, el){
-    document.querySelectorAll('.dur-card-fs').forEach(c=>c.classList.remove('active'));
-    el.classList.add('active');
+  openFocusSettings(){
+    this.syncFocusSettingsDOM();
+    openModal('focus-settings-modal');
+  },
+  closeFocusSettings(){
+    closeModal('focus-settings-modal');
+  },
+  loadFocusSettings(){
+    const saved = DB.load('focus_settings', null);
+    if(saved){
+      this.focusSettings = Object.assign({
+        focus: 25,
+        shortBreak: 5,
+        longBreak: 15,
+        intervals: 4,
+        dnd: true,
+        aod: true,
+      }, saved);
+    }
+    this.syncFocusSettingsDOM();
+    if(!_timerRunning && !_isBreak){
+      _timerDuration = this.focusSettings.focus * 60;
+      _origDuration = _timerDuration;
+      _timerSecs = _timerDuration;
+      setDialDisplay();
+    }
+  },
+  syncFocusSettingsDOM(){
+    const s = this.focusSettings;
+    const focusVal = document.getElementById('fs-val-focus');
+    const shortVal = document.getElementById('fs-val-shortBreak');
+    const longVal = document.getElementById('fs-val-longBreak');
+    const intVal = document.getElementById('session-intervals');
+    const dndEl = document.getElementById('fs-dnd');
+    const aodEl = document.getElementById('fs-aod');
+
+    if(focusVal) focusVal.textContent = s.focus;
+    if(shortVal) shortVal.textContent = s.shortBreak;
+    if(longVal) longVal.textContent = s.longBreak;
+    if(intVal) intVal.textContent = s.intervals;
+    if(dndEl) dndEl.checked = !!s.dnd;
+    if(aodEl) aodEl.checked = !!s.aod;
+
+    this.updateSessionBar();
+  },
+  adjustFocusSetting(key, delta){
+    if(!this.focusSettings) this.loadFocusSettings();
+    let val = this.focusSettings[key] + delta;
+    if(key === 'focus') val = Math.max(1, Math.min(180, val));
+    else if(key === 'shortBreak') val = Math.max(1, Math.min(60, val));
+    else if(key === 'longBreak') val = Math.max(1, Math.min(90, val));
+    else if(key === 'intervals') val = Math.max(1, Math.min(12, val));
+
+    this.focusSettings[key] = val;
+    DB.save('focus_settings', this.focusSettings);
+    this.syncFocusSettingsDOM();
+
+    if(key === 'focus' && !_timerRunning && !_isBreak){
+      _timerDuration = val * 60;
+      _origDuration = _timerDuration;
+      _timerSecs = _timerDuration;
+      setDialDisplay();
+    } else if(key === 'shortBreak' && !_timerRunning && _isBreak){
+      _timerDuration = val * 60;
+      _origDuration = _timerDuration;
+      _timerSecs = _timerDuration;
+      setDialDisplay();
+    }
+  },
+  updateSessionBar(){
+    const s = this.focusSettings;
+    const totalFocus = s.focus * s.intervals;
+    const totalBreak = (s.shortBreak * Math.max(0, s.intervals - 1)) + s.longBreak;
+    const totalMins = totalFocus + totalBreak;
+
+    const focusBar = document.getElementById('fs-session-focus');
+    const breakBar = document.getElementById('fs-session-break');
+    const focusLbl = document.getElementById('fs-session-focus-lbl');
+    const breakLbl = document.getElementById('fs-session-break-lbl');
+    const totalLbl = document.getElementById('session-total-time');
+
+    const focusPct = totalMins > 0 ? Math.round((totalFocus / totalMins) * 100) : 75;
+    const breakPct = 100 - focusPct;
+
+    if(focusBar) focusBar.style.width = focusPct + '%';
+    if(breakBar) breakBar.style.width = breakPct + '%';
+
+    const fmtHoursMins = m => {
+      const h = Math.floor(m / 60);
+      const rem = m % 60;
+      return h > 0 ? `${h}h ${rem>0 ? rem+'m':''}`.trim() : `${rem}m`;
+    };
+
+    if(focusLbl) focusLbl.textContent = `Focus: ${fmtHoursMins(totalFocus)}`;
+    if(breakLbl) breakLbl.textContent = `Break: ${fmtHoursMins(totalBreak)}`;
+    if(totalLbl) totalLbl.textContent = fmtHoursMins(totalMins);
+  },
+  selectDurMode(mode, el){
+    document.querySelectorAll('.fs-dur-card').forEach(c => c.classList.remove('active'));
+    if(el) el.classList.add('active');
     timerPause();
-    _timerSecs=mins*60; _timerDuration=mins*60; _origDuration=mins*60;
-    setDialDisplay(); document.getElementById('dial-status').textContent='Start';
+    const s = this.focusSettings;
+    if(mode === 'focus'){
+      _isBreak = false;
+      const mins = s.focus;
+      _timerDuration = mins * 60; _origDuration = _timerDuration; _timerSecs = _timerDuration;
+      document.getElementById('dial-status').textContent = 'Start';
+      showToast(`Focus duration: ${mins}m`);
+    } else if(mode === 'shortBreak'){
+      _isBreak = true;
+      const mins = s.shortBreak;
+      _timerDuration = mins * 60; _origDuration = _timerDuration; _timerSecs = _timerDuration;
+      document.getElementById('dial-status').textContent = 'Break';
+      showToast(`Short Break: ${mins}m`);
+    } else if(mode === 'longBreak'){
+      _isBreak = true;
+      const mins = s.longBreak;
+      _timerDuration = mins * 60; _origDuration = _timerDuration; _timerSecs = _timerDuration;
+      document.getElementById('dial-status').textContent = 'Long Break';
+      showToast(`Long Break: ${mins}m`);
+    }
+    setDialDisplay();
+  },
+  toggleDND(val){
+    if(!this.focusSettings) this.loadFocusSettings();
+    this.focusSettings.dnd = !!val;
+    DB.save('focus_settings', this.focusSettings);
+    showToast(val ? 'DND enabled (in-app alerts muted during focus)' : 'DND disabled', true);
+  },
+  toggleAOD(val){
+    if(!this.focusSettings) this.loadFocusSettings();
+    this.focusSettings.aod = !!val;
+    DB.save('focus_settings', this.focusSettings);
+    if(val && _timerRunning){
+      requestWakeLock();
+    } else if(!val && !_timerRunning){
+      releaseWakeLock();
+    }
+    showToast(val ? 'Always-on Display enabled' : 'Always-on Display disabled', true);
   },
 
   /* --- SPOTIFY SETUP & SETTINGS NAVIGATION --- */
@@ -2892,9 +3137,14 @@ const App = {
       if(!document.fullscreenElement) document.getElementById('pill-fullscreen').classList.remove('active');
     });
 
-    // Init timer display
-    _timerDuration=25*60; _origDuration=25*60;
-    setDialDisplay();
+    // Init focus settings and strict mode preference
+    this.loadFocusSettings();
+    this.focusStrictMode = !!DB.load('strict_mode', false);
+    const strictPill = document.getElementById('pill-strict');
+    if(strictPill) strictPill.classList.toggle('active', this.focusStrictMode);
+    const strictBadge = document.getElementById('dial-strict-badge');
+    if(strictBadge) strictBadge.classList.toggle('active', this.focusStrictMode);
+    this.updateViolationBadge();
 
     // Unlock audio on first tap
     document.body.addEventListener('click',()=>getAudioCtx(),{once:true});
@@ -2920,6 +3170,27 @@ const App = {
 };
 
 /* ===================================================
+   WAKE LOCK (Screen Always On)
+   =================================================== */
+let _wakeLock = null;
+async function requestWakeLock(){
+  try {
+    if('wakeLock' in navigator){
+      _wakeLock = await navigator.wakeLock.request('screen');
+      _wakeLock.addEventListener('release', () => { _wakeLock = null; });
+    }
+  } catch(err){
+    console.log('Wake Lock unavailable:', err);
+  }
+}
+function releaseWakeLock(){
+  if(_wakeLock){
+    try { _wakeLock.release(); } catch(e){}
+    _wakeLock = null;
+  }
+}
+
+/* ===================================================
    TIMER INTERNALS
    =================================================== */
 let _timerDuration = 25*60;
@@ -2935,21 +3206,20 @@ function _strictBeforeUnload(e){
 }
 
 /* Strict mode visibility change tracker */
-let _strictVisGrace = null;
 function _strictVisibilityHandler(){
   if(!App.focusStrictMode || !_timerRunning) return;
   if(document.visibilityState === 'hidden'){
-    // User left the tab — start grace period
-    _strictVisGrace = setTimeout(()=>{
-      // Grace period expired — warn heavily
-      showToast('⚠️ You left for too long! Focus broken.');
-      _strictVisGrace = null;
-    }, 10000);
+    // User left the tab/app during strict session
+    App.strictViolations = (App.strictViolations || 0) + 1;
+    App.updateViolationBadge();
   } else if(document.visibilityState === 'visible'){
-    if(_strictVisGrace){
-      clearTimeout(_strictVisGrace);
-      _strictVisGrace = null;
-      showToast('👁️ Stay focused! Do not switch tabs.');
+    if(App.strictViolations > 0){
+      requestWakeLock();
+      const sro = document.getElementById('strict-return-overlay');
+      const sroCnt = document.getElementById('sro-violation-count');
+      if(sroCnt) sroCnt.textContent = App.strictViolations;
+      if(sro) sro.classList.add('open');
+      if(navigator.vibrate) navigator.vibrate([150, 75, 150]);
     }
   }
 }
@@ -2967,6 +3237,15 @@ function timerStart(){
     const badge = document.getElementById('dial-strict-badge');
     if(badge) badge.classList.add('active');
     window.addEventListener('beforeunload', _strictBeforeUnload);
+    requestWakeLock();
+    // Auto-enter fullscreen for strict immersion
+    if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+      document.documentElement.requestFullscreen().then(()=>{
+        document.getElementById('pill-fullscreen')?.classList.add('active');
+      }).catch(()=>{});
+    }
+  } else if(App.focusSettings?.aod){
+    requestWakeLock();
   }
 
   _timerInterval=setInterval(()=>{
@@ -2996,16 +3275,19 @@ function timerPause(){
   document.getElementById('btn-timer-play').innerHTML='▶';
   if(document.getElementById('dial-status').textContent==='Focusing')
     document.getElementById('dial-status').textContent='Paused';
-  // Disable strict enforcement UI
-  const badge = document.getElementById('dial-strict-badge');
-  if(badge) badge.classList.remove('active');
+
   window.removeEventListener('beforeunload', _strictBeforeUnload);
+  if(!App.focusStrictMode || !App.focusSettings?.aod){
+    releaseWakeLock();
+  }
 }
 
 function timerComplete(){
-  // Auto-unlock strict mode on natural completion
   const wasStrict = App.focusStrictMode;
+  const violations = App.strictViolations || 0;
   timerPause();
+  releaseWakeLock();
+
   // Use Spotify reminder track if connected, else fall back to chime
   if(window.Spotify && Spotify.isConnected() && Spotify.reminderTrack){
     Spotify.playReminderTone();
@@ -3014,7 +3296,18 @@ function timerComplete(){
   }
   if(navigator.vibrate) navigator.vibrate([200,100,200,100,200]);
   document.getElementById('dial-status').textContent='Done! 🎉';
-  showToast(wasStrict ? '🏆 Strict session complete! Amazing discipline! 🎉' : 'Focus session complete! Great work! 🎉');
+
+  if(wasStrict){
+    if(violations === 0){
+      showToast('🏆 Strict session complete! Zero violations! Amazing focus! 🌟', true);
+    } else {
+      showToast(`Strict session ended with ${violations} violation${violations>1?'s':''}. Keep striving! 💪`, true);
+    }
+    App.strictViolations = 0;
+    App.updateViolationBadge();
+  } else {
+    showToast('Focus session complete! Great work! 🎉', true);
+  }
   setTimeout(()=>App.timerSkip(),1500);
 }
 
@@ -3026,7 +3319,8 @@ function pad2(n){ return String(n).padStart(2,'0'); }
 function cap(s){ return s?s.charAt(0).toUpperCase()+s.slice(1):''; }
 function esc(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-function showToast(msg){
+function showToast(msg, force=false){
+  if(!force && _timerRunning && App.focusSettings?.dnd) return;
   const el=document.getElementById('toast');
   el.textContent=msg; el.classList.add('show');
   clearTimeout(el._t);

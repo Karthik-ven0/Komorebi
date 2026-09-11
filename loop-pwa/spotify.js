@@ -237,8 +237,40 @@ const Spotify = {
   },
 
   async fetchPlaylists() {
-    const data = await this.api('/me/playlists?limit=50');
-    return data?.items || [];
+    try {
+      const ok = await this.ensureToken();
+      if (!ok) {
+        return { error: 'token_expired', message: 'Spotify session expired or token missing. Please reconnect Spotify.' };
+      }
+      const res = await fetch('https://api.spotify.com/v1/me/playlists?limit=50', {
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.status === 401) {
+        this.disconnect();
+        return { error: 'unauthorized', message: 'Spotify session expired. Please reconnect.' };
+      }
+      if (res.status === 403) {
+        return {
+          error: 'forbidden',
+          message: 'Spotify Developer App is in Development Mode. Make sure your Spotify email is added to "Users and Access" in your Spotify Developer Dashboard.'
+        };
+      }
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        return {
+          error: 'api_error',
+          message: err?.error?.message || `Spotify API returned status ${res.status}.`
+        };
+      }
+      const data = await res.json();
+      return { items: data.items || [] };
+    } catch (err) {
+      console.error('fetchPlaylists error:', err);
+      return { error: 'network_error', message: 'Could not connect to Spotify. Check internet connection.' };
+    }
   },
 
   async fetchPlaylistTracks(playlistId) {
@@ -399,9 +431,9 @@ const Spotify = {
           </div>
         </div>
         <div style="display:flex;gap:8px;align-items:center;">
-          <button onclick="Spotify.prev()" style="border:none;background:none;font-size:16px;cursor:pointer;">⏮</button>
-          <button onclick="Spotify.isPlaying?Spotify.pause():Spotify.resume()" style="border:none;background:var(--accent);color:#fff;width:32px;height:32px;border-radius:50%;font-size:13px;cursor:pointer;">${this.isPlaying ? '❚❚' : '▶'}</button>
-          <button onclick="Spotify.next()" style="border:none;background:none;font-size:16px;cursor:pointer;">⏭</button>
+          <button onclick="event.stopPropagation();Spotify.prev()" style="border:none;background:none;font-size:16px;cursor:pointer;">⏮</button>
+          <button onclick="event.stopPropagation();(Spotify.isPlaying?Spotify.pause():Spotify.resume())" style="border:none;background:var(--accent);color:#fff;width:32px;height:32px;border-radius:50%;font-size:13px;cursor:pointer;">${this.isPlaying ? '❚❚' : '▶'}</button>
+          <button onclick="event.stopPropagation();Spotify.next()" style="border:none;background:none;font-size:16px;cursor:pointer;">⏭</button>
         </div>`;
     } else {
       bar.innerHTML = `
@@ -409,7 +441,7 @@ const Spotify = {
           <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Green.png" style="height:18px;object-fit:contain;">
           <span style="font-size:13px;font-weight:700;">Choose Playlist</span>
         </div>
-        <button onclick="Spotify.openPlaylistPicker()" style="border:none;background:var(--accent);color:#fff;padding:6px 14px;border-radius:var(--r-full);font-size:12.5px;font-weight:700;cursor:pointer;">Browse</button>`;
+        <button onclick="event.stopPropagation();Spotify.openPlaylistPicker()" style="border:none;background:var(--accent);color:#fff;padding:6px 14px;border-radius:var(--r-full);font-size:12.5px;font-weight:700;cursor:pointer;">Browse</button>`;
     }
   },
 
@@ -429,19 +461,50 @@ const Spotify = {
     }
     openModal('sp-playlist-modal');
     const grid = document.getElementById('sp-playlist-grid');
-    grid.innerHTML = `<div style="text-align:center;padding:30px;color:var(--text-2);">Loading playlists...</div>`;
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--text-2);"><div style="margin:0 auto 10px;width:24px;height:24px;border:2.5px solid #E5E7EB;border-top-color:#1DB954;border-radius:50%;animation:spin .8s linear infinite;"></div>Loading playlists from Spotify...</div>`;
 
-    const playlists = await this.fetchPlaylists();
-    if (!playlists.length) {
-      grid.innerHTML = `<div style="text-align:center;padding:30px;color:var(--text-2);">No playlists found.</div>`;
+    const result = await this.fetchPlaylists();
+    if (result.error) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:22px 16px;background:#FEF2F2;border-radius:var(--r-md);border:1px solid #FCA5A5;margin:8px 0;">
+          <div style="font-size:26px;margin-bottom:6px;">⚠️</div>
+          <div style="font-weight:800;color:#991B1B;font-size:13.5px;margin-bottom:6px;">Could Not Load Playlists</div>
+          <div style="font-size:12px;color:#7F1D1D;line-height:1.5;margin-bottom:14px;">${esc(result.message)}</div>
+          <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+            <button onclick="Spotify.openPlaylistPicker()" class="btn" style="background:#fff;border:1px solid #F87171;color:#991B1B;font-size:12px;padding:8px 16px;border-radius:var(--r-full);font-weight:700;cursor:pointer;">↻ Retry</button>
+            <button onclick="Spotify.reconnect()" class="btn" style="background:#1DB954;color:#fff;border:none;font-size:12px;padding:8px 16px;border-radius:var(--r-full);font-weight:700;cursor:pointer;">Reconnect Spotify</button>
+          </div>
+        </div>`;
       return;
     }
+
+    const playlists = result.items || [];
+    if (!playlists.length) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:30px 16px;color:var(--text-2);">
+          <div style="font-size:32px;margin-bottom:8px;">🎵</div>
+          <div style="font-weight:700;font-size:13.5px;color:var(--text);margin-bottom:4px;">No playlists found</div>
+          <div style="font-size:12px;line-height:1.4;margin-bottom:14px;">Create or save playlists in your Spotify account, then tap Refresh.</div>
+          <button onclick="Spotify.openPlaylistPicker()" class="btn" style="background:#F3F4F6;border:1px solid var(--border);color:var(--text);font-size:12px;padding:8px 16px;border-radius:var(--r-full);font-weight:700;cursor:pointer;">↻ Refresh</button>
+        </div>`;
+      return;
+    }
+
     grid.innerHTML = playlists.map(pl => `
       <div class="sp-pl-card ${this.selectedPlaylist?.id === pl.id ? 'active' : ''}" onclick="Spotify.pickPlaylist('${pl.id}','${esc(pl.name)}','${pl.uri}','${pl.images?.[0]?.url||''}')">
         ${pl.images?.[0]?.url ? `<img src="${pl.images[0].url}" style="width:100%;aspect-ratio:1;border-radius:10px;object-fit:cover;margin-bottom:8px;">` : `<div style="width:100%;aspect-ratio:1;border-radius:10px;background:#E5E7EB;display:grid;place-items:center;font-size:28px;margin-bottom:8px;">🎵</div>`}
         <div style="font-size:12.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(pl.name)}</div>
         <div style="font-size:11px;color:var(--text-2);">${pl.tracks?.total||0} tracks</div>
       </div>`).join('');
+  },
+
+  reconnect() {
+    closeModal('sp-playlist-modal');
+    if (this.clientId) {
+      this.connect(this.clientId);
+    } else {
+      App.openSpotifySetup();
+    }
   },
 
   pickPlaylist(id, name, uri, imgUrl) {
