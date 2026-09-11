@@ -543,7 +543,7 @@ html.ob-done #onboarding,
 .focus-task-name{font-size:20px;font-weight:800;letter-spacing:-.02em;}
 .focus-task-range{font-size:13px;color:var(--text-2);font-weight:600;margin-top:3px;}
 
-/* Timer Dial — exact image 2 reference */
+/* Timer Dial — SVG Progress Ring */
 .dial-outer{
   position:relative;width:240px;height:240px;
   margin:0 auto 22px;display:grid;place-items:center;flex-shrink:0;
@@ -554,21 +554,68 @@ html.ob-done #onboarding,
   animation:glow-pulse 3s infinite ease-in-out;
 }
 @keyframes glow-pulse{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.1);opacity:1}}
-.dial-disc{
-  width:220px;height:220px;border-radius:50%;
-  background:linear-gradient(135deg,#FFA040 0%,#FF5500 100%);
-  box-shadow:0 16px 40px rgba(255,85,0,.35),inset 0 2px 8px rgba(255,255,255,.45);
-  display:grid;place-items:center;position:relative;
-  border:8px solid rgba(255,255,255,.85);
+
+/* SVG ring container */
+.dial-ring-svg{
+  position:absolute;inset:0;width:100%;height:100%;
+  transform:rotate(-90deg); /* 12 o'clock start */
+  filter:drop-shadow(0 4px 18px rgba(255,85,0,.30));
 }
-.dial-inner{
-  width:162px;height:162px;border-radius:50%;
+.dial-ring-track{
+  fill:none;
+  stroke:rgba(255,220,190,.45);
+  stroke-width:14;
+}
+.dial-ring-indicator{
+  fill:none;
+  stroke:url(#dial-grad);
+  stroke-width:14;
+  stroke-linecap:round;
+  transition:stroke-dashoffset 0.4s ease;
+}
+
+/* Inner dark disc — overlaid on top of SVG */
+.dial-disc{
+  width:180px;height:180px;border-radius:50%;
   background:var(--bg-darker);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:inset 0 6px 16px rgba(0,0,0,.5);cursor:pointer;
+  box-shadow:inset 0 6px 18px rgba(0,0,0,.55), 0 0 0 6px rgba(255,255,255,.75);
+  position:relative;z-index:2;cursor:pointer;
 }
 .dial-digits{font-family:var(--mono);font-size:36px;font-weight:700;color:#fff;letter-spacing:-.04em;line-height:1;}
 .dial-status{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-top:7px;}
+
+/* Strict mode lock badge on dial */
+.dial-strict-badge{
+  position:absolute;top:-6px;right:-6px;z-index:5;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--red);color:#fff;
+  display:none;align-items:center;justify-content:center;
+  font-size:13px;box-shadow:0 2px 8px rgba(220,38,38,.45);
+  animation:strict-pulse 1.5s infinite ease-in-out;
+}
+.dial-strict-badge.active{display:flex;}
+@keyframes strict-pulse{0%,100%{box-shadow:0 2px 8px rgba(220,38,38,.45)}50%{box-shadow:0 2px 18px rgba(220,38,38,.7)}}
+
+/* Strict give-up confirmation modal */
+.strict-confirm-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;
+  display:none;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+}
+.strict-confirm-overlay.open{display:flex;}
+.strict-confirm-box{
+  background:#fff;border-radius:var(--r-lg);padding:28px 24px;
+  max-width:320px;width:90%;text-align:center;
+  box-shadow:0 16px 48px rgba(0,0,0,.25);
+}
+.strict-confirm-box h3{font-size:18px;font-weight:800;margin-bottom:8px;color:var(--text);}
+.strict-confirm-box p{font-size:13px;color:var(--text-2);margin-bottom:20px;line-height:1.5;}
+.strict-confirm-btns{display:flex;gap:10px;}
+.strict-confirm-btns button{flex:1;padding:12px;border-radius:var(--r-md);font-weight:700;font-size:14px;cursor:pointer;border:none;transition:transform .12s;}
+.strict-confirm-btns button:active{transform:scale(.96);}
+.strict-btn-cancel{background:#F3F4F6;color:var(--text);}
+.strict-btn-giveup{background:var(--red);color:#fff;}
 
 /* Controls */
 .dial-controls{display:flex;align-items:center;justify-content:center;gap:22px;margin-bottom:22px;flex-shrink:0;width:100%;}
@@ -596,8 +643,8 @@ html.ob-done #onboarding,
   .focus-task-center{ margin-bottom: 10px; }
   .focus-task-name{ font-size: 17px; }
   .dial-outer{ width: 200px; height: 200px; margin: 0 auto 14px; }
-  .dial-disc{ width: 185px; height: 185px; }
-  .dial-inner{ width: 138px; height: 138px; }
+  .dial-disc{ width: 150px; height: 150px; }
+  .dial-ring-svg .dial-ring-track, .dial-ring-svg .dial-ring-indicator{ stroke-width: 12; }
   .dial-digits{ font-size: 30px; }
   .dial-controls{ gap: 16px; margin-bottom: 14px; }
   .btn-dial-main{ width: 52px; height: 52px; font-size: 18px; }
@@ -929,11 +976,22 @@ html.ob-done #onboarding,
 
     <div class="dial-outer">
       <div class="dial-glow"></div>
-      <div class="dial-disc">
-        <div class="dial-inner" onclick="App.openCustomTimer()" title="Tap to set custom time">
-          <div class="dial-digits" id="dial-digits">25:00</div>
-          <div class="dial-status" id="dial-status">Start</div>
-        </div>
+      <!-- SVG Progress Ring -->
+      <svg class="dial-ring-svg" viewBox="0 0 240 240">
+        <defs>
+          <linearGradient id="dial-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFA040"/>
+            <stop offset="100%" stop-color="#FF5500"/>
+          </linearGradient>
+        </defs>
+        <circle class="dial-ring-track" cx="120" cy="120" r="105"/>
+        <circle class="dial-ring-indicator" id="dial-ring-indicator" cx="120" cy="120" r="105"/>
+      </svg>
+      <!-- Dark center disc with digits -->
+      <div class="dial-disc" onclick="App.openCustomTimer()" title="Tap to set custom time">
+        <div class="dial-strict-badge" id="dial-strict-badge">🔒</div>
+        <div class="dial-digits" id="dial-digits">25:00</div>
+        <div class="dial-status" id="dial-status">Start</div>
       </div>
     </div>
 
@@ -1427,6 +1485,18 @@ html.ob-done #onboarding,
   </div>
 </div>
 
+<!-- ===== STRICT MODE CONFIRMATION MODAL ===== -->
+<div class="strict-confirm-overlay" id="strict-confirm-modal">
+  <div class="strict-confirm-box">
+    <h3>🔒 Give up this session?</h3>
+    <p>Strict Mode is active. Are you sure you want to abandon this focus session? Your progress won't be saved.</p>
+    <div class="strict-confirm-btns">
+      <button class="strict-btn-cancel" onclick="App.closeStrictConfirm()">Keep Going 💪</button>
+      <button class="strict-btn-giveup" onclick="App.confirmStrictGiveUp()">Give Up</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== SPOTIFY SETUP MODAL ===== -->
 <div class="modal-back" id="sp-setup-modal">
   <div class="modal-sheet" style="max-height:92vh;overflow-y:auto;">
@@ -1690,6 +1760,24 @@ function timerDisplay(s){
 }
 function setDialDisplay(){
   document.getElementById('dial-digits').textContent = timerDisplay(_timerSecs);
+  // Update SVG progress ring
+  const ring = document.getElementById('dial-ring-indicator');
+  if(!ring) return;
+  const r = 105;
+  const C = 2 * Math.PI * r; // ~659.73
+  ring.style.strokeDasharray = C;
+  let progress;
+  if(App.focusTimerMode === 'stopwatch'){
+    // Stopwatch: fill up based on elapsed, cap at 60 min visual
+    const cap = Math.max(_timerDuration || 3600, 3600);
+    progress = Math.min(_timerSecs / cap, 1);
+  } else {
+    // Countdown: remaining / total
+    const total = _timerDuration || 1;
+    progress = _timerSecs / total;
+  }
+  const offset = C * (1 - progress);
+  ring.style.strokeDashoffset = offset;
 }
 
 /* ===================================================
@@ -1719,8 +1807,8 @@ const App = {
 
   /* --- NAVIGATION --- */
   navigate(screenId, btn){
-    if(this.focusStrictMode && screenId !== 's-focus'){
-      showToast('Strict Mode active — finish your session first!');
+    if(this.focusStrictMode && _timerRunning && screenId !== 's-focus'){
+      showToast('🔒 Strict Mode active — finish your session first!');
       return;
     }
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -2314,7 +2402,16 @@ const App = {
   toggleStrict(){
     this.focusStrictMode=!this.focusStrictMode;
     document.getElementById('pill-strict').classList.toggle('active',this.focusStrictMode);
-    showToast(this.focusStrictMode?'Strict Mode: ON — Navigation locked':'Strict Mode: OFF');
+    // Update strict badge visibility
+    const badge = document.getElementById('dial-strict-badge');
+    if(badge) badge.classList.toggle('active', this.focusStrictMode && _timerRunning);
+    // Manage beforeunload
+    if(this.focusStrictMode && _timerRunning){
+      window.addEventListener('beforeunload', _strictBeforeUnload);
+    } else {
+      window.removeEventListener('beforeunload', _strictBeforeUnload);
+    }
+    showToast(this.focusStrictMode?'🔒 Strict Mode: ON — Navigation locked when running':'Strict Mode: OFF');
   },
   toggleTimerMode(){
     this.focusTimerMode = this.focusTimerMode==='countdown'?'stopwatch':'countdown';
@@ -2341,8 +2438,26 @@ const App = {
   },
 
   /* --- TIMER CONTROLS --- */
-  timerToggle(){ if(_timerRunning) timerPause(); else timerStart(); },
+  timerToggle(){
+    if(_timerRunning){
+      // If strict mode active, confirm before pausing
+      if(this.focusStrictMode){
+        this._strictAction = 'pause';
+        document.getElementById('strict-confirm-modal').classList.add('open');
+        return;
+      }
+      timerPause();
+    } else {
+      timerStart();
+    }
+  },
   timerReset(){
+    // If strict mode active and timer running, confirm first
+    if(this.focusStrictMode && _timerRunning){
+      this._strictAction = 'reset';
+      document.getElementById('strict-confirm-modal').classList.add('open');
+      return;
+    }
     timerPause();
     _timerSecs = _timerDuration || 25*60;
     document.getElementById('dial-status').textContent='Start';
@@ -2351,10 +2466,39 @@ const App = {
     _isBreak=false;
   },
   timerSkip(){
+    // If strict mode active and timer running, confirm first
+    if(this.focusStrictMode && _timerRunning){
+      this._strictAction = 'skip';
+      document.getElementById('strict-confirm-modal').classList.add('open');
+      return;
+    }
     timerPause();
     if(!_isBreak){ _isBreak=true; _timerSecs=5*60; _timerDuration=5*60; document.getElementById('dial-status').textContent='Break'; showToast('Short Break started'); }
     else { _isBreak=false; _timerSecs=_origDuration||25*60; _timerDuration=_origDuration||25*60; document.getElementById('dial-status').textContent='Start'; }
     setDialDisplay();
+  },
+  /* --- STRICT MODE CONFIRMATION --- */
+  _strictAction: null,
+  closeStrictConfirm(){
+    document.getElementById('strict-confirm-modal').classList.remove('open');
+    this._strictAction = null;
+  },
+  confirmStrictGiveUp(){
+    document.getElementById('strict-confirm-modal').classList.remove('open');
+    // Temporarily disable strict to allow the action
+    const wasStrict = this.focusStrictMode;
+    this.focusStrictMode = false;
+    const badge = document.getElementById('dial-strict-badge');
+    if(badge) badge.classList.remove('active');
+    window.removeEventListener('beforeunload', _strictBeforeUnload);
+    if(this._strictAction === 'pause') timerPause();
+    else if(this._strictAction === 'reset') this.timerReset();
+    else if(this._strictAction === 'skip') this.timerSkip();
+    // Re-enable strict mode toggle state
+    this.focusStrictMode = wasStrict;
+    document.getElementById('pill-strict').classList.toggle('active', wasStrict);
+    this._strictAction = null;
+    showToast('Session abandoned — Strict Mode still enabled');
   },
   openCustomTimer(){
     if(_timerRunning){ showToast('Pause the timer first to set a custom time'); return; }
@@ -2739,6 +2883,8 @@ const App = {
     // Visibility change
     document.addEventListener('visibilitychange',()=>{
       if(document.visibilityState==='visible'){ this.renderHome(); if(_timerRunning) timerStart(); }
+      // Strict mode tab-switch detection
+      _strictVisibilityHandler();
     });
 
     // Fullscreen change
@@ -2779,6 +2925,35 @@ const App = {
 let _timerDuration = 25*60;
 let _origDuration = 25*60;
 
+/* Strict mode beforeunload handler */
+function _strictBeforeUnload(e){
+  if(App.focusStrictMode && _timerRunning){
+    e.preventDefault();
+    e.returnValue = 'Focus session in progress — are you sure you want to leave?';
+    return e.returnValue;
+  }
+}
+
+/* Strict mode visibility change tracker */
+let _strictVisGrace = null;
+function _strictVisibilityHandler(){
+  if(!App.focusStrictMode || !_timerRunning) return;
+  if(document.visibilityState === 'hidden'){
+    // User left the tab — start grace period
+    _strictVisGrace = setTimeout(()=>{
+      // Grace period expired — warn heavily
+      showToast('⚠️ You left for too long! Focus broken.');
+      _strictVisGrace = null;
+    }, 10000);
+  } else if(document.visibilityState === 'visible'){
+    if(_strictVisGrace){
+      clearTimeout(_strictVisGrace);
+      _strictVisGrace = null;
+      showToast('👁️ Stay focused! Do not switch tabs.');
+    }
+  }
+}
+
 function timerStart(){
   if(_timerRunning) return;
   _timerRunning=true;
@@ -2786,6 +2961,14 @@ function timerStart(){
   document.getElementById('btn-timer-play').innerHTML='❚❚';
   document.getElementById('dial-status').textContent='Focusing';
   getAudioCtx();
+
+  // Enable strict enforcement if strict mode is on
+  if(App.focusStrictMode){
+    const badge = document.getElementById('dial-strict-badge');
+    if(badge) badge.classList.add('active');
+    window.addEventListener('beforeunload', _strictBeforeUnload);
+  }
+
   _timerInterval=setInterval(()=>{
     if(App.focusTimerMode==='stopwatch'){
       _timerSecs++;
@@ -2813,9 +2996,15 @@ function timerPause(){
   document.getElementById('btn-timer-play').innerHTML='▶';
   if(document.getElementById('dial-status').textContent==='Focusing')
     document.getElementById('dial-status').textContent='Paused';
+  // Disable strict enforcement UI
+  const badge = document.getElementById('dial-strict-badge');
+  if(badge) badge.classList.remove('active');
+  window.removeEventListener('beforeunload', _strictBeforeUnload);
 }
 
 function timerComplete(){
+  // Auto-unlock strict mode on natural completion
+  const wasStrict = App.focusStrictMode;
   timerPause();
   // Use Spotify reminder track if connected, else fall back to chime
   if(window.Spotify && Spotify.isConnected() && Spotify.reminderTrack){
@@ -2825,7 +3014,7 @@ function timerComplete(){
   }
   if(navigator.vibrate) navigator.vibrate([200,100,200,100,200]);
   document.getElementById('dial-status').textContent='Done! 🎉';
-  showToast('Focus session complete! Great work! 🎉');
+  showToast(wasStrict ? '🏆 Strict session complete! Amazing discipline! 🎉' : 'Focus session complete! Great work! 🎉');
   setTimeout(()=>App.timerSkip(),1500);
 }
 

@@ -1,7 +1,7 @@
-/* Focus PWA Service Worker — v5 */
+/* Focus PWA Service Worker — v6 */
 'use strict';
 
-const CACHE_NAME = 'focus-pwa-v5';
+const CACHE_NAME = 'focus-pwa-v6';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
