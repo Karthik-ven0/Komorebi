@@ -731,17 +731,31 @@ html.ob-done #onboarding,
 .btn-dial-main{width:60px;height:60px;border-radius:50%;background:var(--bg-dark);color:#fff;border:none;font-size:20px;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.3);transition:transform .15s;}
 .btn-dial-main:active{transform:scale(.92);}
 
-/* Feature pills — exact image 2 */
-.feat-pills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:22px;flex-shrink:0;width:100%;}
+/* Feature pills — exact image 2 with 5 dynamic controls */
+.feat-pills{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:22px;flex-shrink:0;width:100%;}
 .feat-pill{
   background:#fff;border:1.5px solid #E5E7EB;border-radius:var(--r-md);
-  padding:11px 4px;text-align:center;font-size:11px;font-weight:700;
-  color:var(--text-2);display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:10px 2px;text-align:center;font-size:9.5px;font-weight:700;
+  color:var(--text-2);display:flex;flex-direction:column;align-items:center;gap:5px;
   cursor:pointer;transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.03);
+  white-space:nowrap;overflow:hidden;
 }
-.feat-pill svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+.feat-pill svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;}
 .feat-pill.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent);}
 .feat-pill:active{transform:scale(.96);}
+
+/* PiP floating notification active indicator banner */
+.pip-hint-banner{
+  background:rgba(255,106,0,0.1);border:1.5px solid rgba(255,106,0,0.35);
+  color:var(--accent);border-radius:var(--r-md);padding:8px 12px;font-size:11px;
+  font-weight:700;margin:-8px 0 14px;text-align:center;cursor:pointer;
+  display:none;align-items:center;justify-content:center;gap:6px;
+  animation:pipPulse 2s infinite ease-in-out;
+}
+@keyframes pipPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,106,0,0.25);}
+  50%{box-shadow:0 0 0 6px rgba(255,106,0,0);}
+}
 
 /* Compact height responsive adjustments for Focus screen */
 @media (max-height: 740px) {
@@ -1106,6 +1120,8 @@ html.ob-done #onboarding,
 
       <!-- HTML5 Royalty-Free Stream Audio Element -->
       <audio id="royalty-stream-audio" preload="none"></audio>
+      <!-- HTML5 Video element for Floating PiP Timer Window -->
+      <video id="floating-pip-video" style="display:none;position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;" muted playsinline autoplay autopictureinpicture></video>
 
       <!-- Spotify Player Iframe (Hidden when native sound is active) -->
       <iframe id="groove-spotify-iframe" 
@@ -1170,6 +1186,12 @@ html.ob-done #onboarding,
       <button class="btn-dial-sub" onclick="App.timerSkip()" title="Next">⏭</button>
     </div>
 
+    <!-- Floating PiP Indicator Banner (shows when PiP is active) -->
+    <div class="pip-hint-banner" id="pip-active-hint" onclick="App.toggleFloatingPip()">
+      <span>📺 Floating Mini Timer active</span>
+      <span style="font-size:10px;background:var(--accent);color:#fff;padding:2px 7px;border-radius:10px;font-weight:800;">ON YOUTUBE</span>
+    </div>
+
     <!-- Feature pills — image 2 reference, all functional -->
     <div class="feat-pills">
       <button class="feat-pill" id="pill-strict" onclick="App.toggleStrict()">
@@ -1179,6 +1201,10 @@ html.ob-done #onboarding,
       <button class="feat-pill active" id="pill-timer" onclick="App.toggleTimerMode()">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         <span>Timer Mode</span>
+      </button>
+      <button class="feat-pill" id="pill-pip" onclick="App.toggleFloatingPip()" title="Float timer on top of YouTube & other apps">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><rect x="11" y="9" width="9" height="7" rx="1" ry="1" fill="currentColor" opacity="0.35"/><polyline points="2 17 6 21 18 21 22 17"/></svg>
+        <span>Floating PiP</span>
       </button>
       <button class="feat-pill" id="pill-fullscreen" onclick="App.toggleFullscreen()">
         <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
@@ -2711,6 +2737,277 @@ function stopWhiteNoise(){
 }
 
 /* ===================================================
+   FLOATING PICTURE-IN-PICTURE ENGINE
+   Allows timer to float on top of YouTube & other apps
+   =================================================== */
+const FloatingPip = {
+  canvas: null,
+  ctx: null,
+  video: null,
+  stream: null,
+  isActive: false,
+  blinkCounter: 0,
+
+  init(){
+    if(!this.canvas){
+      this.canvas = document.createElement('canvas');
+      this.canvas.width = 512;
+      this.canvas.height = 320;
+      this.ctx = this.canvas.getContext('2d');
+
+      this.video = document.getElementById('floating-pip-video');
+      if(!this.video){
+        this.video = document.createElement('video');
+        this.video.id = 'floating-pip-video';
+        this.video.style.cssText = 'display:none;position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;';
+        this.video.muted = true;
+        this.video.playsInline = true;
+        this.video.autoplay = true;
+        document.body.appendChild(this.video);
+      }
+
+      this.video.addEventListener('leavepictureinpicture', () => {
+        this.isActive = false;
+        this.updateUI();
+      });
+      this.video.addEventListener('enterpictureinpicture', () => {
+        this.isActive = true;
+        this.updateUI();
+      });
+    }
+  },
+
+  renderFrame(){
+    if(!this.ctx) return;
+    const ctx = this.ctx;
+    const w = 512, h = 320;
+    this.blinkCounter = (this.blinkCounter + 1) % 60;
+    const isBlinking = this.blinkCounter > 54;
+
+    const timeStr = timerDisplay(_timerSecs);
+    const taskName = document.getElementById('focus-task-name')?.textContent || 'Focus Session';
+    const isBreak = document.getElementById('dial-status')?.textContent?.includes('Break');
+    const isRunning = _timerRunning;
+
+    // Background slate gradient
+    const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+    bgGrad.addColorStop(0, '#0F172A');
+    bgGrad.addColorStop(1, '#020617');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    // Outer border glow
+    ctx.strokeStyle = isBreak ? 'rgba(16,185,129,0.4)' : 'rgba(255,106,0,0.4)';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(2, 2, w - 4, h - 4);
+
+    // Accent top highlight bar
+    ctx.fillStyle = isBreak ? '#10B981' : '#FF6A00';
+    ctx.fillRect(0, 0, w, 7);
+
+    // Pill badge: Mode
+    ctx.fillStyle = isBreak ? 'rgba(16,185,129,0.18)' : 'rgba(255,106,0,0.18)';
+    ctx.beginPath();
+    ctx.roundRect(24, 24, 115, 30, 8);
+    ctx.fill();
+    ctx.fillStyle = isBreak ? '#34D399' : '#FFA040';
+    ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillText(isBreak ? '☕ BREAK' : '🌸 FOCUS', 38, 44);
+
+    // Cute MaoMao companion pet display
+    ctx.fillStyle = '#F8FAFC';
+    ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillText(isBlinking ? '🐾 MaoMao (-.-)' : '🐾 MaoMao (^.^)', w - 150, 44);
+
+    // Task Name
+    ctx.fillStyle = '#94A3B8';
+    ctx.font = '600 15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    const cleanTask = taskName.length > 28 ? taskName.slice(0, 26) + '...' : taskName;
+    ctx.fillText(cleanTask, 24, 90);
+
+    // Big Crisp Digits
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 78px "SF Mono", Monaco, "Courier New", monospace';
+    ctx.fillText(timeStr, 24, 180);
+
+    // Status Indicator dot + text
+    ctx.fillStyle = isRunning ? (isBreak ? '#34D399' : '#FF8C00') : '#64748B';
+    ctx.beginPath();
+    ctx.arc(32, 222, 6, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = isRunning ? '#E2E8F0' : '#94A3B8';
+    ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    const statusLabel = isRunning ? (isBreak ? 'Break in progress · Relax!' : 'Focusing · Active on YouTube') : 'Timer Paused';
+    ctx.fillText(statusLabel, 48, 228);
+
+    // Progress Bar Track
+    const barX = 24, barY = 258, barW = w - 48, barH = 10;
+    ctx.fillStyle = 'rgba(255,255,255,0.1)';
+    ctx.beginPath();
+    ctx.roundRect(barX, barY, barW, barH, 5);
+    ctx.fill();
+
+    // Progress Fill
+    const total = _timerDuration || 1;
+    const progress = Math.max(0, Math.min(1, 1 - (_timerSecs / total)));
+    const fillW = Math.max(10, barW * progress);
+    ctx.fillStyle = isBreak ? '#10B981' : '#FF6A00';
+    ctx.beginPath();
+    ctx.roundRect(barX, barY, fillW, barH, 5);
+    ctx.fill();
+
+    // Footer Hint
+    ctx.fillStyle = '#64748B';
+    ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillText('Loop PWA Floating Mini · Tap window to return', 24, 298);
+  },
+
+  async toggle(){
+    this.init();
+
+    if(document.pictureInPictureElement){
+      try {
+        await document.exitPictureInPicture();
+        this.isActive = false;
+        this.updateUI();
+        showToast('Floating Mini Timer closed');
+        return;
+      } catch(e){}
+    }
+
+    try {
+      this.renderFrame();
+
+      if(!this.stream){
+        this.stream = this.canvas.captureStream(12);
+        this.video.srcObject = this.stream;
+      }
+
+      await this.video.play();
+      await this.video.requestPictureInPicture();
+      this.isActive = true;
+      this.updateUI();
+      showToast('📺 Floating Mini Timer active! Stays on top of YouTube 🌟', true);
+    } catch(err){
+      console.warn('[PiP Toggle Error]', err);
+      showToast('Picture-in-Picture: Tap Play first or check browser PiP permissions');
+    }
+  },
+
+  updateFrame(){
+    if(this.isActive){
+      this.renderFrame();
+    }
+  },
+
+  updateUI(){
+    const pill = document.getElementById('pill-pip');
+    if(pill) pill.classList.toggle('active', this.isActive);
+    const hint = document.getElementById('pip-active-hint');
+    if(hint) hint.style.display = this.isActive ? 'flex' : 'none';
+  }
+};
+
+/* ===================================================
+   BACKGROUND NOTIFICATIONS ENGINE
+   Keeps timer visible in system notification tray while on YouTube
+   =================================================== */
+const BackgroundNotifier = {
+  lastNotificationTime: 0,
+
+  async requestPermissionIfNeeded(){
+    if(!('Notification' in window)) return false;
+    if(Notification.permission === 'granted') return true;
+    if(Notification.permission === 'default'){
+      try {
+        const p = await Notification.requestPermission();
+        return p === 'granted';
+      } catch(e){
+        return false;
+      }
+    }
+    return false;
+  },
+
+  async showStatusNotification(force = false){
+    if(!('Notification' in window) || Notification.permission !== 'granted') return;
+    if(!_timerRunning && !force) return;
+
+    const now = Date.now();
+    // Throttle tray updates to avoid notification vibration spam
+    if(!force && now - this.lastNotificationTime < 8000) return;
+    this.lastNotificationTime = now;
+
+    const digits = timerDisplay(_timerSecs);
+    const taskName = document.getElementById('focus-task-name')?.textContent || 'Focus Session';
+    const isBreak = document.getElementById('dial-status')?.textContent?.includes('Break');
+    const title = `${isBreak ? '☕ Break' : '⏳ Focusing'}: ${digits} · ${taskName}`;
+    const body = `Active while you learn on YouTube · Tap to open Loop PWA 🌸`;
+
+    try {
+      if('serviceWorker' in navigator && navigator.serviceWorker.controller){
+        const reg = await navigator.serviceWorker.ready;
+        reg.showNotification(title, {
+          body: body,
+          icon: './icons/icon-192.png',
+          badge: './icons/favicon.png',
+          tag: 'loop-focus-timer',
+          renotify: false,
+          silent: true
+        });
+      } else {
+        new Notification(title, {
+          body: body,
+          icon: './icons/icon-192.png',
+          tag: 'loop-focus-timer',
+          silent: true
+        });
+      }
+    } catch(e){}
+  },
+
+  async showCompletionNotification(){
+    if(!('Notification' in window) || Notification.permission !== 'granted') return;
+
+    const taskName = document.getElementById('focus-task-name')?.textContent || 'Focus Session';
+    const title = '🎉 Focus Session Complete!';
+    const body = `"${taskName}" is finished! Great job. Time for a well-deserved break 🌸`;
+
+    try {
+      if('serviceWorker' in navigator && navigator.serviceWorker.controller){
+        const reg = await navigator.serviceWorker.ready;
+        reg.showNotification(title, {
+          body: body,
+          icon: './icons/icon-192.png',
+          badge: './icons/favicon.png',
+          tag: 'loop-focus-complete',
+          renotify: true,
+          requireInteraction: true,
+          vibrate: [300, 150, 300, 150, 300]
+        });
+      } else {
+        new Notification(title, {
+          body: body,
+          icon: './icons/icon-192.png',
+          tag: 'loop-focus-complete'
+        });
+      }
+    } catch(e){}
+  },
+
+  closeTimerNotification(){
+    if('serviceWorker' in navigator && navigator.serviceWorker.controller){
+      navigator.serviceWorker.ready.then(reg => {
+        reg.getNotifications({ tag: 'loop-focus-timer' }).then(notifs => {
+          notifs.forEach(n => n.close());
+        });
+      }).catch(()=>{});
+    }
+  }
+};
+
+/* ===================================================
    TIMER ENGINE
    =================================================== */
 let _timerSecs = 25*60;
@@ -2726,25 +3023,38 @@ function timerDisplay(s){
   return `${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
 }
 function setDialDisplay(){
-  document.getElementById('dial-digits').textContent = timerDisplay(_timerSecs);
+  const disp = timerDisplay(_timerSecs);
+  document.getElementById('dial-digits').textContent = disp;
   // Update SVG progress ring
   const ring = document.getElementById('dial-ring-indicator');
-  if(!ring) return;
-  const r = 105;
-  const C = 2 * Math.PI * r; // ~659.73
-  ring.style.strokeDasharray = C;
-  let progress;
-  if(App.focusTimerMode === 'stopwatch'){
-    // Stopwatch: fill up based on elapsed, cap at 60 min visual
-    const cap = Math.max(_timerDuration || 3600, 3600);
-    progress = Math.min(_timerSecs / cap, 1);
-  } else {
-    // Countdown: remaining / total
-    const total = _timerDuration || 1;
-    progress = _timerSecs / total;
+  if(ring){
+    const r = 105;
+    const C = 2 * Math.PI * r; // ~659.73
+    ring.style.strokeDasharray = C;
+    let progress;
+    if(App.focusTimerMode === 'stopwatch'){
+      // Stopwatch: fill up based on elapsed, cap at 60 min visual
+      const cap = Math.max(_timerDuration || 3600, 3600);
+      progress = Math.min(_timerSecs / cap, 1);
+    } else {
+      // Countdown: remaining / total
+      const total = _timerDuration || 1;
+      progress = _timerSecs / total;
+    }
+    const offset = C * (1 - progress);
+    ring.style.strokeDashoffset = offset;
   }
-  const offset = C * (1 - progress);
-  ring.style.strokeDashoffset = offset;
+
+  // Update Floating PiP Frame if active
+  if(window.FloatingPip && FloatingPip.isActive){
+    FloatingPip.updateFrame();
+  }
+
+  // Update Document Title when hidden (e.g. while watching YouTube in another tab/window)
+  if(document.visibilityState === 'hidden' && _timerRunning){
+    const task = document.getElementById('focus-task-name')?.textContent || 'Focus';
+    document.title = `(${disp}) ⏳ ${task} · Loop`;
+  }
 }
 
 /* ===================================================
@@ -3773,6 +4083,9 @@ const App = {
     setDialDisplay();
     showToast(this.focusTimerMode==='countdown'?'Timer Mode: Countdown':'Timer Mode: Stopwatch');
   },
+  toggleFloatingPip(){
+    FloatingPip.toggle();
+  },
   toggleFullscreen(){
     if(!document.fullscreenElement){
       document.documentElement.requestFullscreen().then(()=>{
@@ -3812,6 +4125,8 @@ const App = {
     document.getElementById('btn-timer-play').innerHTML='▶';
     setDialDisplay();
     _isBreak=false;
+    FloatingPip.updateFrame();
+    BackgroundNotifier.closeTimerNotification();
   },
   timerSkip(){
     // If strict mode active and timer running, confirm first
@@ -3824,6 +4139,7 @@ const App = {
     if(!_isBreak){ _isBreak=true; _timerSecs=5*60; _timerDuration=5*60; document.getElementById('dial-status').textContent='Break'; showToast('Short Break started'); }
     else { _isBreak=false; _timerSecs=_origDuration||25*60; _timerDuration=_origDuration||25*60; document.getElementById('dial-status').textContent='Start'; }
     setDialDisplay();
+    FloatingPip.updateFrame();
   },
   /* --- STRICT MODE CONFIRMATION --- */
   _strictAction: null,
@@ -4363,9 +4679,20 @@ const App = {
       });
     }
 
-    // Visibility change
+    // Visibility change (handles backgrounding e.g. switching to YouTube)
     document.addEventListener('visibilitychange',()=>{
-      if(document.visibilityState==='visible'){ this.renderHome(); if(_timerRunning) timerStart(); }
+      if(document.visibilityState==='visible'){
+        document.title = 'Loop - Minimal Focus & Habit PWA';
+        this.renderHome();
+        if(_timerRunning) timerStart();
+        // Clear background tray notification when user returns to app
+        BackgroundNotifier.closeTimerNotification();
+      } else if(document.visibilityState === 'hidden'){
+        // If timer is running and user switches to YouTube, trigger instant status notification
+        if(_timerRunning){
+          BackgroundNotifier.showStatusNotification(true);
+        }
+      }
       // Strict mode tab-switch detection
       _strictVisibilityHandler();
     });
@@ -4487,6 +4814,9 @@ function timerStart(){
   document.getElementById('dial-status').textContent='Focusing';
   getAudioCtx();
 
+  // Politely request background notification permission if not yet asked
+  BackgroundNotifier.requestPermissionIfNeeded();
+
   // Enable strict enforcement if strict mode is on
   if(App.focusStrictMode){
     const badge = document.getElementById('dial-strict-badge');
@@ -4503,6 +4833,9 @@ function timerStart(){
     requestWakeLock();
   }
 
+  // Update PiP frame immediately
+  FloatingPip.updateFrame();
+
   _timerInterval=setInterval(()=>{
     if(App.focusTimerMode==='stopwatch'){
       _timerSecs++;
@@ -4511,6 +4844,14 @@ function timerStart(){
       _timerSecs--;
     }
     setDialDisplay();
+
+    // Update PiP video frame on every tick
+    FloatingPip.updateFrame();
+
+    // If app is hidden (user is on YouTube or other app), keep notification tray updated
+    if(document.visibilityState === 'hidden'){
+      BackgroundNotifier.showStatusNotification();
+    }
   },1000);
 }
 
@@ -4535,6 +4876,10 @@ function timerPause(){
   if(!App.focusStrictMode || !App.focusSettings?.aod){
     releaseWakeLock();
   }
+
+  // Sync PiP and dismiss tray notification
+  FloatingPip.updateFrame();
+  BackgroundNotifier.closeTimerNotification();
 }
 
 function timerComplete(){
@@ -4542,6 +4887,10 @@ function timerComplete(){
   const violations = App.strictViolations || 0;
   timerPause();
   releaseWakeLock();
+
+  // High-priority system notification for users learning on YouTube
+  BackgroundNotifier.showCompletionNotification();
+  FloatingPip.updateFrame();
 
   // Use Spotify reminder track if connected, else fall back to chime
   if(window.Spotify && Spotify.isConnected() && Spotify.reminderTrack){
