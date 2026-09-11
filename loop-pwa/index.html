@@ -665,6 +665,53 @@ html.ob-done #onboarding,
 .fs-session-focus{background:var(--accent-grad);transition:width .3s ease;}
 .fs-session-break{background:repeating-linear-gradient(-45deg,#10B981,#10B981 5px,#059669 5px,#059669 10px);transition:width .3s ease;}
 
+/* Music quick chips on focus screen */
+.music-quick-chips{
+  display:flex;gap:7px;overflow-x:auto;padding:2px 2px 8px;margin-bottom:14px;
+  scrollbar-width:none;-ms-overflow-style:none;width:100%;flex-shrink:0;
+}
+.music-quick-chips::-webkit-scrollbar{display:none;}
+.music-chip{
+  background:#fff;border:1.5px solid var(--border);border-radius:var(--r-full);
+  padding:6px 13px;font-size:11.5px;font-weight:700;color:var(--text-2);
+  white-space:nowrap;cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+  transition:all .15s;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.04);
+}
+.music-chip.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent);}
+.music-chip:active{transform:scale(.94);}
+
+/* Music Browser Modal Cards */
+.music-cat-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:12px;scrollbar-width:none;}
+.music-cat-tabs::-webkit-scrollbar{display:none;}
+.music-cat-btn{
+  background:#F3F4F6;border:none;border-radius:var(--r-full);padding:6px 14px;
+  font-size:12px;font-weight:700;color:var(--text-2);cursor:pointer;white-space:nowrap;transition:all .15s;
+}
+.music-cat-btn.active{background:var(--accent);color:#fff;}
+.music-card{
+  background:#fff;border:1.5px solid var(--border);border-radius:var(--r-md);
+  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;cursor:pointer;transition:all .15s;margin-bottom:8px;
+}
+.music-card:hover,.music-card.active{border-color:var(--accent);background:rgba(255,106,0,.04);}
+.music-card-art{
+  width:44px;height:44px;border-radius:10px;background:var(--accent-light);
+  display:grid;place-items:center;font-size:22px;flex-shrink:0;
+}
+.music-card-info{flex:1;min-width:0;}
+.music-card-title{font-size:13.5px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.music-card-desc{font-size:11.5px;color:var(--text-2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.music-card-badge{
+  font-size:10px;font-weight:800;color:var(--accent);background:rgba(255,106,0,.12);
+  padding:2px 7px;border-radius:var(--r-full);margin-top:4px;display:inline-block;
+}
+.music-card-play{
+  width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;
+  border:none;display:grid;place-items:center;font-size:12px;font-weight:800;flex-shrink:0;
+  box-shadow:0 3px 8px rgba(255,106,0,.3);transition:transform .12s;
+}
+.music-card-play:active{transform:scale(.9);}
+
 /* Controls */
 .dial-controls{display:flex;align-items:center;justify-content:center;gap:22px;margin-bottom:22px;flex-shrink:0;width:100%;}
 .btn-dial-sub{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);font-size:17px;color:var(--text);display:grid;place-items:center;box-shadow:0 3px 10px rgba(0,0,0,.05);}
@@ -1012,7 +1059,7 @@ html.ob-done #onboarding,
     </div>
 
     <!-- Integrated Groove Music Player (Directly under Groove Tunes bar) -->
-    <div id="groove-player-container" style="margin-bottom:14px;border-radius:14px;overflow:hidden;background:#121212;box-shadow:0 4px 18px rgba(0,0,0,.12);transition:all 0.25s ease;width:100%;flex-shrink:0;">
+    <div id="groove-player-container" style="margin-bottom:10px;border-radius:14px;overflow:hidden;background:#121212;box-shadow:0 4px 18px rgba(0,0,0,.12);transition:all 0.25s ease;width:100%;flex-shrink:0;">
       <iframe id="groove-spotify-iframe" 
         src="https://open.spotify.com/embed/playlist/37i9dQZF1DXdLEN7aqioXM?utm_source=generator&theme=0" 
         width="100%" 
@@ -1023,6 +1070,19 @@ html.ob-done #onboarding,
         loading="lazy" 
         style="display:block;border-radius:14px;border:none;width:100%;">
       </iframe>
+    </div>
+
+    <!-- Quick Station Switcher Chips -->
+    <div class="music-quick-chips" id="music-quick-chips">
+      <div class="music-chip active" data-id="37i9dQZF1DXdLEN7aqioXM" onclick="App.selectSpotifyPlaylist('37i9dQZF1DXdLEN7aqioXM', 'Lofi Beats')">☕ Lofi Beats</div>
+      <div class="music-chip" data-id="37i9dQZF1DWZeKCadgRdKQ" onclick="App.selectSpotifyPlaylist('37i9dQZF1DWZeKCadgRdKQ', 'Deep Focus')">🧠 Deep Focus</div>
+      <div class="music-chip" data-id="37i9dQZF1DX4sWSpwq3LiO" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX4sWSpwq3LiO', 'Peaceful Piano')">🎹 Piano</div>
+      <div class="music-chip" data-id="37i9dQZF1DX8ymr6UES72F" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX8ymr6UES72F', 'Gentle Rain')">🌧️ Rain</div>
+      <div class="music-chip" data-id="37i9dQZF1DX5trt9i14X7j" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX5trt9i14X7j', 'Coding Flow')">⚡ Coding</div>
+      <div class="music-chip" data-id="37i9dQZF1DX6f2tpV9IKlh" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX6f2tpV9IKlh', 'Jazz Vibes')">🎷 Jazz</div>
+      <div class="music-chip" data-id="37i9dQZF1DXd9rSD9ocuzt" onclick="App.selectSpotifyPlaylist('37i9dQZF1DXd9rSD9ocuzt', 'Synthwave')">🌆 Synthwave</div>
+      <div class="music-chip" data-id="37i9dQZF1DX4PP3DA4J0N8" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX4PP3DA4J0N8', 'Nature Sounds')">🌿 Nature</div>
+      <div class="music-chip" onclick="App.openMusicPicker()" style="background:var(--accent);color:#fff;border-color:var(--accent);">+ Browse All 🎵</div>
     </div>
 
     <div class="focus-task-center">
@@ -1641,45 +1701,168 @@ html.ob-done #onboarding,
       <button class="btn-modal-x" onclick="closeModal('sp-playlist-modal')">←</button>
       <h3 style="display:flex;align-items:center;gap:8px;">
         <svg viewBox="0 0 168 168" width="20" height="20"><path fill="#1DB954" d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741C167.74 37.77 130.25.277 83.996.277zm38.404 120.78a5.217 5.217 0 0 1-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 0 1-6.249-3.93 5.222 5.222 0 0 1 3.93-6.249c31.9-7.291 59.263-4.15 81.337 9.325a5.217 5.217 0 0 1 1.726 7.194zm10.25-22.805c-2.1 3.4-6.5 4.469-9.9 2.369-22.5-13.831-56.823-17.843-83.448-9.761-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 0 1 4.35-8.148c30.427-9.234 68.2-4.755 94.096 11.141 3.4 2.1 4.468 6.502 2.05 9.749zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684a7.838 7.838 0 0 1-9.799-5.23 7.835 7.835 0 0 1 5.229-9.8c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 0 1 2.66 10.744 7.835 7.835 0 0 1-10.631 2.768z"/></svg>
-        Focus Music &amp; Playlists
+        Browse Focus Soundscapes
       </h3>
       <div style="width:32px;"></div>
     </div>
     
-    <p style="font-size:12.5px;color:var(--text-2);margin-bottom:14px;line-height:1.4;">
-      Choose a curated soundscape or paste any Spotify link. Plays right under Groove Tunes for both Free and Premium users!
+    <p style="font-size:12.5px;color:var(--text-2);margin-bottom:12px;line-height:1.4;">
+      Tap any station to play directly under Groove Tunes. Designed for deep work, study, and flow state.
     </p>
 
-    <!-- Custom Spotify URL Box -->
-    <div style="background:#F9FAFB;border:1.5px solid var(--border);border-radius:var(--r-md);padding:12px 14px;margin-bottom:16px;">
-      <div style="font-size:11.5px;font-weight:700;color:var(--text);margin-bottom:6px;">
-        🔗 Paste Any Spotify Link (Playlist, Album or Track)
+    <!-- Category Filter Pills -->
+    <div class="music-cat-tabs" id="music-cat-tabs">
+      <button class="music-cat-btn active" onclick="App.filterMusicCategory('all', this)">🌟 All Channels</button>
+      <button class="music-cat-btn" onclick="App.filterMusicCategory('lofi', this)">☕ Lo-Fi &amp; Beats</button>
+      <button class="music-cat-btn" onclick="App.filterMusicCategory('focus', this)">🧠 Deep Focus</button>
+      <button class="music-cat-btn" onclick="App.filterMusicCategory('piano', this)">🎹 Piano &amp; Acoustic</button>
+      <button class="music-cat-btn" onclick="App.filterMusicCategory('ambient', this)">🌧️ Nature &amp; Ambience</button>
+      <button class="music-cat-btn" onclick="App.filterMusicCategory('synth', this)">⚡ Electronic</button>
+    </div>
+
+    <!-- Pre-rendered Rich Playlist Cards List -->
+    <div id="music-cards-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
+      <div class="music-card active" data-cat="lofi" data-id="37i9dQZF1DXdLEN7aqioXM" onclick="App.selectSpotifyPlaylist('37i9dQZF1DXdLEN7aqioXM', 'Lofi Beats')">
+        <div class="music-card-art">☕</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Lofi Beats</div>
+          <div class="music-card-desc">Beats to relax, study, and code to</div>
+          <span class="music-card-badge">#Chillhop · Relax</span>
+        </div>
+        <button class="music-card-play">▶</button>
       </div>
-      <div style="display:flex;gap:8px;">
-        <input type="text" id="custom-sp-input" placeholder="e.g. https://open.spotify.com/playlist/..." style="flex:1;border:1px solid #CBD5E1;border-radius:8px;padding:8px 10px;font-size:12px;background:#fff;">
-        <button onclick="App.applyCustomSpotifyUrl()" class="btn" style="background:#1DB954;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">Load ♫</button>
+
+      <div class="music-card" data-cat="focus" data-id="37i9dQZF1DWZeKCadgRdKQ" onclick="App.selectSpotifyPlaylist('37i9dQZF1DWZeKCadgRdKQ', 'Deep Focus')">
+        <div class="music-card-art">🧠</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Deep Focus</div>
+          <div class="music-card-desc">Atmospheric study soundscapes for high concentration</div>
+          <span class="music-card-badge">#Focus · Instrumental</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card" data-cat="lofi" data-id="37i9dQZF1DX8Uebhn9wzrS" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX8Uebhn9wzrS', 'Chill Lofi Study')">
+        <div class="music-card-art">📖</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Chill Lofi Study</div>
+          <div class="music-card-desc">Smooth mellow hip hop rhythms for reading &amp; writing</div>
+          <span class="music-card-badge">#Study · Mellow</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card" data-cat="piano" data-id="37i9dQZF1DX4sWSpwq3LiO" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX4sWSpwq3LiO', 'Peaceful Piano')">
+        <div class="music-card-art">🎹</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Peaceful Piano</div>
+          <div class="music-card-desc">Gentle acoustic piano melodies for calm productivity</div>
+          <span class="music-card-badge">#Piano · Calm</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card" data-cat="ambient" data-id="37i9dQZF1DX8ymr6UES72F" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX8ymr6UES72F', 'Gentle Rain Ambience')">
+        <div class="music-card-art">🌧️</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Gentle Rain Ambience</div>
+          <div class="music-card-desc">Natural rainfall and soft thunder to block distractions</div>
+          <span class="music-card-badge">#Rain · WhiteNoise</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card" data-cat="synth" data-id="37i9dQZF1DX5trt9i14X7j" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX5trt9i14X7j', 'Coding Flow')">
+        <div class="music-card-art">⚡</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Coding Flow</div>
+          <div class="music-card-desc">High-tempo instrumental electronic for tunnel vision</div>
+          <span class="music-card-badge">#Coding · FlowState</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card" data-cat="piano" data-id="37i9dQZF1DX6f2tpV9IKlh" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX6f2tpV9IKlh', 'Coffee Table Jazz')">
+        <div class="music-card-art">🎷</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Coffee Table Jazz</div>
+          <div class="music-card-desc">Warm vintage coffeehouse jazz for cozy work vibes</div>
+          <span class="music-card-badge">#Jazz · Acoustic</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card" data-cat="synth" data-id="37i9dQZF1DXd9rSD9ocuzt" onclick="App.selectSpotifyPlaylist('37i9dQZF1DXd9rSD9ocuzt', 'Synthwave Chill')">
+        <div class="music-card-art">🌆</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Synthwave Chill</div>
+          <div class="music-card-desc">Retro neon synthscapes for late-night problem solving</div>
+          <span class="music-card-badge">#Synth · Cyberpunk</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card" data-cat="ambient" data-id="37i9dQZF1DX4PP3DA4J0N8" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX4PP3DA4J0N8', 'Forest Nature Sounds')">
+        <div class="music-card-art">🌿</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Forest Nature Sounds</div>
+          <div class="music-card-desc">Pure woodland breeze, streams, and gentle forest birds</div>
+          <span class="music-card-badge">#Nature · Organic</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card" data-cat="focus" data-id="37i9dQZF1DX7EF89NsImau" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX7EF89NsImau', 'Binaural Alpha Waves')">
+        <div class="music-card-art">🧘</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Binaural Alpha Waves</div>
+          <div class="music-card-desc">Sound frequency designed to boost memory and focus</div>
+          <span class="music-card-badge">#Binaural · Science</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card" data-cat="piano" data-id="37i9dQZF1DWZwtERXCS82H" onclick="App.selectSpotifyPlaylist('37i9dQZF1DWZwtERXCS82H', 'Reading Soundtrack')">
+        <div class="music-card-art">🎻</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Reading Soundtrack</div>
+          <div class="music-card-desc">Cinematic instrumental strings to accompany deep work</div>
+          <span class="music-card-badge">#Cinematic · Strings</span>
+        </div>
+        <button class="music-card-play">▶</button>
+      </div>
+
+      <div class="music-card" data-cat="lofi" data-id="37i9dQZF1DX9RwfGbeGQha" onclick="App.selectSpotifyPlaylist('37i9dQZF1DX9RwfGbeGQha', 'Japanese Lo-Fi')">
+        <div class="music-card-art">🌸</div>
+        <div class="music-card-info">
+          <div class="music-card-title">Japanese Lo-Fi</div>
+          <div class="music-card-desc">Oriental traditional strings meets cozy lofi beats</div>
+          <span class="music-card-badge">#Tokyo · Chillout</span>
+        </div>
+        <button class="music-card-play">▶</button>
       </div>
     </div>
 
-    <!-- Curated Grid Header -->
-    <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:10px;">
-      Curated Focus Channels
-    </div>
-
-    <!-- Curated Playlist Grid -->
-    <div id="sp-curated-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;"></div>
-
-    <!-- Offline Synth Option -->
-    <div onclick="App.selectOfflineGroove()" style="background:#fff;border:1.5px dashed var(--border);border-radius:var(--r-md);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:12px;">
+    <!-- Built-in Ambient Offline Option -->
+    <div onclick="App.selectOfflineGroove()" style="background:#fff;border:1.5px dashed var(--border);border-radius:var(--r-md);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:14px;">
       <div style="display:flex;align-items:center;gap:10px;">
         <div style="font-size:22px;">🎧</div>
         <div>
           <div style="font-size:13px;font-weight:700;">Built-in Ambient Generator</div>
-          <div style="font-size:11px;color:var(--text-2);">Works 100% offline without Spotify</div>
+          <div style="font-size:11px;color:var(--text-2);">Offline synthesizer with zero internet needed</div>
         </div>
       </div>
       <span style="font-size:12px;font-weight:700;color:var(--accent);">Select →</span>
     </div>
+
+    <!-- Optional Custom Link (Collapsible at bottom) -->
+    <details style="font-size:12px;color:var(--text-2);background:#F9FAFB;border-radius:var(--r-md);padding:10px 12px;margin-bottom:10px;border:1px solid var(--border);">
+      <summary style="cursor:pointer;font-weight:700;color:var(--text-2);">Custom Spotify Link (Optional)</summary>
+      <div style="display:flex;gap:6px;margin-top:8px;">
+        <input type="text" id="custom-sp-input" placeholder="Paste playlist/album URL..." style="flex:1;border:1px solid #CBD5E1;border-radius:8px;padding:7px 9px;font-size:11.5px;background:#fff;">
+        <button onclick="App.applyCustomSpotifyUrl()" class="btn" style="background:#1DB954;color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:11.5px;font-weight:700;cursor:pointer;">Load</button>
+      </div>
+    </details>
   </div>
 </div>
 
@@ -2537,24 +2720,24 @@ const App = {
   },
 
   openMusicPicker(){
-    this.renderMusicPicker();
+    const current = DB.load('selected_music', { id: '37i9dQZF1DXdLEN7aqioXM' });
+    document.querySelectorAll('.music-card').forEach(c => {
+      c.classList.toggle('active', c.getAttribute('data-id') === current.id);
+    });
+    this.filterMusicCategory('all', document.querySelector('.music-cat-btn'));
     openModal('sp-playlist-modal');
   },
 
-  renderMusicPicker(){
-    const grid = document.getElementById('sp-curated-grid');
-    if(!grid) return;
-    const current = DB.load('selected_music', { id: '37i9dQZF1DXdLEN7aqioXM' });
-    grid.innerHTML = this.CURATED_PLAYLISTS.map(p => {
-      const isSel = current.id === p.id;
-      return `
-        <div onclick="App.selectSpotifyPlaylist('${p.id}', '${p.name}')" 
-             style="background:#fff;border:1.5px solid ${isSel ? 'var(--accent)' : 'var(--border)'};border-radius:var(--r-md);padding:12px;cursor:pointer;transition:all .15s;${isSel ? 'background:rgba(255,106,0,.06);' : ''}">
-          <div style="font-size:24px;margin-bottom:6px;">${p.emoji}</div>
-          <div style="font-size:13px;font-weight:700;color:var(--text);">${p.name}</div>
-          <div style="font-size:11px;color:var(--text-2);margin-top:2px;">${p.desc}</div>
-        </div>`;
-    }).join('');
+  filterMusicCategory(cat, btn){
+    document.querySelectorAll('.music-cat-btn').forEach(b => b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+    document.querySelectorAll('.music-card').forEach(card => {
+      if(cat === 'all' || card.getAttribute('data-cat') === cat){
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
   },
 
   selectSpotifyPlaylist(id, name, type = 'playlist'){
@@ -2569,6 +2752,16 @@ const App = {
     if(label) label.textContent = `♫ ${name}`;
     if(container) container.style.display = 'block';
     if(icon) icon.textContent = '▲';
+
+    // Update quick chips
+    document.querySelectorAll('.music-chip').forEach(c => {
+      c.classList.toggle('active', c.getAttribute('data-id') === id);
+    });
+
+    // Update modal cards
+    document.querySelectorAll('.music-card').forEach(c => {
+      c.classList.toggle('active', c.getAttribute('data-id') === id);
+    });
 
     DB.save('selected_music', { id, name, type });
     closeModal('sp-playlist-modal');
