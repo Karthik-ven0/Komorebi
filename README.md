@@ -1,17 +1,29 @@
-# FocusLoop 🌸 ⏱️
+# Komorebi 🌸 ⏱️
 
-> A cozy, aesthetic Pomodoro focus timer and daily task planner featuring Spotify integration, ambient soundscapes, and an interactive desktop companion pet (**Maomao**). 100% offline Progressive Web App (PWA).
+> **A calm focus ritual that helps me choose one thing, focus on it, finish it, and see my progress.**
+
+Komorebi is an intentional, distraction-free Progressive Web App (PWA) built for deep work and calm productivity. 100% offline-first with zero external streaming dependencies.
+
+---
+
+## 🌿 The Focus Loop
+
+1. **Choose**: Set your focus intent or select from Today's Focus Queue in seconds.
+2. **Focus**: Immersive circular countdown timer with a signature glowing orange ring and offline ambient soundscapes.
+3. **Finish**: Calm, non-intrusive session completion (*"Nice work. Keep going."*).
+4. **Progress**: Minimal, grounded feedback with daily and weekly focus summaries.
 
 ---
 
 ## ✨ Features
 
-- **⏱️ Pomodoro Focus Timer**: Concentric glowing dial, countdown & stopwatch modes, custom durations, and an anti-distraction **Strict Mode**.
-- **🐾 Interactive Maomao Companion Pet**: A pixelated anime desktop pet that reacts to touch, turns to look at your cursor/tap, celebrates completed tasks, and offers friendly greetings.
-- **🎵 Music & Soundscapes**: Seamless Spotify Web API integration with quick-connect setup, synthesized ambient chords (**Groove Tunes**), and pink/white noise generators.
-- **📅 Daily Schedule & Timeline**: Calendar day view with morning/afternoon time slots, priority tags, and project categories.
-- **📊 Daily Progress Analytics**: Real-time circular progress gauge (`% completed`), task counters, and streak tracking.
-- **📱 100% Offline-First PWA**: Powered by Service Worker v4 for instant loading, full local offline persistence, and native installation on iOS, Android, and Desktop.
+- **⏱️ Signature Circular Focus Timer**: 240px countdown ring with soft glowing orange gradient that decreases clockwise from 12 o'clock, Space Mono digits, and custom duration presets (15m, 25m, 45m, 60m).
+- **🎯 Focus Intent Banner**: Prominent intention display right above the timer (*"What are you focusing on?"*).
+- **📋 Frictionless Focus Queue**: 1-2-3 prioritized daily queue. No complex project hierarchies, statuses, or tag taxonomies.
+- **🐾 Maomao Living Companion**: A gentle, quiet pixel companion inspired by Codex-style desktop pets. Sits peacefully in the corner, reacts to session starts and breaks. Zero coins, levels, XP, or gamification mechanics.
+- **🌧️ Curated Offline Ambient Audio**: Built-in procedural Web Audio generating natural soundscapes without internet access: Gentle Rain, Brown Noise, Forest & Birds, Cozy Lofi Chords, and Komorebi Sunbeam Chimes.
+- **📊 Calm Analytics**: Grounded daily focus totals, completed sessions, tasks finished, and clean 7-day focus columns.
+- **📱 100% Offline-First PWA**: Powered by Service Worker v1 with instant asset precaching and full local persistence (`localStorage`).
 
 ---
 
@@ -19,7 +31,7 @@
 
 ### Running Locally
 ```bash
-# Start the local server
+# Start the local development server
 node dev-server.js
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.

@@ -73,10 +73,16 @@
       // Distance parameters (dynamically scaled for mobile vs desktop)
       this._updateDistances();
 
-      // Saved pinned position or default bottom-right (above dock)
+      // Responsive placement helper
+      const defPos = this._calcDefaultPos();
       const savedPos = this._loadPinnedPos();
-      this.x = savedPos ? savedPos.x : Math.max(20, window.innerWidth - this.dispW - 24);
-      this.y = savedPos ? savedPos.y : Math.max(20, window.innerHeight - this.dispH - 95);
+      if (savedPos && savedPos.x < window.innerWidth - 20 && savedPos.y < window.innerHeight - 20) {
+        this.x = savedPos.x;
+        this.y = savedPos.y;
+      } else {
+        this.x = defPos.x;
+        this.y = defPos.y;
+      }
       this.pinnedX = this.x;
       this.pinnedY = this.y;
 
@@ -154,8 +160,16 @@
         const raw = localStorage.getItem('loop_db_pet_pinned_pos');
         if (raw) {
           const p = JSON.parse(raw);
-          // verify still in screen
-          if (p.x < window.innerWidth && p.y < window.innerHeight) return p;
+          const appEl = document.getElementById('app');
+          const appRect = appEl ? appEl.getBoundingClientRect() : null;
+          // Verify still in screen
+          if (p.x >= 0 && p.x < window.innerWidth - 30 && p.y >= 0 && p.y < window.innerHeight - 30) {
+            // Discard stale coordinate if stranded far in the desktop void
+            if (appRect && window.innerWidth >= 960 && p.x > appRect.right + 120) {
+              return null;
+            }
+            return p;
+          }
         }
       } catch (e) {}
       return null;
@@ -267,6 +281,13 @@
       // 6. Handle Window Resizes
       window.addEventListener('resize', () => {
         this._updateDistances();
+        const appEl = document.getElementById('app');
+        const appRect = appEl ? appEl.getBoundingClientRect() : null;
+        if (appRect && window.innerWidth >= 960 && this.x > appRect.right + 80) {
+          const def = this._calcDefaultPos();
+          this.x = def.x;
+          this.y = def.y;
+        }
         this._clampPosition();
         this._updateOverlayPositions();
       });
@@ -747,9 +768,32 @@
       this._updateOverlayPositions();
     }
 
+    _calcDefaultPos() {
+      const appEl = document.getElementById('app');
+      const appRect = appEl ? appEl.getBoundingClientRect() : null;
+      let defX = window.innerWidth - this.dispW - 24;
+      let defY = window.innerHeight - this.dispH - (window.innerWidth >= 960 ? 40 : 95);
+
+      if (appRect) {
+        if (window.innerWidth >= 1260 && (window.innerWidth - appRect.right) >= 80) {
+          // Room on the right flank outside app container
+          defX = appRect.right + 16;
+          defY = Math.min(window.innerHeight - this.dispH - 40, appRect.bottom - this.dispH - 40);
+        } else {
+          // Inside bottom-right of the app or screen
+          defX = Math.max(appRect.left + 20, Math.min(window.innerWidth - this.dispW - 24, appRect.right - this.dispW - 24));
+        }
+      }
+      return {
+        x: Math.max(20, Math.round(defX)),
+        y: Math.max(20, Math.round(defY))
+      };
+    }
+
     resetToCorner() {
-      this.x = Math.max(20, window.innerWidth - this.dispW - 30);
-      this.y = Math.max(20, window.innerHeight - this.dispH - 85);
+      const def = this._calcDefaultPos();
+      this.x = def.x;
+      this.y = def.y;
       this.pinnedX = this.x;
       this.pinnedY = this.y;
       try {

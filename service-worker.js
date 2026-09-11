@@ -1,12 +1,13 @@
-/* Focus PWA Service Worker — v15 */
+/* Komorebi PWA Service Worker — v2 */
 'use strict';
 
-const CACHE_NAME = 'focus-pwa-v15';
+const CACHE_NAME = 'komorebi-v2';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
+  './styles.css',
+  './app.js',
   './manifest.json',
-  './spotify.js',
   './maomao-pet.js',
   './maomao.webp',
   './silence.wav',
