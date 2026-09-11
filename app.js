@@ -326,7 +326,9 @@ const App = {
 
     // PWA Service Worker Registration
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+      navigator.serviceWorker.register('./service-worker.js').then(reg => {
+        reg.update();
+      }).catch(() => {});
     }
   },
 

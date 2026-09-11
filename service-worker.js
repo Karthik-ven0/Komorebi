@@ -1,7 +1,7 @@
-/* Komorebi PWA Service Worker — v3 */
+/* Komorebi PWA Service Worker — v4 */
 'use strict';
 
-const CACHE_NAME = 'komorebi-v3';
+const CACHE_NAME = 'komorebi-v4';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -88,8 +88,8 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 2. Scripts and Manifest: Network-First with cache fallback
-  if (url.pathname.endsWith('.js') || url.pathname.endsWith('.json')) {
+  // 2. Styles, Scripts and Manifest: Network-First with cache fallback
+  if (url.pathname.endsWith('.css') || url.pathname.endsWith('.js') || url.pathname.endsWith('.json') || url.search.length > 0) {
     event.respondWith(
       fetch(event.request)
         .then((networkRes) => {

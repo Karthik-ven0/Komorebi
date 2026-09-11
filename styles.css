@@ -112,7 +112,7 @@ button {
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  padding: 12px 20px calc(var(--safe-b) + 95px) 20px;
+  padding: 8px 24px calc(var(--safe-b) + 95px) 24px;
   animation: screenFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -142,9 +142,9 @@ body.dark-mode .screen::-webkit-scrollbar-thumb {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc(var(--safe-t) + 18px) 20px 14px 20px;
+  padding: max(calc(var(--safe-t) + 24px), 28px) 24px 18px 24px;
   flex-shrink: 0;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
 }
 
