@@ -1,7 +1,7 @@
-/* Focus PWA Service Worker — v11 */
+/* Focus PWA Service Worker — v12 */
 'use strict';
 
-const CACHE_NAME = 'focus-pwa-v11';
+const CACHE_NAME = 'focus-pwa-v12';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const PRECACHE_ASSETS = [
   './spotify.js',
   './maomao-pet.js',
   './maomao.webp',
+  './silence.wav',
   './icons/favicon.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
@@ -135,7 +136,12 @@ self.addEventListener('notificationclick', (event) => {
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
       for (const client of list) {
-        if ('focus' in client) return client.focus();
+        if ('focus' in client) {
+          if (event.action === 'break') {
+            client.postMessage({ type: 'START_BREAK' });
+          }
+          return client.focus();
+        }
       }
       if (clients.openWindow) return clients.openWindow('./');
     })
