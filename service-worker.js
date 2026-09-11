@@ -1,7 +1,7 @@
-/* Komorebi PWA Service Worker — v2 */
+/* Komorebi PWA Service Worker — v3 */
 'use strict';
 
-const CACHE_NAME = 'komorebi-v2';
+const CACHE_NAME = 'komorebi-v3';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
