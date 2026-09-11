@@ -1,7 +1,7 @@
-/* Focus PWA Service Worker — v12 */
+/* Focus PWA Service Worker — v15 */
 'use strict';
 
-const CACHE_NAME = 'focus-pwa-v12';
+const CACHE_NAME = 'focus-pwa-v15';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -16,7 +16,7 @@ const PRECACHE_ASSETS = [
   './icons/maskable-512.png'
 ];
 
-// Precache essential assets on install
+// Precache essential assets on install and skip waiting immediately
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -26,7 +26,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Purge obsolete caches on activate
+// Purge obsolete caches on activate and claim clients
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -41,10 +41,13 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Support manual skip-waiting trigger from app
+// Support manual skip-waiting and clear-cache triggers from app
 self.addEventListener('message', (event) => {
   if (event.data && (event.data === 'SKIP_WAITING' || event.data.type === 'SKIP_WAITING')) {
     self.skipWaiting();
+  }
+  if (event.data && (event.data === 'CLEAR_CACHE' || event.data.type === 'CLEAR_CACHE')) {
+    caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k))));
   }
 });
 
@@ -63,41 +66,28 @@ self.addEventListener('fetch', (event) => {
     }
   }
 
-  // 1. HTML Navigation: Network-First with 1200ms timeout for instant mobile offline load
+  // 1. HTML Navigation: Network-First (online fetches fresh code, falls back to cache when offline)
   if (event.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname.endsWith('/')) {
     event.respondWith(
-      new Promise((resolve) => {
-        let timedOut = false;
-        const timer = setTimeout(() => {
-          timedOut = true;
-          caches.match(event.request).then((cached) => {
-            if (cached) resolve(cached);
-            else caches.match('./index.html').then((fallback) => fallback && resolve(fallback));
+      fetch(event.request)
+        .then((networkRes) => {
+          if (networkRes && networkRes.status === 200) {
+            const copy = networkRes.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)).catch(() => {});
+          }
+          return networkRes;
+        })
+        .catch(() => {
+          return caches.match(event.request).then((cached) => {
+            if (cached) return cached;
+            return caches.match('./index.html').then((fallback) => fallback || Response.error());
           });
-        }, 1200);
-
-        fetch(event.request)
-          .then((networkRes) => {
-            clearTimeout(timer);
-            if (networkRes && networkRes.status === 200) {
-              const copy = networkRes.clone();
-              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)).catch(() => {});
-            }
-            if (!timedOut) resolve(networkRes);
-          })
-          .catch(() => {
-            clearTimeout(timer);
-            caches.match(event.request).then((cached) => {
-              if (cached) resolve(cached);
-              else caches.match('./index.html').then((fallback) => resolve(fallback || Response.error()));
-            });
-          });
-      })
+        })
     );
     return;
   }
 
-  // 2. Scripts and Manifest: Network-First with short timeout to eliminate stale-state errors
+  // 2. Scripts and Manifest: Network-First with cache fallback
   if (url.pathname.endsWith('.js') || url.pathname.endsWith('.json')) {
     event.respondWith(
       fetch(event.request)
@@ -113,7 +103,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 3. Static Media (images, icons, fonts): Cache-First with Network fallback
+  // 3. Static Media (images, audio, icons, fonts): Cache-First with Network fallback
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) {

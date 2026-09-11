@@ -128,14 +128,19 @@ img{display:block;}
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 200;
+  z-index: 300;
   box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  -webkit-transform: translateX(-50%) translateZ(0);
+  transform: translateX(-50%) translateZ(0);
 }
 .dock-btn{
   width:46px;height:46px;border-radius:50%;
   background:none;border:none;color:#6B7280;
   display:grid;place-items:center;transition:all .2s;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  cursor: pointer; -webkit-user-select: none; user-select: none;
 }
+.dock-btn *{ pointer-events: none; }
 .dock-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;}
 .dock-btn.active{background:var(--accent);color:#fff;box-shadow:0 4px 16px var(--accent-glow);}
 .dock-center-btn{
@@ -143,6 +148,8 @@ img{display:block;}
   background:var(--accent);border:none;color:#fff;
   font-size:26px;line-height:1;display:grid;place-items:center;
   box-shadow:0 4px 14px var(--accent-glow);transition:transform .15s;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  cursor: pointer; -webkit-user-select: none; user-select: none;
 }
 .dock-center-btn:active{transform:scale(.92);}
 
@@ -1404,6 +1411,10 @@ html.ob-done #onboarding,
         <div class="settings-row" onclick="App.reopenOnboarding()" style="cursor:pointer;">
           <div class="settings-row-text"><h4>View Onboarding Walkthrough</h4></div>
           <span>↗</span>
+        </div>
+        <div class="settings-row" onclick="App.hardRefreshApp()" style="cursor:pointer;">
+          <div class="settings-row-text"><h4>Clear Cache &amp; Reload App</h4><p>Force download latest app updates</p></div>
+          <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px;" onclick="event.stopPropagation();App.hardRefreshApp();">Update 🔄</button>
         </div>
         <div class="settings-row">
           <div class="settings-row-text"><h4 style="color:var(--red);">Erase All Data</h4><p>Remove all tasks &amp; settings</p></div>
@@ -3069,13 +3080,37 @@ const App = {
       target.scrollTop = 0;
     }
     document.querySelectorAll('.dock-btn[data-screen]').forEach(b=>b.classList.remove('active'));
-    if(btn) btn.classList.add('active');
+    const activeBtn = btn || document.querySelector(`.dock-btn[data-screen="${screenId}"]`);
+    if(activeBtn) activeBtn.classList.add('active');
     this.currentScreen = screenId;
-    if(screenId==='s-home') this.renderHome();
-    if(screenId==='s-cal') this.renderCalendar();
-    if(screenId==='s-focus') this.renderRecentTasks();
-    if(screenId==='s-status') this.renderStatus();
-    if(screenId==='s-settings') this.renderSettings();
+
+    try {
+      if(screenId==='s-home') this.renderHome();
+      if(screenId==='s-cal') this.renderCalendar();
+      if(screenId==='s-focus') this.renderRecentTasks();
+      if(screenId==='s-status') this.renderStatus();
+      if(screenId==='s-settings') this.renderSettings();
+    } catch(err) {
+      console.warn('[Screen Render Error]', err);
+    }
+  },
+
+  hardRefreshApp(){
+    showToast('Purging cache & refreshing...', true);
+    if('caches' in window){
+      caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))).then(() => {
+        if('serviceWorker' in navigator){
+          navigator.serviceWorker.getRegistrations().then(regs => {
+            for(const r of regs) r.unregister();
+            window.location.reload(true);
+          });
+        } else {
+          window.location.reload(true);
+        }
+      }).catch(() => window.location.reload(true));
+    } else {
+      window.location.reload(true);
+    }
   },
 
   /* --- ONBOARDING --- */
@@ -4626,18 +4661,19 @@ const App = {
     document.getElementById('btn-add-home').onclick=()=>App.openAddTask();
     document.getElementById('btn-notif').onclick=()=>{ showToast('No new notifications'); };
 
-    // Register Service Worker with seamless update handling
+    // Register Service Worker with seamless auto-update handling
     if('serviceWorker' in navigator){
       navigator.serviceWorker.register('service-worker.js').then((reg) => {
         reg.update().catch(()=>{});
+        // Check for updates on resume/focus
+        window.addEventListener('focus', () => reg.update().catch(()=>{}));
         reg.addEventListener('updatefound', () => {
           const newWorker = reg.installing;
           if(newWorker){
             newWorker.addEventListener('statechange', () => {
-              if(newWorker.state === 'installed' && navigator.serviceWorker.controller){
-                showToast('App update ready ✨ Refreshing...', true);
+              if(newWorker.state === 'installed'){
+                showToast('Updating Komorebi to latest version ✨', true);
                 newWorker.postMessage('SKIP_WAITING');
-                setTimeout(() => window.location.reload(), 800);
               }
             });
           }
