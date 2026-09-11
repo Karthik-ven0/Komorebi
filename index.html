@@ -1000,21 +1000,29 @@ html.ob-done #onboarding,
       </button>
     </div>
 
-    <div class="groove-bar" id="groove-bar" onclick="App.toggleGroove()">
+    <div class="groove-bar" id="groove-bar" onclick="App.toggleGroovePlayer()">
       <div class="groove-l">
         <div class="wave-bars"><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
-        <span>♫ Groove Tunes</span>
+        <span id="groove-label">♫ Lofi Beats</span>
       </div>
-      <span style="font-size:13px;color:var(--text-2);" id="groove-x">✕</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button onclick="event.stopPropagation();App.openMusicPicker()" style="background:rgba(255,106,0,.1);border:none;color:var(--accent);padding:5px 12px;border-radius:var(--r-full);font-size:11.5px;font-weight:700;cursor:pointer;">Change 🎵</button>
+        <span style="font-size:12px;color:var(--text-3);padding:2px 4px;font-weight:800;" id="groove-toggle-icon">▲</span>
+      </div>
     </div>
 
-    <!-- Spotify quick-connect (shows when not connected) -->
-    <div id="sp-focus-banner" onclick="App.openSpotifySetup()" style="background:linear-gradient(135deg,#1DB954,#17a548);border-radius:var(--r-md);padding:11px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;cursor:pointer;box-shadow:0 4px 14px rgba(29,185,84,.28);transition:transform 0.15s ease;">
-      <div style="display:flex;align-items:center;gap:9px;">
-        <svg viewBox="0 0 168 168" width="20" height="20"><path fill="#fff" d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741C167.74 37.77 130.25.277 83.996.277zm38.404 120.78a5.217 5.217 0 0 1-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 0 1-6.249-3.93 5.222 5.222 0 0 1 3.93-6.249c31.9-7.291 59.263-4.15 81.337 9.325a5.217 5.217 0 0 1 1.726 7.194zm10.25-22.805c-2.1 3.4-6.5 4.469-9.9 2.369-22.5-13.831-56.823-17.843-83.448-9.761-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 0 1 4.35-8.148c30.427-9.234 68.2-4.755 94.096 11.141 3.4 2.1 4.468 6.502 2.05 9.749zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684a7.838 7.838 0 0 1-9.799-5.23 7.835 7.835 0 0 1 5.229-9.8c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 0 1 2.66 10.744 7.835 7.835 0 0 1-10.631 2.768z"/></svg>
-        <div><div style="font-size:13px;font-weight:700;color:#fff;">Connect Spotify</div><div style="font-size:11px;color:rgba(255,255,255,.85);">Play music while you focus</div></div>
-      </div>
-      <button onclick="event.stopPropagation();App.openSpotifySetup()" style="background:rgba(255,255,255,.25);border:none;color:#fff;padding:7px 14px;border-radius:var(--r-full);font-size:12.5px;font-weight:700;cursor:pointer;">Set Up →</button>
+    <!-- Integrated Groove Music Player (Directly under Groove Tunes bar) -->
+    <div id="groove-player-container" style="margin-bottom:14px;border-radius:14px;overflow:hidden;background:#121212;box-shadow:0 4px 18px rgba(0,0,0,.12);transition:all 0.25s ease;width:100%;flex-shrink:0;">
+      <iframe id="groove-spotify-iframe" 
+        src="https://open.spotify.com/embed/playlist/37i9dQZF1DXdLEN7aqioXM?utm_source=generator&theme=0" 
+        width="100%" 
+        height="152" 
+        frameBorder="0" 
+        allowfullscreen="" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy" 
+        style="display:block;border-radius:14px;border:none;width:100%;">
+      </iframe>
     </div>
 
     <div class="focus-task-center">
@@ -1625,23 +1633,53 @@ html.ob-done #onboarding,
   </div>
 </div>
 
-<!-- ===== SPOTIFY PLAYLIST PICKER ===== -->
+<!-- ===== SPOTIFY / FOCUS MUSIC PICKER MODAL ===== -->
 <div class="modal-back" id="sp-playlist-modal">
-  <div class="modal-sheet" style="max-height:90vh;">
+  <div class="modal-sheet" style="max-height:88vh;overflow-y:auto;">
     <div class="sheet-handle"></div>
-    <div class="modal-hdr" style="margin-bottom:6px;">
+    <div class="modal-hdr" style="margin-bottom:8px;">
       <button class="btn-modal-x" onclick="closeModal('sp-playlist-modal')">←</button>
       <h3 style="display:flex;align-items:center;gap:8px;">
         <svg viewBox="0 0 168 168" width="20" height="20"><path fill="#1DB954" d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741C167.74 37.77 130.25.277 83.996.277zm38.404 120.78a5.217 5.217 0 0 1-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 0 1-6.249-3.93 5.222 5.222 0 0 1 3.93-6.249c31.9-7.291 59.263-4.15 81.337 9.325a5.217 5.217 0 0 1 1.726 7.194zm10.25-22.805c-2.1 3.4-6.5 4.469-9.9 2.369-22.5-13.831-56.823-17.843-83.448-9.761-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 0 1 4.35-8.148c30.427-9.234 68.2-4.755 94.096 11.141 3.4 2.1 4.468 6.502 2.05 9.749zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684a7.838 7.838 0 0 1-9.799-5.23 7.835 7.835 0 0 1 5.229-9.8c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 0 1 2.66 10.744 7.835 7.835 0 0 1-10.631 2.768z"/></svg>
-        Choose Playlist
+        Focus Music &amp; Playlists
       </h3>
-      <button class="btn-modal-x" style="background:rgba(29,185,84,.12);color:#1DB954;" onclick="Spotify.playSelectedPlaylist()">▶ Play</button>
+      <div style="width:32px;"></div>
     </div>
-    <p style="font-size:12.5px;color:var(--text-2);margin-bottom:16px;">Select a playlist to play during your focus session. Music plays through your Spotify app.</p>
-    <div class="sp-playlist-grid" id="sp-playlist-grid">
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-2);">Loading your playlists...</div>
+    
+    <p style="font-size:12.5px;color:var(--text-2);margin-bottom:14px;line-height:1.4;">
+      Choose a curated soundscape or paste any Spotify link. Plays right under Groove Tunes for both Free and Premium users!
+    </p>
+
+    <!-- Custom Spotify URL Box -->
+    <div style="background:#F9FAFB;border:1.5px solid var(--border);border-radius:var(--r-md);padding:12px 14px;margin-bottom:16px;">
+      <div style="font-size:11.5px;font-weight:700;color:var(--text);margin-bottom:6px;">
+        🔗 Paste Any Spotify Link (Playlist, Album or Track)
+      </div>
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="custom-sp-input" placeholder="e.g. https://open.spotify.com/playlist/..." style="flex:1;border:1px solid #CBD5E1;border-radius:8px;padding:8px 10px;font-size:12px;background:#fff;">
+        <button onclick="App.applyCustomSpotifyUrl()" class="btn" style="background:#1DB954;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">Load ♫</button>
+      </div>
     </div>
-    <button class="btn btn-primary" style="width:100%;margin-top:16px;padding:14px;" onclick="Spotify.playSelectedPlaylist()">▶ Play Selected Playlist</button>
+
+    <!-- Curated Grid Header -->
+    <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:10px;">
+      Curated Focus Channels
+    </div>
+
+    <!-- Curated Playlist Grid -->
+    <div id="sp-curated-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;"></div>
+
+    <!-- Offline Synth Option -->
+    <div onclick="App.selectOfflineGroove()" style="background:#fff;border:1.5px dashed var(--border);border-radius:var(--r-md);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">🎧</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;">Built-in Ambient Generator</div>
+          <div style="font-size:11px;color:var(--text-2);">Works 100% offline without Spotify</div>
+        </div>
+      </div>
+      <span style="font-size:12px;font-weight:700;color:var(--accent);">Select →</span>
+    </div>
   </div>
 </div>
 
@@ -2474,18 +2512,109 @@ const App = {
   },
 
   /* --- FOCUS MODE FEATURES --- */
-  toggleGroove(){
-    // If Spotify is connected, use Spotify playlist picker
-    if(window.Spotify && Spotify.isConnected()){
-      if(Spotify.isPlaying){ Spotify.pause(); showToast('Spotify paused'); }
-      else if(Spotify.selectedPlaylist){ Spotify.resume(); showToast('▶ ' + Spotify.selectedPlaylist.name); }
-      else { Spotify.openPlaylistPicker(); }
+  CURATED_PLAYLISTS: [
+    { id: '37i9dQZF1DXdLEN7aqioXM', name: 'Lofi Beats', emoji: '☕', desc: 'Chill beats to relax & study' },
+    { id: '37i9dQZF1DWZeKCadgRdKQ', name: 'Deep Focus', emoji: '🧠', desc: 'Calm ambient & instrumental' },
+    { id: '37i9dQZF1DX8Uebhn9wzrS', name: 'Chill Lofi Study', emoji: '📖', desc: 'Smooth relaxing study beats' },
+    { id: '37i9dQZF1DX4sWSpwq3LiO', name: 'Peaceful Piano', emoji: '🎹', desc: 'Acoustic piano melodies' },
+    { id: '37i9dQZF1DXd9rSD9ocuzt', name: 'Synthwave Chill', emoji: '🌆', desc: 'Atmospheric retro synth' },
+    { id: '37i9dQZF1DX0SM0LYsmbMT', name: 'Jazz Vibes', emoji: '🎷', desc: 'Cozy coffee shop jazz' },
+    { id: '37i9dQZF1DX4PP3DA4J0N8', name: 'Rain & Nature', emoji: '🌧️', desc: 'Relaxing ambient soundscapes' },
+    { id: '37i9dQZF1DX5trt9i14X7j', name: 'Coding Flow', emoji: '⚡', desc: 'Flow state electronic beats' },
+  ],
+
+  toggleGroovePlayer(){
+    const container = document.getElementById('groove-player-container');
+    const icon = document.getElementById('groove-toggle-icon');
+    if(!container) return;
+    if(container.style.display === 'none'){
+      container.style.display = 'block';
+      if(icon) icon.textContent = '▲';
+    } else {
+      container.style.display = 'none';
+      if(icon) icon.textContent = '▼';
+    }
+  },
+
+  openMusicPicker(){
+    this.renderMusicPicker();
+    openModal('sp-playlist-modal');
+  },
+
+  renderMusicPicker(){
+    const grid = document.getElementById('sp-curated-grid');
+    if(!grid) return;
+    const current = DB.load('selected_music', { id: '37i9dQZF1DXdLEN7aqioXM' });
+    grid.innerHTML = this.CURATED_PLAYLISTS.map(p => {
+      const isSel = current.id === p.id;
+      return `
+        <div onclick="App.selectSpotifyPlaylist('${p.id}', '${p.name}')" 
+             style="background:#fff;border:1.5px solid ${isSel ? 'var(--accent)' : 'var(--border)'};border-radius:var(--r-md);padding:12px;cursor:pointer;transition:all .15s;${isSel ? 'background:rgba(255,106,0,.06);' : ''}">
+          <div style="font-size:24px;margin-bottom:6px;">${p.emoji}</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);">${p.name}</div>
+          <div style="font-size:11px;color:var(--text-2);margin-top:2px;">${p.desc}</div>
+        </div>`;
+    }).join('');
+  },
+
+  selectSpotifyPlaylist(id, name, type = 'playlist'){
+    const iframe = document.getElementById('groove-spotify-iframe');
+    const label = document.getElementById('groove-label');
+    const container = document.getElementById('groove-player-container');
+    const icon = document.getElementById('groove-toggle-icon');
+
+    if(iframe){
+      iframe.src = `https://open.spotify.com/embed/${type}/${id}?utm_source=generator&theme=0`;
+    }
+    if(label) label.textContent = `♫ ${name}`;
+    if(container) container.style.display = 'block';
+    if(icon) icon.textContent = '▲';
+
+    DB.save('selected_music', { id, name, type });
+    closeModal('sp-playlist-modal');
+    showToast(`Loaded: ${name} 🎵`);
+  },
+
+  applyCustomSpotifyUrl(){
+    const input = document.getElementById('custom-sp-input');
+    if(!input || !input.value.trim()){
+      showToast('Please enter a Spotify link');
       return;
     }
-    // Fallback: built-in ambient tones
+    const val = input.value.trim();
+    const m = val.match(/spotify(?:\.com)?(?:\/|:)(playlist|album|track|episode|show)(?:\/|:)([a-zA-Z0-9]+)/);
+    if(m){
+      const type = m[1];
+      const id = m[2];
+      this.selectSpotifyPlaylist(id, 'Custom ' + cap(type), type);
+      input.value = '';
+    } else {
+      showToast('Invalid link — paste a Spotify URL or URI');
+    }
+  },
+
+  selectOfflineGroove(){
+    const container = document.getElementById('groove-player-container');
+    const label = document.getElementById('groove-label');
+    if(container) container.style.display = 'none';
+    if(label) label.textContent = '♫ Built-in Ambient';
+    this.toggleGroove();
+    closeModal('sp-playlist-modal');
+  },
+
+  toggleGroove(){
     getAudioCtx();
-    if(this.groovePlaying){ stopGroove(); this.groovePlaying=false; document.getElementById('groove-bar').classList.remove('playing'); showToast('Groove Tunes stopped'); }
-    else { startGroove(); this.groovePlaying=true; document.getElementById('groove-bar').classList.add('playing'); showToast('♫ Groove Tunes playing'); }
+    if(this.groovePlaying){
+      stopGroove();
+      this.groovePlaying = false;
+      document.getElementById('groove-bar')?.classList.remove('playing');
+      showToast('Ambient audio stopped');
+    } else {
+      startGroove();
+      this.groovePlaying = true;
+      document.getElementById('groove-bar')?.classList.add('playing');
+      showToast('♫ Ambient audio playing');
+    }
   },
   toggleWhiteNoise(){
     getAudioCtx();
@@ -2791,7 +2920,7 @@ const App = {
   openSpotifyFromProfile(){
     this.closeProfileModal();
     setTimeout(() => {
-      this.openSpotifySetup();
+      this.openMusicPicker();
     }, 80);
   },
   closeSpotifySetup(){
@@ -3154,11 +3283,15 @@ const App = {
     if(s.avatarEmoji) document.getElementById('home-avatar-emoji').textContent = s.avatarEmoji;
     if(s.userName) document.getElementById('user-name-disp').textContent = s.userName;
 
-    // Spotify focus banner: show only when not connected
-    const spBanner = document.getElementById('sp-focus-banner');
-    if(spBanner){
-      const spCfg = DB.load('spotify_cfg',{});
-      spBanner.style.display = spCfg.accessToken ? 'none' : 'flex';
+    // Restore selected music playlist under groove tunes
+    const savedMusic = DB.load('selected_music', { id: '37i9dQZF1DXdLEN7aqioXM', name: 'Lofi Beats', type: 'playlist' });
+    const grooveIframe = document.getElementById('groove-spotify-iframe');
+    const grooveLabel = document.getElementById('groove-label');
+    if(grooveIframe && savedMusic?.id){
+      grooveIframe.src = `https://open.spotify.com/embed/${savedMusic.type||'playlist'}/${savedMusic.id}?utm_source=generator&theme=0`;
+    }
+    if(grooveLabel && savedMusic?.name){
+      grooveLabel.textContent = `♫ ${savedMusic.name}`;
     }
 
     this.renderHome();
