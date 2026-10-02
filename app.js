@@ -350,6 +350,7 @@ const App = {
 
   /* --- NAVIGATION --- */
   navigate(screenId, btnEl) {
+    const prevScreen = this.currentScreen;
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const target = document.getElementById(screenId);
     if (target) {
@@ -364,10 +365,25 @@ const App = {
     if (screenId === 's-focus') {
       this.updateDialDisplay();
       this.renderQueue();
+      if (prevScreen && prevScreen !== 's-focus' && !this.timerRunning && window._maomao && this.settings.petEnabled !== false) {
+        if (typeof window._maomao.playAction === 'function') {
+          window._maomao.playAction('wave', 2500, 'Back at the focus station! 🌸 Ready when you are!');
+        }
+      }
     } else if (screenId === 's-queue') {
       this.renderQueue();
+      if (window._maomao && this.settings.petEnabled !== false && !this.timerRunning) {
+        if (typeof window._maomao.playAction === 'function') {
+          window._maomao.playAction('review', 3000, "Checking our task queue! What's next on the agenda? 📋");
+        }
+      }
     } else if (screenId === 's-progress') {
       this.renderProgress();
+      if (window._maomao && this.settings.petEnabled !== false && !this.timerRunning) {
+        if (typeof window._maomao.playAction === 'function') {
+          window._maomao.playAction('review', 3500, 'Analyzing your focus stats & progress report! 📊');
+        }
+      }
     }
   },
 
@@ -489,18 +505,27 @@ const App = {
     this.sessionStartTime = this.sessionStartTime || Date.now();
     this.saveTimerState();
 
+    // Reset milestone flags for this session
+    this._halfwayAlerted = false;
+    this._countdownAlerted = false;
+
     // Start background keeper & request WakeLock
     this.acquireWakeLock();
     const keeper = document.getElementById('timer-media-keeper');
     if (keeper) keeper.play().catch(() => {});
 
-    // React with companion
+    // React with companion: enter quiet, focused idle state
     if (window._maomao && this.settings.petEnabled !== false) {
       if (typeof window._maomao.playAction === 'function') {
-        window._maomao.playAction('review', 0, 'Focus time! Reviewing our goals 📖');
+        if (this.timerMode === 'focus') {
+          const taskMsg = this.activeTask ? `Focusing on "${this.activeTask.title}" 🌿 Quiet mode on` : 'Focus session started! Quiet concentration mode 🌿';
+          window._maomao.playAction('idle', 0, taskMsg);
+        } else {
+          window._maomao.playAction('waiting', 0, 'Break session started! Relax and stretch 🍵');
+        }
       } else {
-        window._maomao.row = 8;
-        window._maomao._updateBadge('Studying 📖');
+        window._maomao.row = 0;
+        window._maomao._updateBadge('Focusing 🌿');
       }
     }
 
@@ -518,12 +543,24 @@ const App = {
     this.timerRemainingSecs = Math.max(0, Math.ceil(remMs / 1000));
     this.updateDialDisplay();
 
+    // Companion in-session milestone reactions
+    if (window._maomao && this.settings.petEnabled !== false && typeof window._maomao.playAction === 'function') {
+      if (!this._halfwayAlerted && this.timerDurationSecs >= 300 && this.timerRemainingSecs <= Math.floor(this.timerDurationSecs / 2)) {
+        this._halfwayAlerted = true;
+        window._maomao.playAction('review', 3200, 'Halfway there! Keep your momentum going! 🎯');
+      } else if (!this._countdownAlerted && this.timerRemainingSecs === 30 && this.timerDurationSecs >= 60) {
+        this._countdownAlerted = true;
+        window._maomao.playAction('run', 3500, 'Final 30 seconds! Finish strong! ⚡');
+      }
+    }
+
     if (this.timerRemainingSecs <= 0) {
       this.timerComplete();
     }
   },
 
   timerPause() {
+    const wasRunning = this.timerRunning;
     this.timerRunning = false;
     clearInterval(this.tickInterval);
     this.releaseWakeLock();
@@ -534,12 +571,13 @@ const App = {
     this.recordSessionElapsed();
     this.saveTimerState();
 
-    if (window._maomao && this.settings.petEnabled !== false) {
+    // User stopped midway -> Companion expresses sadness / pout & encouragement
+    if (wasRunning && window._maomao && this.settings.petEnabled !== false) {
       if (typeof window._maomao.playAction === 'function') {
-        window._maomao.playAction('failed', 3000, 'Paused! Catch your breath, we can continue anytime 💪');
+        window._maomao.playAction('failed', 4500, 'Aw... pausing midway? 🌧️ Take a breath, we can finish this!');
       } else {
         window._maomao.row = 5;
-        window._maomao._updateBadge('Paused');
+        window._maomao._updateBadge('Sad / Paused 🌧️');
       }
     }
 
@@ -547,10 +585,17 @@ const App = {
   },
 
   timerReset() {
+    const wasRunning = this.timerRunning;
     this.timerPause();
     this.timerRemainingSecs = this.timerDurationSecs;
     this.saveTimerState();
     this.updateDialDisplay();
+
+    if (wasRunning && window._maomao && this.settings.petEnabled !== false) {
+      if (typeof window._maomao.playAction === 'function') {
+        window._maomao.playAction('failed', 3500, "Resetting session? 🌧️ Deep breath, let's start fresh!");
+      }
+    }
   },
 
   timerSkip() {
@@ -561,11 +606,21 @@ const App = {
       this.timerDurationSecs = this.settings.shortBreak * 60;
       this.timerRemainingSecs = this.timerDurationSecs;
       showToast('Break started ☕');
+      if (window._maomao && this.settings.petEnabled !== false) {
+        if (typeof window._maomao.playAction === 'function') {
+          window._maomao.playAction('waiting', 0, 'Switching to break! Stretch and enjoy some tea 🍵');
+        }
+      }
     } else {
       this.timerMode = 'focus';
       this.timerDurationSecs = this.settings.focus * 60;
       this.timerRemainingSecs = this.timerDurationSecs;
       showToast('Ready to focus 🎯');
+      if (window._maomao && this.settings.petEnabled !== false) {
+        if (typeof window._maomao.playAction === 'function') {
+          window._maomao.playAction('idle', 0, 'Ready to focus! Calm and quiet 🌿');
+        }
+      }
     }
     this.saveTimerState();
     this.updateDialDisplay();
@@ -586,10 +641,11 @@ const App = {
       });
     }
 
-    // Companion reaction
+    // Companion reaction: celebratory jump!
     if (window._maomao && this.settings.petEnabled !== false) {
       if (typeof window._maomao.playAction === 'function') {
-        window._maomao.playAction('jump', 4500, 'Session complete! Fantastic job! 🎉');
+        const taskName = this.activeTask ? `on "${this.activeTask.title}"` : 'focus session';
+        window._maomao.playAction('jump', 5500, `Session complete ${taskName}! Fantastic job! 🎉⭐`);
       } else {
         window._maomao.row = 4;
         window._maomao.frame = 0;
@@ -610,6 +666,9 @@ const App = {
     if (elapsedMins >= 1 && this.timerMode === 'focus') {
       const history = DB.load('sessions', []);
       const today = this.getTodayIso();
+      const todayTotal = history.filter(s => s.date === today).reduce((acc, s) => acc + (s.minutes || 0), 0);
+      const newTotal = todayTotal + elapsedMins;
+
       history.unshift({
         id: 'sess-' + Date.now(),
         date: today,
@@ -619,6 +678,15 @@ const App = {
       });
       DB.save('sessions', history.slice(0, 500));
       this.renderProgress();
+
+      // Check daily focus milestones (e.g. 30m, 60m, 120m, 180m)
+      const milestones = [30, 60, 120, 180, 240];
+      const reached = milestones.find(m => todayTotal < m && newTotal >= m);
+      if (reached && window._maomao && this.settings.petEnabled !== false && typeof window._maomao.playAction === 'function') {
+        setTimeout(() => {
+          window._maomao.playAction('jump', 5000, `Milestone unlocked: ${reached}m focused today! 🏆 Outstanding dedication!`);
+        }, 1200);
+      }
     }
     this.sessionStartTime = 0;
   },
@@ -708,11 +776,18 @@ const App = {
       document.documentElement.requestFullscreen().then(() => {
         const lbl = document.getElementById('lbl-fullscreen');
         if (lbl) lbl.textContent = 'Exit Immersion';
+        if (window._maomao && this.settings.petEnabled !== false && typeof window._maomao.playAction === 'function') {
+          window._maomao.playAction('jump', 3200, 'Full Immersion Mode engaged! 🚀 Zero distractions!');
+          window._maomao._updateBadge('Immersion 🚀');
+        }
       }).catch(() => showToast('Full Screen not supported'));
     } else {
       document.exitFullscreen();
       const lbl = document.getElementById('lbl-fullscreen');
       if (lbl) lbl.textContent = 'Focus Immersion';
+      if (window._maomao && this.settings.petEnabled !== false && typeof window._maomao.playAction === 'function') {
+        window._maomao.playAction('wave', 2500, 'Exited immersion mode 🌸');
+      }
     }
   },
 
@@ -779,6 +854,10 @@ const App = {
     }
     this.renderQueue();
     showToast('Task added to Queue');
+
+    if (window._maomao && this.settings.petEnabled !== false && typeof window._maomao.playAction === 'function') {
+      window._maomao.playAction('review', 3200, `New task logged: "${newTask.title}" 📝 Let's conquer it!`);
+    }
   },
 
   toggleTask(id, forceDone = false) {
@@ -794,12 +873,16 @@ const App = {
       }
       if (window._maomao && this.settings.petEnabled !== false) {
         if (typeof window._maomao.playAction === 'function') {
-          window._maomao.playAction('jump', 2800, 'Task done! You are doing amazing! ⭐');
+          window._maomao.playAction('jump', 3500, `Task completed: "${t.title}" ✓ Fantastic job! ⭐`);
         } else {
           window._maomao.row = 4;
           window._maomao.frame = 0;
           window._maomao._updateBadge('Nice! 🌸');
         }
+      }
+    } else {
+      if (window._maomao && this.settings.petEnabled !== false && typeof window._maomao.playAction === 'function') {
+        window._maomao.playAction('waiting', 2400, `Re-opened task: "${t.title}" 🌿 We'll get back to it!`);
       }
     }
     this.saveTasks(tasks);
@@ -814,6 +897,9 @@ const App = {
       this.setIntent(null);
     }
     this.renderQueue();
+    if (window._maomao && this.settings.petEnabled !== false && typeof window._maomao.playAction === 'function') {
+      window._maomao.playAction('waiting', 2000, 'Task cleared 🗑️ Keeping workspace tidy!');
+    }
   },
 
   focusTaskNow(id) {
@@ -823,6 +909,9 @@ const App = {
     this.setIntent({ id: t.id, title: t.title });
     this.navigate('s-focus');
     showToast(`Focused on: ${t.title}`);
+    if (window._maomao && this.settings.petEnabled !== false && typeof window._maomao.playAction === 'function') {
+      window._maomao.playAction('run', 2800, `Focus locked: "${t.title}"! 🎯 Ready to start!`);
+    }
   },
 
   renderQueue() {
@@ -1017,6 +1106,20 @@ const App = {
     if (hdrIcon) hdrIcon.textContent = icon;
     if (hdrName) hdrName.textContent = name;
     showToast(`Ambient Sound: ${name}`);
+
+    if (window._maomao && this.settings.petEnabled !== false && typeof window._maomao.playAction === 'function') {
+      if (key === 'rain') {
+        window._maomao.playAction('waiting', 3200, 'Listening to soothing rainfall... Cozy focus 🌧️🍵');
+      } else if (key === 'forest') {
+        window._maomao.playAction('idle', 3200, 'Woodland breeze & chirping birds 🌿 Peaceful nature');
+      } else if (key === 'lofi') {
+        window._maomao.playAction('jump', 3000, "Vibing to warm lofi chords~ 🎧✨ Let's flow!");
+      } else if (key === 'brown') {
+        window._maomao.playAction('waiting', 3000, 'Deep brown noise rumble 🌊 Distractions silenced');
+      } else {
+        window._maomao.playAction('waiting', 2200, 'Pure silence for absolute focus 🤫');
+      }
+    }
   },
   setAmbientVolume(v) {
     AmbientAudio.setVolume(v);
@@ -1093,6 +1196,14 @@ const App = {
     document.body.classList.toggle('dark-mode', val);
     this.syncThemeIcon();
     this.syncSettingsUI();
+
+    if (window._maomao && this.settings.petEnabled !== false && typeof window._maomao.playAction === 'function') {
+      if (val) {
+        window._maomao.playAction('waiting', 3000, 'Night owl mode activated 🌙 Cozy and peaceful');
+      } else {
+        window._maomao.playAction('wave', 3000, 'Good morning! ☀️ Fresh bright day for focus!');
+      }
+    }
   },
 
   syncThemeIcon() {

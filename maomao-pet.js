@@ -47,15 +47,15 @@
   };
 
   const BUBBLES = {
-    idle     : ["Hi! How are you? 🌸","Focus time! 🌿","Need anything? 🌸","Herbs ready~ ✨","What's next? 🎯","Stay focused! 💪","Drink some water! 🍵","Ready to focus! 🌿"],
+    idle     : ["Deep in focus with you 🌿","Shh... quiet concentration mode 🤫","Staying calm and focused 🌿","Watching your back while you work ✨","Pure focus time 🎯","Breathing steady, minds clear 🌸"],
     scribble : ["Woah! 🌀","So fast! ⚡","What are you drawing? 📝","Dizzy dizzy~ 💫"],
-    greet    : ["Hi! How are you? 🌸","Hello there! 👋","Nice to meet you! 🌸","Maomao here! 🌿","How are you doing today? 🍵"],
-    drag     : ["Wheee! 🎈","Up we go! ✨","Moving around~ 🐾"],
+    greet    : ["Hi! How are you? 🌸","Hello there! 👋","Nice to meet you! 🌸","Maomao here! 🌿","Ready for a great session! 🍵"],
+    drag     : ["Wheee! 🎈","Up we go! ✨","Moving around~ 🐾","Where are we sitting today? 🌸"],
     tap      : ["Hi! How are you? 🌸","Looking right here! 👀","Noticed! ✨","I see you! 🌸"],
-    jump     : ["Yay! Let's go! ✨","Bouncy joy! 🎈","Woohoo! 🎉","Full of energy! ⭐"],
-    review   : ["Reviewing our notes... 📖","Deep in study mode 🍵","Checking tasks carefully 📝","Focusing on our goals! 🎯"],
-    failed   : ["Don't give up! 💪","We'll get it next time 🌧️","Take a deep breath 🌸","I believe in you! ✨"],
-    run      : ["Zooming over! ⚡","Right behind you! 💨","Catch me if you can! 🐾"]
+    jump     : ["Yay! Let's go! ✨","Bouncy joy! 🎈","Woohoo! 🎉","Full of energy! ⭐","Victory! You did it! 🏆"],
+    review   : ["Reviewing our notes... 📖","Deep in study mode 🍵","Checking tasks carefully 📝","Focusing on our goals! 🎯","Analyzing stats & records 📊"],
+    failed   : ["Aw... stopping midway? 🌧️","Don't give up! I believe in you! 💔","Take a deep breath, we can finish this! 🌸","Rest a moment, then let's get back to it 💪","A tiny pause to recharge 🌧️"],
+    run      : ["Zooming over! ⚡","Right behind you! 💨","Final sprint to the finish line! 🐾","Sprint mode activated! ⚡"]
   };
 
   class MaomaoPet {
@@ -885,9 +885,15 @@
             this.isLooking = true;
             this._updateBadge('Looking ✨');
           } else if (!this.isActionLocked) {
-            if (this.row !== ROWS.WAITING && this.row !== ROWS.IDLE) {
-              this.row = ROWS.WAITING;
-              this._updateBadge(this.petName);
+            if (window.App && window.App.timerRunning) {
+              const isBreak = window.App.timerMode === 'break';
+              this.row = isBreak ? ROWS.WAITING : ROWS.IDLE;
+              this._updateBadge(isBreak ? 'Break 🍵' : 'Focusing 🌿');
+            } else {
+              if (this.row !== ROWS.WAITING && this.row !== ROWS.IDLE) {
+                this.row = ROWS.WAITING;
+                this._updateBadge(this.petName);
+              }
             }
             this.isLooking = false;
             this.frameDelay = 12;
@@ -1058,8 +1064,9 @@
         case 'review':
         case 'study':
         case 'read':
-        case 'focus':
         case 'book':
+        case 'stats':
+        case 'analytics':
           targetRow = ROWS.REVIEW;
           badgeText = 'Studying 📖';
           bubbleType = 'review';
@@ -1069,27 +1076,31 @@
         case 'sad':
         case 'upset':
         case 'pout':
+        case 'pause':
           targetRow = ROWS.FAILED;
-          badgeText = 'Oops! 🌧️';
+          badgeText = 'Sad 🌧️';
           bubbleType = 'failed';
           break;
         case 'waiting':
         case 'wait':
         case 'rest':
         case 'cozy':
+        case 'break':
           targetRow = ROWS.WAITING;
-          badgeText = this.petName || 'Maomao';
+          badgeText = (window.App && window.App.timerRunning && window.App.timerMode === 'break') ? 'Break 🍵' : (this.petName || 'Maomao');
           bubbleType = 'idle';
           break;
         case 'run':
         case 'fast':
+        case 'sprint':
           targetRow = ROWS.RUN;
           badgeText = 'Running ⚡';
           bubbleType = 'run';
           break;
         case 'idle':
+        case 'focus':
           targetRow = ROWS.IDLE;
-          badgeText = this.petName || 'Maomao';
+          badgeText = 'Focusing 🌿';
           bubbleType = 'idle';
           break;
         default:
@@ -1102,7 +1113,7 @@
       this.row = targetRow;
       this.frame = 0;
       this.isLooking = false;
-      this.frameDelay = (act === 'run' || act === 'jump') ? 5 : 7;
+      this.frameDelay = (act === 'run' || act === 'jump') ? 5 : (act === 'idle' || act === 'focus' ? 10 : 7);
       this._updateBadge(badgeText);
 
       if (customMsg) {
@@ -1115,7 +1126,7 @@
           this._bubbleTimeout = setTimeout(() => {
             this.bubbleEl.style.opacity = '0';
             this.bubbleEl.style.transform = 'scale(0.85) translateY(4px)';
-          }, 3000);
+          }, 3200);
         }
       } else {
         this._showBubble(bubbleType);
@@ -1126,8 +1137,14 @@
         this._actionLockTimer = setTimeout(() => {
           this.isActionLocked = false;
           if (!this.isDragging && !this.isMoving) {
-            this.row = ROWS.WAITING;
-            this._updateBadge(this.petName);
+            if (window.App && window.App.timerRunning) {
+              const isBreak = window.App.timerMode === 'break';
+              this.row = isBreak ? ROWS.WAITING : ROWS.IDLE;
+              this._updateBadge(isBreak ? 'Break 🍵' : 'Focusing 🌿');
+            } else {
+              this.row = ROWS.WAITING;
+              this._updateBadge(this.petName);
+            }
           }
         }, durationMs);
       }
