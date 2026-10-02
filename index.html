@@ -331,6 +331,61 @@
             <option value="large">Large</option>
           </select>
         </div>
+
+        <!-- Installed Pets Selector -->
+        <div class="settings-row" style="flex-direction:column;align-items:stretch;">
+          <div class="set-text" style="margin-bottom:6px;">
+            <h4>Active Pet</h4>
+            <p>Choose from your installed companions</p>
+          </div>
+          <div class="pet-selector-grid" id="pet-selector-grid">
+            <!-- Populated by PetTerminal -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Codex Pet Terminal Section -->
+      <div class="settings-sec terminal-section">
+        <div class="terminal-toggle-row" onclick="PetTerminal.toggle()">
+          <div class="set-text">
+            <h4>⌨ Codex Pet Console</h4>
+            <p>Install & manage pets via commands</p>
+          </div>
+          <div class="terminal-toggle-indicator" id="terminal-toggle-label">▾ Open</div>
+        </div>
+
+        <div id="terminal-container" style="display:none;">
+          <div class="terminal-card">
+            <!-- Title Bar -->
+            <div class="terminal-title-bar">
+              <div class="terminal-title-left">
+                <div class="terminal-dots">
+                  <span class="terminal-dot red"></span>
+                  <span class="terminal-dot yellow"></span>
+                  <span class="terminal-dot green"></span>
+                </div>
+                <span class="terminal-title-text">komorebi codex v1.0</span>
+              </div>
+              <div class="terminal-title-right">
+                <span class="terminal-status-dot"></span>
+                <span class="terminal-status-text">Secure</span>
+              </div>
+            </div>
+
+            <!-- Output Area -->
+            <div class="terminal-output" id="terminal-output">
+              <!-- Output lines rendered by JS -->
+            </div>
+
+            <!-- Input Row -->
+            <div class="terminal-input-row">
+              <span class="terminal-prompt">codex ❯</span>
+              <input type="text" class="terminal-input" id="terminal-input"
+                     placeholder="type 'help' to get started..."
+                     autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Sounds & Notifications Section -->
@@ -492,6 +547,7 @@
 
 <!-- Scripts: Maomao Companion & Core App Engine -->
 <script src="maomao-pet.js?v=4" defer></script>
+<script src="pet-terminal.js?v=1" defer></script>
 <script src="app.js?v=4" defer></script>
 
 </body>

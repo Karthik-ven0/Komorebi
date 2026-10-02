@@ -1,7 +1,7 @@
 /* Komorebi PWA Service Worker — v4 */
 'use strict';
 
-const CACHE_NAME = 'komorebi-v4';
+const CACHE_NAME = 'komorebi-v5';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const PRECACHE_ASSETS = [
   './app.js',
   './manifest.json',
   './maomao-pet.js',
+  './pet-terminal.js',
   './maomao.webp',
   './silence.wav',
   './icons/favicon.png',

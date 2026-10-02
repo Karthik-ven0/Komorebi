@@ -34,7 +34,7 @@
   // Codex v2 Row mappings
   const ROWS = {
     IDLE    : 0,
-    WALK_R  : 1, // Walk/Run right
+    WALK_R  : 1, // Walk animation — used for BOTH directions (flip canvas for left)
     GRABBED : 2, // Grabbed / Airborne (when dragging with finger)
     WAVE    : 3, // Wave / Hello
     JUMP    : 4, // Jump / Joy
@@ -109,6 +109,10 @@
       this.dragOffsetY = 0;
       this.dragDistance = 0;
 
+      // Spritesheet dimensions (may be overridden by swapSprite)
+      this.frameW = FRAME_W; // 192px for default Maomao
+      this.frameH = FRAME_H; // ~208px for default Maomao
+
       // Animation & state
       this.row = ROWS.WAITING; // default initial pose (Image 2)
       this.frame = 0;
@@ -178,15 +182,15 @@
     _updateDistances() {
       this.isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.innerWidth < 640;
       if (this.isTouch) {
-        // Mobile screen is narrow (360-430px), comfort distance is compact
-        this.comfortDist = 95;  // ~1 inch on mobile
-        this.minDist     = 65;
-        this.maxDist     = 180;
+        // Mobile: stay close so the pet is always visible near the finger
+        this.comfortDist = 55;  // tight, ~half an inch
+        this.minDist     = 35;
+        this.maxDist     = 100;
       } else {
-        // Desktop screen has room, "at least a few inches apart"
-        this.comfortDist = 230; // ~2.4 inches
-        this.minDist     = 160;
-        this.maxDist     = 300;
+        // Desktop: close enough to feel connected but not on top of cursor
+        this.comfortDist = 110; // ~1 inch
+        this.minDist     = 70;
+        this.maxDist     = 170;
       }
     }
 
@@ -578,7 +582,8 @@
           this.y += (moveDy / distToTarget) * spd;
 
           this.facingRight = moveDx > 0;
-          this.row = this.facingRight ? ROWS.WALK_R : ROWS.WALK_L;
+          // Always use WALK_R row; _draw() will flip horizontally when facingRight is false
+          this.row = ROWS.WALK_R;
           this.isLooking = false;
           this.frameDelay = 6;
           this._updateBadge('Walking 🌿');
@@ -690,7 +695,7 @@
         this.x += (moveDx / dist) * 1.8;
         this.y += (moveDy / dist) * 1.8;
         this.facingRight = moveDx > 0;
-        this.row = this.facingRight ? ROWS.WALK_R : ROWS.WALK_L;
+        this.row = ROWS.WALK_R; // _draw() handles flipping for left direction
         this.isLooking = false;
         this.frameDelay = 7;
         this._updateBadge('Strolling 🌿');
@@ -706,11 +711,21 @@
       const ctx = this.ctx;
       ctx.clearRect(0, 0, this.dispW, this.dispH);
 
-      const sx = this.frame * FRAME_W;
-      const sy = this.row   * FRAME_H;
+      const fw = this.frameW || FRAME_W;
+      const fh = this.frameH || FRAME_H;
+      const sx = this.frame * fw;
+      const sy = this.row   * fh;
 
       ctx.save();
-      ctx.drawImage(this.img, sx, sy, FRAME_W, FRAME_H, 0, 0, this.dispW, this.dispH);
+
+      // Flip horizontally when walking left (no dedicated left-walk row in Codex v2)
+      const shouldFlip = this.isMoving && !this.facingRight && !this.isLooking;
+      if (shouldFlip) {
+        ctx.translate(this.dispW, 0);
+        ctx.scale(-1, 1);
+      }
+
+      ctx.drawImage(this.img, sx, sy, fw, fh, 0, 0, this.dispW, this.dispH);
       ctx.restore();
     }
 
@@ -756,7 +771,9 @@
       const targetSize = SIZES[this.settings.size] || SIZES.normal;
       if (targetSize !== this.dispW) {
         this.dispW = targetSize;
-        this.dispH = Math.round(this.dispW * FRAME_H / FRAME_W);
+        const fh = this.frameH || FRAME_H;
+        const fw = this.frameW || FRAME_W;
+        this.dispH = Math.round(this.dispW * fh / fw);
         this.canvas.width = this.dispW;
         this.canvas.height = this.dispH;
         this.canvas.style.width = this.dispW + 'px';
@@ -766,6 +783,46 @@
       this._updateDistances();
       this._clampPosition();
       this._updateOverlayPositions();
+    }
+
+    /**
+     * swapSprite — swap to any Codex-format spritesheet URL
+     * cols/rows default to 8x9 (v1) or 8x11 (v2 = Maomao)
+     */
+    swapSprite(url, cols, rows) {
+      cols = cols || 8;
+      rows = rows || 9; // v1 default; Maomao uses 11
+
+      const newImg = new Image();
+      newImg.crossOrigin = 'anonymous';
+      newImg.onload = () => {
+        // Compute per-frame dimensions from actual image size
+        this.frameW = Math.round(newImg.naturalWidth  / cols);
+        this.frameH = Math.round(newImg.naturalHeight / rows);
+        this.img = newImg;
+
+        // Recompute canvas height to match new aspect ratio
+        this.dispH = Math.round(this.dispW * this.frameH / this.frameW);
+        this.canvas.height = this.dispH;
+        this.canvas.style.height = this.dispH + 'px';
+
+        // Reset to safe state
+        this.row   = 6; // WAITING
+        this.frame = 0;
+        this._updateOverlayPositions();
+        this._showBubble('greet');
+      };
+      newImg.onerror = () => {
+        console.warn('[Komorebi] swapSprite failed for:', url);
+        // Restore Maomao on error
+        this.swapSprite('maomao.webp', 8, 11);
+      };
+      newImg.src = url;
+    }
+
+    /** Restore built-in Maomao sprite */
+    restoreDefaultSprite() {
+      this.swapSprite('maomao.webp', 8, 11);
     }
 
     _calcDefaultPos() {
