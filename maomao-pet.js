@@ -70,6 +70,16 @@
       this.dispW = SIZES[this.settings.size] || SIZES.normal;
       this.dispH = Math.round(this.dispW * FRAME_H / FRAME_W);
 
+      // Active companion profile
+      const activeId = (() => {
+        try { return JSON.parse(localStorage.getItem('km_active_pet')); } catch(e) { return 'maomao'; }
+      })();
+      const installedList = (() => {
+        try { return JSON.parse(localStorage.getItem('km_installed_pets')) || []; } catch(e) { return []; }
+      })();
+      const activePetRecord = installedList.find(p => (p.slug || p.id) === activeId);
+      this.petName = activePetRecord ? (activePetRecord.displayName || activePetRecord.slug || activePetRecord.id) : 'Maomao';
+
       // Distance parameters (dynamically scaled for mobile vs desktop)
       this._updateDistances();
 
@@ -182,15 +192,15 @@
     _updateDistances() {
       this.isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.innerWidth < 640;
       if (this.isTouch) {
-        // Mobile: stay close so the pet is always visible near the finger
-        this.comfortDist = 55;  // tight, ~half an inch
-        this.minDist     = 35;
-        this.maxDist     = 100;
+        // Mobile: very close to finger
+        this.comfortDist = 38;
+        this.minDist     = 20;
+        this.maxDist     = 65;
       } else {
-        // Desktop: close enough to feel connected but not on top of cursor
-        this.comfortDist = 110; // ~1 inch
-        this.minDist     = 70;
-        this.maxDist     = 170;
+        // Desktop: tight follow right next to the cursor
+        this.comfortDist = 48;
+        this.minDist     = 28;
+        this.maxDist     = 80;
       }
     }
 
@@ -217,10 +227,11 @@
       document.body.appendChild(this.canvas);
       this.ctx = this.canvas.getContext('2d');
 
-      // 2. Create "Waiting" status badge (matching Image 2)
+      // 2. Create status / name badge
       this.badgeEl = document.createElement('div');
       Object.assign(this.badgeEl.style, {
         position      : 'fixed',
+        transform     : 'translateX(-50%)',
         background    : 'rgba(255,255,255,0.92)',
         backdropFilter: 'blur(8px)',
         border        : '1px solid rgba(0,0,0,0.08)',
@@ -235,11 +246,11 @@
         pointerEvents : 'none',
         whiteSpace    : 'nowrap',
         letterSpacing : '0.02em',
-        transition    : 'opacity 0.25s ease, transform 0.25s ease',
+        transition    : 'opacity 0.25s ease',
         opacity       : '1',
         display       : this.settings.enabled !== false ? 'block' : 'none',
       });
-      this.badgeEl.textContent = 'Waiting';
+      this.badgeEl.textContent = this.petName || 'Maomao';
       document.body.appendChild(this.badgeEl);
 
       // 3. Create Speech Bubble
@@ -263,7 +274,7 @@
       });
       document.body.appendChild(this.bubbleEl);
 
-      // 4. Load Sprite
+      // 4. Load Sprite (starts immediately with active pet from storage)
       const startLoop = () => {
         if (!this._loopStarted) {
           this._loopStarted = true;
@@ -273,8 +284,31 @@
         }
       };
       this.img.onload = startLoop;
-      this.img.onerror = () => console.error('Failed to load maomao.webp');
-      this.img.src = 'maomao.webp';
+
+      const activeIdInit = (() => {
+        try { return JSON.parse(localStorage.getItem('km_active_pet')); } catch(e) { return 'maomao'; }
+      })();
+      const installedListInit = (() => {
+        try { return JSON.parse(localStorage.getItem('km_installed_pets')) || []; } catch(e) { return []; }
+      })();
+      const activePetInit = installedListInit.find(p => (p.slug || p.id) === activeIdInit);
+
+      if (activePetInit && (activePetInit.slug !== 'maomao' && !activePetInit.builtIn)) {
+        this.petName = activePetInit.displayName || activePetInit.slug || activePetInit.id;
+        const spriteUrl = activePetInit.sprite || activePetInit.spritesheetUrl;
+        const rows = activePetInit.rows || (activePetInit.tags && activePetInit.tags.includes('v2') ? 11 : 9);
+        this.frameW = Math.round(1536 / 8);
+        this.frameH = Math.round(2288 / rows);
+        this.img.src = spriteUrl;
+      } else {
+        this.petName = 'Maomao';
+        this.img.src = 'maomao.webp';
+      }
+
+      this.img.onerror = () => {
+        console.warn('Failed to load active pet sprite, falling back to maomao.webp');
+        this.swapSprite('maomao.webp', 8, 11);
+      };
       if (this.img.complete && this.img.naturalWidth > 0) {
         startLoop();
       }
@@ -503,9 +537,9 @@
 
     _updateOverlayPositions() {
       if (this.badgeEl) {
-        const badgeX = Math.round(this.x + this.dispW / 2 - 32);
+        const badgeX = Math.round(this.x + this.dispW / 2);
         const badgeY = Math.round(this.y + this.dispH + 3);
-        this.badgeEl.style.left = Math.max(8, Math.min(window.innerWidth - 80, badgeX)) + 'px';
+        this.badgeEl.style.left = Math.max(30, Math.min(window.innerWidth - 30, badgeX)) + 'px';
         this.badgeEl.style.top  = Math.min(window.innerHeight - 30, badgeY) + 'px';
       }
       if (this.bubbleEl) {
@@ -556,7 +590,7 @@
 
         let offsetX = (dxToCursor / distToCursor) * this.comfortDist;
         let offsetY = (dyToCursor / distToCursor) * this.comfortDist;
-        if (Math.abs(offsetY) < 30) offsetY = 40;
+        if (Math.abs(offsetY) < 12) offsetY = 16;
 
         let targetX = this.cursorX + offsetX - this.dispW / 2;
         let targetY = this.cursorY + offsetY - this.dispH / 2;
@@ -573,11 +607,11 @@
         const moveDy = this.targetY - this.y;
         const distToTarget = Math.hypot(moveDx, moveDy);
 
-        const needsWalking = this.hasInputMoved && (distToCursor > this.maxDist || distToCursor < this.minDist);
+        const needsWalking = this.hasInputMoved && (distToCursor > this.maxDist || distToTarget > 14);
 
-        if (needsWalking && distToTarget > 20) {
+        if (needsWalking && distToTarget > 8) {
           this.isMoving = true;
-          const spd = Math.min(this.speed, Math.max(2.0, distToTarget * 0.08));
+          const spd = Math.min(this.speed * 1.4, Math.max(2.8, distToTarget * 0.14));
           this.x += (moveDx / distToTarget) * spd;
           this.y += (moveDy / distToTarget) * spd;
 
@@ -585,8 +619,8 @@
           // Always use WALK_R row; _draw() will flip horizontally when facingRight is false
           this.row = ROWS.WALK_R;
           this.isLooking = false;
-          this.frameDelay = 6;
-          this._updateBadge('Walking 🌿');
+          this.frameDelay = 5;
+          this._updateBadge(this.petName || 'Maomao');
         } else {
           this.isMoving = false;
           const timeSinceInput = Date.now() - this.lastInputTime;
@@ -737,8 +771,9 @@
 
     _updateBadge(text) {
       if (!this.badgeEl) return;
-      this.badgeEl.textContent = text;
-      if (text === 'Waiting') {
+      const display = (!text || text === 'Waiting') ? (this.petName || 'Maomao') : text;
+      this.badgeEl.textContent = display;
+      if (!text || text === 'Waiting' || display === this.petName) {
         this.badgeEl.style.color = '#4B5563';
         this.badgeEl.style.borderColor = 'rgba(0,0,0,0.08)';
       } else {
@@ -747,9 +782,16 @@
       }
     }
 
+    setPetName(name) {
+      this.petName = name || 'Maomao';
+      this._updateBadge(this.petName);
+    }
+
     _showBubble(type) {
       const msgs = BUBBLES[type] || BUBBLES.idle;
-      const msg  = msgs[Math.floor(Math.random() * msgs.length)];
+      let msg  = msgs[Math.floor(Math.random() * msgs.length)];
+      const currentName = this.petName || 'Maomao';
+      msg = msg.replace(/\bMaomao\b/g, currentName);
       this.bubbleEl.textContent = msg;
       this.bubbleEl.style.opacity = '1';
       this.bubbleEl.style.transform = 'scale(1) translateY(0)';

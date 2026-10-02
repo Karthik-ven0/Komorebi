@@ -219,20 +219,21 @@ const PetTerminal = (() => {
   function switchVisiblePet(petData) {
     if (!window._maomao) return;
     const pet = window._maomao;
+    const displayName = petData.displayName || petData.slug || petData.id || 'Maomao';
 
     if (petData.slug === 'maomao' || petData.builtIn) {
+      if (typeof pet.setPetName === 'function') pet.setPetName('Maomao');
       pet.swapSprite('maomao.webp', 8, 11);
-      pet._updateBadge('Maomao 🐱');
+      pet._updateBadge('Maomao');
     } else {
       const spriteUrl = petData.sprite || petData.spritesheetUrl;
-
-      // Use stored rows (saved at install time), or detect from tags
       const storedRows = petData.rows;
       const tags = (petData.tags || []).join(' ').toLowerCase();
       const rows = storedRows || (tags.includes('v2') ? 11 : 9);
 
+      if (typeof pet.setPetName === 'function') pet.setPetName(displayName);
       pet.swapSprite(spriteUrl, 8, rows);
-      pet._updateBadge(petData.displayName || petData.slug || petData.id);
+      pet._updateBadge(displayName);
     }
   }
 
@@ -500,6 +501,7 @@ const PetTerminal = (() => {
     renderPetSelector();
     switchVisiblePet(pet);
     print(`✓ Switched to ${pet.emoji || '🐾'} ${pet.displayName}!`, 'success');
+    printPetSpeak(`Hello, ${pet.displayName} here! Ready to accompany you.`);
     reactPet('wave');
   }
 
@@ -767,9 +769,14 @@ const PetTerminal = (() => {
     grid.innerHTML = installed.map(p => {
       const id = p.slug || p.id;
       const isActive = id === activeId;
+      const spriteUrl = p.sprite || p.spritesheetUrl || (p.builtIn || id === 'maomao' ? 'maomao.webp' : '');
+      const avatarHtml = spriteUrl
+        ? `<div class="pet-select-avatar" style="background-image: url('${spriteUrl}');"></div>`
+        : `<div class="pet-select-emoji">${p.emoji || '🐾'}</div>`;
+
       return `
-        <div class="pet-select-card ${isActive ? 'active' : ''}" onclick="PetTerminal.selectPet('${id}')">
-          <div class="pet-select-emoji">${p.emoji || '🐾'}</div>
+        <div class="pet-select-card ${isActive ? 'active' : ''}" onclick="PetTerminal.selectPet('${id}')" title="${escTerminal(p.displayName || id)}">
+          ${avatarHtml}
           <div class="pet-select-name">${escTerminal(p.displayName || p.slug || p.id)}</div>
         </div>`;
     }).join('');
@@ -833,17 +840,16 @@ const PetTerminal = (() => {
   function boot() {
     setTimeout(() => {
       renderPetSelector();
-      // On load, switch to the saved active pet
+      // On load, switch to the saved active pet immediately once pet object is ready
       const activeId = loadActivePet();
       if (activeId && activeId !== 'maomao') {
         const installed = loadInstalledPets();
         const pet = installed.find(p => (p.slug || p.id) === activeId);
         if (pet) {
-          // Wait for MaomaoPet to fully boot, then swap sprite
-          setTimeout(() => switchVisiblePet(pet), 1800);
+          setTimeout(() => switchVisiblePet(pet), 450);
         }
       }
-    }, 600);
+    }, 200);
   }
 
   if (document.readyState === 'loading') {
