@@ -794,7 +794,7 @@
       rows = rows || 9; // v1 default; Maomao uses 11
 
       const newImg = new Image();
-      newImg.crossOrigin = 'anonymous';
+      // Do not set crossOrigin = 'anonymous' to avoid CORS rejection on external CDNs
       newImg.onload = () => {
         // Compute per-frame dimensions from actual image size
         this.frameW = Math.round(newImg.naturalWidth  / cols);

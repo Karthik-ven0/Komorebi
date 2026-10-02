@@ -1,0 +1,5417 @@
+[
+  {
+    "id": "kitsune",
+    "slug": "kitsune",
+    "displayName": "Kitsune 🦊",
+    "description": "Magical spirit fox companion with sharp ears, white body and lively animations.",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "cute",
+      "pixel",
+      "kitsune",
+      "japanese",
+      "spirit"
+    ],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1777796974799/fox/spritesheet.webp",
+    "rows": 9,
+    "source": "codex-share",
+    "submittedBy": "mabyes1",
+    "pageUrl": "https://codex-pets.net/pets/fox"
+  },
+  {
+    "id": "zeta-gundam-v2",
+    "slug": "zeta-gundam-v2",
+    "displayName": "Zeta Gundam v2.1",
+    "description": "Unofficial SD Zeta Gundam with beam saber, rifle, launcher, grenade and Wave Rider animations. Gundam IP belongs to its rights holders. No official affiliation.",
+    "kind": "character",
+    "tags": [
+      "animated",
+      "anime",
+      "robot",
+      "gundam",
+      "zeta"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_1c93e0316e3c/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/zeta-gundam-v2"
+  },
+  {
+    "id": "martian-biker",
+    "slug": "martian-biker",
+    "displayName": "Байкер с Марса",
+    "description": "Серьёзный мышь-байкер, который помогает следить за работой Codex.",
+    "kind": "creature",
+    "tags": [
+      "biker",
+      "mouse",
+      "martian",
+      "motorcycle"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_11aeb847ddc6/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/martian-biker"
+  },
+  {
+    "id": "microwave-cat",
+    "slug": "microwave-cat",
+    "displayName": "Microwave Cat",
+    "description": "A blurry cat supervises a microwave with a pizza inside.",
+    "kind": "creature",
+    "tags": [
+      "cat"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7ff8e3caf04f/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "sergzhik007",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/microwave-cat"
+  },
+  {
+    "id": "contact-alien",
+    "slug": "contact-alien",
+    "displayName": "Contact Alien",
+    "description": "A compact animated pet inspired by the colorful alien creature from the Soviet cartoon Contact.",
+    "kind": "character",
+    "tags": [
+      "alien",
+      "cartoon",
+      "colorful",
+      "contact",
+      "soviet-animation",
+      "v1"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_831d4b228b0f/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/contact-alien"
+  },
+  {
+    "id": "brick-buddy",
+    "slug": "brick-buddy",
+    "displayName": "Brick Buddy",
+    "description": "A cheerful universal-yellow modular block-person companion with a warm, 1970s construction-toy feel.",
+    "kind": "character",
+    "tags": [
+      "toy",
+      "modular-toy",
+      "yellow",
+      "character",
+      "v2"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_5df78a9762cf/spritesheet.webp",
+    "rows": 11,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/brick-buddy"
+  },
+  {
+    "id": "emberling",
+    "slug": "emberling",
+    "displayName": "Emberling",
+    "description": "A round apricot baby dragon with a cream belly, tiny lavender wings, soft horns, and a curious, affectionate expression.",
+    "kind": "creature",
+    "tags": [
+      "dragon",
+      "baby-dragon",
+      "cute",
+      "apricot",
+      "lavender",
+      "flat-vector",
+      "v2"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7277b9ca9aab/spritesheet.webp",
+    "rows": 11,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/emberling"
+  },
+  {
+    "id": "dracula",
+    "slug": "dracula",
+    "displayName": "Count Dracula",
+    "description": "An original pixel-art gothic storybook interpretation of Count Dracula from Bram Stoker's public-domain 1897 novel.",
+    "kind": "character",
+    "tags": [
+      "dracula",
+      "vampire",
+      "gothic",
+      "victorian",
+      "transylvania",
+      "public-domain",
+      "cc0",
+      "v2"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_2a42c009285c/spritesheet.webp",
+    "rows": 11,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/dracula"
+  },
+  {
+    "id": "tallulah",
+    "slug": "tallulah",
+    "displayName": "Tallulah",
+    "description": "An animated underground-comic devil woman with worn burgundy wings, purple stagewear, yellow fishnets, and a fierce glamorous attitude. Shared by cutespirit under CC BY-NC 4.0.",
+    "kind": "creature",
+    "tags": [
+      "mature",
+      "comic",
+      "devil",
+      "gothic",
+      "winged",
+      "glamorous"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_5c5b27bfed8f/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "cutespirit",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/tallulah"
+  },
+  {
+    "id": "t-rex",
+    "slug": "t-rex",
+    "displayName": "T-Rex",
+    "description": "A bright lime-green cartoon T-Rex with a huge blue eye, a cream muzzle and belly, tiny clawed arms, chunky feet, and a confident toothy grin.",
+    "kind": "creature",
+    "tags": [
+      "t-rex",
+      "dinosaur",
+      "prehistoric",
+      "cartoon",
+      "lime",
+      "cute",
+      "cc0"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_f122aaac0226/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/t-rex"
+  },
+  {
+    "id": "fennec-fox",
+    "slug": "fennec-fox",
+    "displayName": "Fennec Fox",
+    "description": "A graceful sandy fennec fox with enormous dark-lined ears, a cream chest, bright curious eyes, and a plush cream-tipped tail.",
+    "kind": "creature",
+    "tags": [
+      "fennec",
+      "fox",
+      "desert",
+      "cute",
+      "animal"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_f560160dddb7/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/fennec-fox"
+  },
+  {
+    "id": "red-panda",
+    "slug": "red-panda",
+    "displayName": "Red Panda",
+    "description": "A warm russet red panda with a cream facial mask, dark legs, rounded ears, and a plush striped tail, animated with curious woodland charm.",
+    "kind": "creature",
+    "tags": [
+      "red-panda",
+      "wildlife",
+      "woodland",
+      "russet",
+      "cute",
+      "flat-vector",
+      "cc0"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_bdf463385ae5/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/red-panda"
+  },
+  {
+    "id": "sviborg-ball",
+    "slug": "sviborg-ball",
+    "displayName": "Sviborg's Ball",
+    "description": "A stern bronze sphere with a human face, inspired by the surreal Sviborg's Ball internet meme.",
+    "kind": "object",
+    "tags": [
+      "meme",
+      "sphere",
+      "bronze",
+      "surreal",
+      "face"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7ca06692a7a7/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/sviborg-ball"
+  },
+  {
+    "id": "axolotl",
+    "slug": "axolotl",
+    "displayName": "Axolotl",
+    "description": "A luminous lavender axolotl with coral-pink feathery gills, a soft rounded body, tiny dark eyes, and a calm curious personality.",
+    "kind": "creature",
+    "tags": [
+      "axolotl",
+      "amphibian",
+      "aquatic",
+      "lavender",
+      "cute",
+      "flat-vector",
+      "cc0"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_9fec764d7607/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/axolotl"
+  },
+  {
+    "id": "glamorous-succubus",
+    "slug": "glamorous-succubus",
+    "displayName": "Glamorous Succubus",
+    "description": "A glamorous adult gothic pixel succubus with horns, wings, confident poise, and non-explicit animated poses.",
+    "kind": "character",
+    "tags": [
+      "succubus",
+      "demon",
+      "gothic",
+      "glamorous",
+      "adult",
+      "pixel-art",
+      "cc0"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_026fa64fbbd1/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/glamorous-succubus"
+  },
+  {
+    "id": "gothic-flying-demon",
+    "slug": "gothic-flying-demon",
+    "displayName": "Gothic Flying Demon",
+    "description": "A small winged gothic pixel demon with a dark crimson palette and restless airborne poses.",
+    "kind": "creature",
+    "tags": [
+      "gothic",
+      "demon",
+      "flying",
+      "winged",
+      "dark",
+      "pixel-art"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_ef0930636ff1/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/gothic-flying-demon"
+  },
+  {
+    "id": "kesha",
+    "slug": "kesha",
+    "displayName": "Kesha",
+    "description": "A tan-and-white corgi with a broad white facial blaze, a fluffy white chest, and oversized upright ears. Long body, short legs, no visible tail. She blinks and smiles at idle, raises a front paw to wave, and lies flat with her chin on the ground when something goes wrong.",
+    "kind": "creature",
+    "tags": [
+      "corgi",
+      "dog",
+      "cute",
+      "animated"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_c4f97b4b4981/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "vizetmail",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/kesha"
+  },
+  {
+    "id": "wild-boar",
+    "slug": "wild-boar",
+    "displayName": "Wild Boar",
+    "description": "A pixel-art wild boar in side profile: brown body with a darker snout and legs, a tan underbelly, short cream tusks, and a bristled back. It breathes subtly at idle, runs on a four-legged cycle, and roots the ground with its snout when a task fails.",
+    "kind": "creature",
+    "tags": [
+      "boar",
+      "pixel-art",
+      "wildlife",
+      "forest",
+      "cc0"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_91fc30629309/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/wild-boar"
+  },
+  {
+    "id": "woodland-deer",
+    "slug": "woodland-deer",
+    "displayName": "Woodland Deer",
+    "description": "A graceful brown pixel deer with alert ears, gentle woodland poise, and animated movement.",
+    "kind": "creature",
+    "tags": [
+      "deer",
+      "pixel-art",
+      "forest",
+      "wildlife",
+      "cc0"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_3d317a5f95b5/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/woodland-deer"
+  },
+  {
+    "id": "nightmare-creature",
+    "slug": "nightmare-creature",
+    "displayName": "Nightmare Creature",
+    "description": "A creepy gothic pixel monster with an unusual silhouette, dark fantasy details, and animated horror charm.",
+    "kind": "creature",
+    "tags": [
+      "pixel-art",
+      "gothic",
+      "dark-fantasy",
+      "monster",
+      "horror"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_8bfacb5e59b9/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/nightmare-creature"
+  },
+  {
+    "id": "crimson-dragon",
+    "slug": "crimson-dragon",
+    "displayName": "Crimson Dragon",
+    "description": "A richly animated crimson pixel dragon with broad wings, a powerful fantasy silhouette, and expressive movement.",
+    "kind": "creature",
+    "tags": [
+      "dragon",
+      "crimson",
+      "fantasy",
+      "pixel-art",
+      "cc0"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_795a6eec17f7/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/crimson-dragon"
+  },
+  {
+    "id": "fire-skull",
+    "slug": "fire-skull",
+    "displayName": "Fire Skull",
+    "description": "A floating gothic pixel skull wrapped in vivid supernatural flame with mischievous animated expressions.",
+    "kind": "creature",
+    "tags": [
+      "skull",
+      "fire",
+      "gothic",
+      "undead",
+      "pixel-art",
+      "cc0"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_4851bdcaadd5/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/fire-skull"
+  },
+  {
+    "id": "polin",
+    "slug": "polin",
+    "displayName": "Polín",
+    "description": "A round golden pollen-grain creature with a glossy dimpled shell and a cream cracked rim on top of its head. It blinks at idle, waddles side to side, waves, and hops with squash-and-stretch. On failure it deflates flat to the ground, then re-inflates with a worried frown. Original CC0 character.",
+    "kind": "creature",
+    "tags": [
+      "pollen",
+      "golden",
+      "creature",
+      "original",
+      "source-github",
+      "license-cc0",
+      "v2"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_70dc867c471c/spritesheet.webp",
+    "rows": 11,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/polin"
+  },
+  {
+    "id": "iris",
+    "slug": "iris",
+    "displayName": "Iris",
+    "description": "Iris — cheerful Manga-pop companion who types with both hands while the agent works.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "manga",
+      "humanoid",
+      "developer",
+      "original",
+      "source-github",
+      "license-mit",
+      "v2"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_4a85a6d41699/spritesheet.webp",
+    "rows": 11,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/iris"
+  },
+  {
+    "id": "minty-codex-pet",
+    "slug": "minty-codex-pet",
+    "displayName": "Minty — Codex Pet",
+    "description": "A mint-haired animated Codex companion with nine activity animations and sixteen v2 look directions.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "chibi",
+      "humanoid",
+      "mint",
+      "original",
+      "source-github",
+      "license-mit",
+      "v2"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_39e20324bbac/spritesheet.webp",
+    "rows": 11,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/minty-codex-pet"
+  },
+  {
+    "id": "sakura",
+    "slug": "sakura",
+    "displayName": "Sakura",
+    "description": "A crisp 2D chibi adult kunoichi in a simplified white, black, and hot-pink rose outfit.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "chibi",
+      "shinobi",
+      "2d",
+      "sprite"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_c3fce280336f/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/sakura"
+  },
+  {
+    "id": "rose-katana",
+    "slug": "rose-katana",
+    "displayName": "Rose Katana",
+    "description": "A chibi anime swordswoman with pink odango buns tied with rose accessories and a white-and-pink floral kimono outfit. She carries a katana in a maroon sheath on her back and a second blade at her waist. She runs with her hair flowing, leaps with clenched fists, and bows her head sadly on failure.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "chibi",
+      "swordswoman"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_eb2bd202a736/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": null,
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/rose-katana"
+  },
+  {
+    "id": "foggy-hedgehog",
+    "slug": "foggy-hedgehog",
+    "displayName": "Foggy Hedgehog",
+    "description": "A worried storybook hedgehog with dark spiky quills and a tan pointed face, clutching a white kerchief bundle with orange polka dots in both paws. He shuffles along holding his bundle, waves one arm, and grows visibly more anxious — wide glistening eyes and a small gasp — when a task fails.",
+    "kind": "character",
+    "tags": [
+      "hedgehog",
+      "cartoon"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_5a9ff4256728/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/foggy-hedgehog"
+  },
+  {
+    "id": "yuffie-3",
+    "slug": "yuffie-3",
+    "displayName": "Yuffie",
+    "description": "A simplified sharp chibi anime girl desktop pet with the reference outfit preserved in bold readable shapes.",
+    "kind": "character",
+    "tags": [
+      "ffvii",
+      "anime",
+      "girl",
+      "final fantasy"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_6bae5b9d2ffe/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/yuffie-3"
+  },
+  {
+    "id": "purple-hedgehog",
+    "slug": "purple-hedgehog",
+    "displayName": "Ezhik",
+    "description": "A round pink hedgehog-like pet with purple crown spikes and oversized dark purple glasses.",
+    "kind": "character",
+    "tags": [
+      "cartoon",
+      "round",
+      "smeshariki"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_f91f82eab266/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/purple-hedgehog"
+  },
+  {
+    "id": "cheburashka",
+    "slug": "cheburashka",
+    "displayName": "Cheburashka",
+    "description": "A small Cheburashka-like furry Codex pet with huge round ears, tan face, dark body, and shy posture.",
+    "kind": "character",
+    "tags": [
+      "cartoon",
+      "oranges",
+      "chibi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7a4d599b5717/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/cheburashka"
+  },
+  {
+    "id": "blue-rabbit-2",
+    "slug": "blue-rabbit-2",
+    "displayName": "Krosh",
+    "description": "A clean flat-vector cyan blue rabbit pet based on the supplied reference.",
+    "kind": "character",
+    "tags": [
+      "cartoon",
+      "rabbit",
+      "smeshariki"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_d0842b733499/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/blue-rabbit-2"
+  },
+  {
+    "id": "round-bear",
+    "slug": "round-bear",
+    "displayName": "Winnie",
+    "description": "A compact warm-brown bear pet with black ears, eye mask, paws, feet, oval nose, pale oval eyes, and a gentle anxious vintage cartoon expression.",
+    "kind": "character",
+    "tags": [
+      "cartoon",
+      "bear"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_72fc9cf69994/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/round-bear"
+  },
+  {
+    "id": "aerith-chibi-2",
+    "slug": "aerith-chibi-2",
+    "displayName": "Aerith",
+    "description": "A slightly chibi anime girl pet with Aerith-inspired red jacket, pale long dress, braid, and boots.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "girl",
+      "final fantasy",
+      "ffvii"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_3acc3ba75262/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/aerith-chibi-2"
+  },
+  {
+    "id": "sunny-sprout",
+    "slug": "sunny-sprout",
+    "displayName": "Neznayka",
+    "description": "A compact cartoon pet with oversized blue-and-yellow swept hair and a strictly preserved orange, green, and yellow outfit from the reference.",
+    "kind": "character",
+    "tags": [
+      "cartoon",
+      "hat",
+      "blond"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_f2660012ffb8/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/sunny-sprout"
+  },
+  {
+    "id": "chibi-wolf",
+    "slug": "chibi-wolf",
+    "displayName": "Nu Pogodi Wolf",
+    "description": "Slightly chibi gray-blue wolf in the exact red tunic, yellow neck scarf, black pants, lavender shoes, black hair, green head accent, and friendly mischievous expression from the reference outfit.",
+    "kind": "character",
+    "tags": [
+      "wolf",
+      "cartoon",
+      "nu pogodi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_f8173ec64ec4/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/chibi-wolf"
+  },
+  {
+    "id": "blond-flexer-2",
+    "slug": "blond-flexer-2",
+    "displayName": "Johnny Bravo",
+    "description": "A muscular flat-vector cartoon blond with a tall pompadour, black sunglasses, a black t-shirt, and blue pants — a Johnny Bravo lookalike. He flexes alternating biceps at idle, runs with pumping arms, hops in place, and drops to his knees with crossed arms when a task fails.",
+    "kind": "character",
+    "tags": [
+      "cartoon",
+      "flex",
+      "blond"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_3994f08adea1/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/blond-flexer-2"
+  },
+  {
+    "id": "karlson-2",
+    "slug": "karlson-2",
+    "displayName": "Karlson",
+    "description": "Canonical red-haired flying cartoon man with green plaid shirt, white bib overalls, red shoes, and red propeller pack.",
+    "kind": "character",
+    "tags": [
+      "cartoon",
+      "funny",
+      "flying"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7888444d7839/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/karlson-2"
+  },
+  {
+    "id": "bird-gentleman",
+    "slug": "bird-gentleman",
+    "displayName": "Doctor Livesey",
+    "description": "A vintage cartoon bird gentleman in a preserved black coat, teal vest, ruffled collar, gloves, and mismatched shoes.",
+    "kind": "character",
+    "tags": [
+      "cartoon",
+      "doctor",
+      "treasure island"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_e3e8e326f67a/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/bird-gentleman"
+  },
+  {
+    "id": "bolshoy-tyll",
+    "slug": "bolshoy-tyll",
+    "displayName": "Big Tyll",
+    "description": "A big green cartoon giant with a leafy crest sprouting from his head, dressed in a loose pale-yellow knee-length tunic with bare hands and feet. Flat cel-shaded style. He runs bent forward with pumping arms, waves high, and slumps into a crouch when a task fails. Based on the Russian character Bolshoy Tyll.",
+    "kind": "character",
+    "tags": [
+      "cartoon",
+      "epic",
+      "creature"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_eb5308fb3711/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/bolshoy-tyll"
+  },
+  {
+    "id": "pushkin-2",
+    "slug": "pushkin-2",
+    "displayName": "Pushkin",
+    "description": "A pixel-art slightly chibi Alexander Pushkin pet preserving the dark cloak, black cravat, white collar tips, and red-green plaid drape from the reference portrait.",
+    "kind": "character",
+    "tags": [
+      "historical",
+      "person",
+      "writer"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_0463689bc0a6/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/pushkin-2"
+  },
+  {
+    "id": "otets-potets",
+    "slug": "otets-potets",
+    "displayName": "Father Potets",
+    "description": "Father Potets, a slightly chibi Codex pet based on the referenced character, preserving the white robe and beard outfit design.",
+    "kind": "character",
+    "tags": [
+      "cartoon",
+      "tragic",
+      "old man"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_01748aa328dc/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/otets-potets"
+  },
+  {
+    "id": "nozomi-2",
+    "slug": "nozomi-2",
+    "displayName": "Nozomi",
+    "description": "A stylized adult anime girl Codex pet with a preserved black strappy top, gray low-rise pants, dark belt, and twin-tail hairstyle.",
+    "kind": "creature",
+    "tags": [
+      "girl",
+      "anime",
+      "bodysuit"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_39d57808ecb4/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/nozomi-2"
+  },
+  {
+    "id": "punk-anime-girl",
+    "slug": "punk-anime-girl",
+    "displayName": "Punk Anime Girl",
+    "description": "A slightly chibi punk anime girl with cyan hair, magenta corset outfit, black cropped jacket, shorts, thigh straps, blue stockings, and strapped black platform boots.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "punk",
+      "chibi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_72b4fcfc1699/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/punk-anime-girl"
+  },
+  {
+    "id": "anime-girl-3",
+    "slug": "anime-girl-3",
+    "displayName": "Anime Girl",
+    "description": "A slightly chibi anime girl pet with a preserved gray strapless sweater dress outfit, black bob hair, white slouch socks, and chunky white shoes.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "sweater-dress"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_b6b9aeffb2d4/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anime-girl-3"
+  },
+  {
+    "id": "ice-crown-girl",
+    "slug": "ice-crown-girl",
+    "displayName": "Ice Crown Girl",
+    "description": "A slightly chibi anime girl pet with long icy-blue hair, tiny black crown, preserved black-white-aqua outfit, and mismatched diamond stockings.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "ice-crown",
+      "gothic-maid"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_539931fcfd44/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/ice-crown-girl"
+  },
+  {
+    "id": "ribbon-pop-diva",
+    "slug": "ribbon-pop-diva",
+    "displayName": "Ribbon Pop Diva",
+    "description": "A compact teal-haired ribbon idol pet with a simplified pink-and-white stage outfit.",
+    "kind": "creature",
+    "tags": [
+      "`anime`",
+      "`idol`",
+      "`ribbon`"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_06fd629b37d2/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/ribbon-pop-diva"
+  },
+  {
+    "id": "kuroa",
+    "slug": "kuroa",
+    "displayName": "Kuroa",
+    "description": "A slightly chibi adult anime woman pet with a preserved black, teal, gold, and coral reference outfit.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "aqua-noir"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_a5447a98208a/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/kuroa"
+  },
+  {
+    "id": "velvet-luma",
+    "slug": "velvet-luma",
+    "displayName": "Velvet Luma",
+    "description": "A simplified chibi gothic anime desktop pet with lavender hair and a bold dark idol outfit.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "gothic-chibi",
+      "sprite"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_9a285b550ae9/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/velvet-luma"
+  },
+  {
+    "id": "noir",
+    "slug": "noir",
+    "displayName": "Noir",
+    "description": "A slightly chibi anime woman pet with black-and-muted-green adventurer outfit, red eyes, and confident feminine poise.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "noir",
+      "fantasy outfit"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_dbc962b231f8/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/noir"
+  },
+  {
+    "id": "lavender-rogue",
+    "slug": "lavender-rogue",
+    "displayName": "Lavender Rogue",
+    "description": "A slightly chibi lavender-haired anime girl in a teal coat, black crop top, shorts, gloves, white belt, and red strap accents.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "lavender",
+      "rogue"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_49e2e66ae854/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/lavender-rogue"
+  },
+  {
+    "id": "anime-chibi-girl",
+    "slug": "anime-chibi-girl",
+    "displayName": "Anime Chibi Girl",
+    "description": "A slightly chibi anime girl pet with the reference outfit preserved in clean bold sprite-ready shapes.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "fantasy",
+      "adventurer"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_1f74c931fc80/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anime-chibi-girl"
+  },
+  {
+    "id": "pink-catgirl",
+    "slug": "pink-catgirl",
+    "displayName": "Pink Catgirl",
+    "description": "Adult anime catgirl mascot with pink hair, blue eyes, cat ears, and a black-and-pink fantasy outfit with fur trim.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "catgirl",
+      "pink",
+      "chibi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_74e733c4eea2/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/pink-catgirl"
+  },
+  {
+    "id": "anime-girl-2",
+    "slug": "anime-girl-2",
+    "displayName": "Anime Girl",
+    "description": "A slightly chibi anime girl pet with a preserved black, cream, white, brown, and gold outfit from the reference.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "feminine"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7f4dae9eb26b/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anime-girl-2"
+  },
+  {
+    "id": "anime-elf-3",
+    "slug": "anime-elf-3",
+    "displayName": "Anime Elf",
+    "description": "A slightly chibi anime elf girl pet with a faithful dark, white, and gold fantasy outfit.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "feminine"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_520301ea68b2/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anime-elf-3"
+  },
+  {
+    "id": "violet-rogue",
+    "slug": "violet-rogue",
+    "displayName": "Violet Rogue",
+    "description": "A slightly chibi adult anime rogue woman with purple side-ponytail hair and a faithfully preserved green, white, brown, and gold adventurer outfit.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "rogue",
+      "violet"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_aaf35d82dac6/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/violet-rogue"
+  },
+  {
+    "id": "anime-elf-girl",
+    "slug": "anime-elf-girl",
+    "displayName": "anime-elf-girl",
+    "description": "A slightly chibi anime elf girl pet with the approved reference outfit, cape, blonde-green hair, purple eyes, and clean bold pet-scale shapes.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "elf",
+      "chibi",
+      "fantasy"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_09da1b62692a/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anime-elf-girl"
+  },
+  {
+    "id": "magenta-elf",
+    "slug": "magenta-elf",
+    "displayName": "Magenta Elf",
+    "description": "A slightly chibi adult-coded anime elf girl with magenta hair, green eyes, and the preserved dark purple ribbon outfit from the reference.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "elf",
+      "chibi",
+      "magenta"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_9c5a15d7d30a/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/magenta-elf"
+  },
+  {
+    "id": "anime-dancer",
+    "slug": "anime-dancer",
+    "displayName": "Anime Dancer",
+    "description": "A slightly chibi anime woman pet with a preserved red, white, brown, gold, and purple dancer outfit.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "dancer",
+      "feminine"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_246dea06fd20/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anime-dancer"
+  },
+  {
+    "id": "anime-girl",
+    "slug": "anime-girl",
+    "displayName": "Anime Girl",
+    "description": "A slightly chibi anime girl Codex pet that strictly preserves the provided outfit design.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "fantasy"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_22121517d324/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anime-girl"
+  },
+  {
+    "id": "bloodrayne-2",
+    "slug": "bloodrayne-2",
+    "displayName": "BloodRayne",
+    "description": "A slightly chibi anime vampire-hunter pet with red hair, glossy black outfit, cuffs, boots, and simplified blade props.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "chibi",
+      "red-haired",
+      "vampire-hunter"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_322b9ef3ff7c/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/bloodrayne-2"
+  },
+  {
+    "id": "armored-anime-girl",
+    "slug": "armored-anime-girl",
+    "displayName": "Armored Anime Girl",
+    "description": "A compact adult-coded anime armored woman pet based on the approved masked manga reference.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "armored",
+      "masked",
+      "chibi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_3dac35392295/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/armored-anime-girl"
+  },
+  {
+    "id": "sakura-chibi",
+    "slug": "sakura-chibi",
+    "displayName": "Sakura Chibi",
+    "description": "A slightly chibi anime girl pet with a preserved pink-haired shinobi outfit and clean bold sprite shapes.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "chibi",
+      "shinobi-girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_188c5d304991/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/sakura-chibi"
+  },
+  {
+    "id": "dante-2",
+    "slug": "dante-2",
+    "displayName": "Dante",
+    "description": "A slightly chibi Dante-inspired action pet with silver hair, red coat, open chest harness, black pants, and shoulder sword.",
+    "kind": "character",
+    "tags": [
+      "dante",
+      "devil may cry",
+      "chibi",
+      "red-coat"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_d1acaf8bb6da/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/dante-2"
+  },
+  {
+    "id": "2b-2",
+    "slug": "2b-2",
+    "displayName": "2B",
+    "description": "A compact Codex pet inspired by an adult anime android woman with a silver bob, black blindfold, black gothic dress, thigh-high boots, gloves, feather cuffs, and a small sword.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "android",
+      "chibi",
+      "nier-inspired"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_95c371fd40f8/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/2b-2"
+  },
+  {
+    "id": "sans",
+    "slug": "sans",
+    "displayName": "Sans",
+    "description": "A compact pixel-art skeleton pet inspired by Sans from Undertale, wearing a hoodie, shorts, and slippers.",
+    "kind": "character",
+    "tags": [
+      "undertale",
+      "skeleton",
+      "pixel art"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_bc9a7529253e/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/sans"
+  },
+  {
+    "id": "assassin",
+    "slug": "assassin",
+    "displayName": "Assassin",
+    "description": "A slightly chibi hooded assassin pet with a strict white-robed reference outfit.",
+    "kind": "creature",
+    "tags": [
+      "assasin",
+      "white clothes"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_cd0373421115/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/assassin"
+  },
+  {
+    "id": "velvet-crowe",
+    "slug": "velvet-crowe",
+    "displayName": "Velvet Crowe",
+    "description": "A slightly chibi adult anime pet based on Velvet Crowe from Tales of Berseria, preserving her dark tattered outfit in clean bold sprite shapes.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "chibi",
+      "dark-fantasy"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_c11b5d6c524a/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/velvet-crowe"
+  },
+  {
+    "id": "quan-chi",
+    "slug": "quan-chi",
+    "displayName": "Quan Chi",
+    "description": "A slightly chibi Codex pet based on Quan Chi from Mortal Kombat.",
+    "kind": "character",
+    "tags": [
+      "mortal kombat",
+      "sorcerer",
+      "chibi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_ee66311e8f1c/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/quan-chi"
+  },
+  {
+    "id": "beetlejuice-2",
+    "slug": "beetlejuice-2",
+    "displayName": "Beetlejuice",
+    "description": "A slightly chibi Beetlejuice-style pet in a strict black-and-white striped suit with pink shirt, pale purple face, yellow hair, green teeth, and orange claws.",
+    "kind": "character",
+    "tags": [
+      "beetlejuice",
+      "chibi",
+      "striped-suit",
+      "spooky"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_1697bbeec1ad/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/beetlejuice-2"
+  },
+  {
+    "id": "solara",
+    "slug": "solara",
+    "displayName": "Solara",
+    "description": "A slightly chibi adult anime armored woman warrior Codex pet with a preserved polished gold armor outfit and sword.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "golden-armor",
+      "chibi-warrior"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_71a14e1d14d9/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/solara"
+  },
+  {
+    "id": "azure-girl",
+    "slug": "azure-girl",
+    "displayName": "Azure Girl",
+    "description": "A compact adult anime woman Codex pet with a preserved white and navy harness outfit.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_bbc500275645/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/azure-girl"
+  },
+  {
+    "id": "anime-elf",
+    "slug": "anime-elf",
+    "displayName": "Anime Elf",
+    "description": "A slightly chibi anime elf woman preserving the turquoise, gold, brown jacket, skirt, stockings, and strap-shoe outfit from the approved reference.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "elf",
+      "chibi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_5a27acc05214/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anime-elf"
+  },
+  {
+    "id": "anime-elf-scout",
+    "slug": "anime-elf-scout",
+    "displayName": "Anime Elf Scout",
+    "description": "A simplified chibi anime elf adventurer with the preserved sage-and-leather reference outfit.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "elf",
+      "adventurer"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_85c1fd91d269/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anime-elf-scout"
+  },
+  {
+    "id": "violet-petal",
+    "slug": "violet-petal",
+    "displayName": "Violet Petal",
+    "description": "A slightly chibi adult anime mascot with a preserved purple petal-warrior outfit from the reference.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "violet-petal"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_dfaa6816d9cd/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/violet-petal"
+  },
+  {
+    "id": "azure-elf",
+    "slug": "azure-elf",
+    "displayName": "Azure Elf",
+    "description": "A slightly chibi anime elf woman pet preserving the teal-and-gold crop top, dark shorts, black thigh-highs, blonde hair, pointed ears, and blue-green eyes from the approved base.",
+    "kind": "creature",
+    "tags": [
+      "anime-elf",
+      "chibi",
+      "teal-gold-outfit"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_e48a56d77ec9/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "MartialArtsMaster",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/azure-elf"
+  },
+  {
+    "id": "ryuk-2",
+    "slug": "ryuk-2",
+    "displayName": "Ryuk",
+    "description": "A slightly chibi eerie shinigami-inspired pet with the reference outfit preserved in bold sprite shapes.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "dark-fantasy",
+      "chibi",
+      "shinigami"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_26b9fca990ef/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/ryuk-2"
+  },
+  {
+    "id": "tifa-chibi",
+    "slug": "tifa-chibi",
+    "displayName": "Tifa Chibi",
+    "description": "A slightly chibi anime fighter girl pet with Tifa-inspired long black hair and the approved blue sweater combat outfit.",
+    "kind": "character",
+    "tags": [
+      "final fantasy",
+      "fighter",
+      "game"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_ce50f7ce5acb/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/tifa-chibi"
+  },
+  {
+    "id": "mai-shiranui",
+    "slug": "mai-shiranui",
+    "displayName": "Mai Shiranui",
+    "description": "A slightly chibi anime martial-arts heroine pet with Mai Shiranui-inspired red-and-white kunoichi outfit.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "chibi",
+      "kunoichi",
+      "fighting-game"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_040e1604270a/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/mai-shiranui"
+  },
+  {
+    "id": "pyramid-head",
+    "slug": "pyramid-head",
+    "displayName": "Pyramid Head",
+    "description": "A simplified slightly chibi Pyramid Head-inspired horror pet with a rusted triangular helmet, stained apron, boots, and oversized blade.",
+    "kind": "character",
+    "tags": [
+      "silent hill",
+      "monster",
+      "creepy"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_043acf0426eb/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/pyramid-head"
+  },
+  {
+    "id": "sephiroth-2",
+    "slug": "sephiroth-2",
+    "displayName": "Sephiroth",
+    "description": "A slightly chibi hatch-pet base model of Sephiroth from Final Fantasy VII, preserving the reference outfit design in clean bold shapes.",
+    "kind": "character",
+    "tags": [
+      "final fantasy",
+      "sword",
+      "antagonist"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_b6f5f286dd9b/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/sephiroth-2"
+  },
+  {
+    "id": "gordon-freeman",
+    "slug": "gordon-freeman",
+    "displayName": "Gordon Freeman",
+    "description": "A slightly chibi Gordon Freeman Codex pet in a strictly preserved HEV suit design.",
+    "kind": "character",
+    "tags": [
+      "half life",
+      "man",
+      "freeman"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_c0cda3617a7f/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/gordon-freeman"
+  },
+  {
+    "id": "cloud-flat-2",
+    "slug": "cloud-flat-2",
+    "displayName": "Cloud",
+    "description": "A slightly chibi flat-vector Cloud-inspired Codex pet with the reference black outfit, pauldron, belts, gloves, boots, spiky blond hair, and oversized sword.",
+    "kind": "character",
+    "tags": [
+      "cloud",
+      "final fantasy",
+      "sword"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_1cff789a22f6/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/cloud-flat-2"
+  },
+  {
+    "id": "catgirl-chibi",
+    "slug": "catgirl-chibi",
+    "displayName": "Catgirl Chibi",
+    "description": "A compact adult anime cat-girl Codex pet with a strictly preserved maroon-and-white cropped outfit, gloves, stockings, boots, ears, and tail.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "catgirl",
+      "chibi",
+      "fantasy"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_2ae86fbfdb8d/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/catgirl-chibi"
+  },
+  {
+    "id": "street-chibi-3",
+    "slug": "street-chibi-3",
+    "displayName": "Street Chibi",
+    "description": "A simplified chibi anime girl pet with a preserved streetwear outfit from the reference.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "chibi",
+      "streetwear",
+      "sticker"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_1a0362f7c40d/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/street-chibi-3"
+  },
+  {
+    "id": "aurelia",
+    "slug": "aurelia",
+    "displayName": "Aurelia",
+    "description": "A simplified slightly chibi adult anime woman in the preserved gold fantasy outfit, ready for Codex pet animation.",
+    "kind": "creature",
+    "tags": [
+      "girl",
+      "anime",
+      "gold"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_824343f18f23/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/aurelia"
+  },
+  {
+    "id": "kitsune-chibi-2",
+    "slug": "kitsune-chibi-2",
+    "displayName": "Kitsune Chibi",
+    "description": "A chibi anime fox-girl with white twintails, red disc hair ornaments, and a fluffy white tail that fans into three when she thinks. She wears a white bodysuit with detached sleeves and a red gem brooch, blinks and smiles at idle, and sits down dejected when a task fails.",
+    "kind": "creature",
+    "tags": [
+      "neko",
+      "anime",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_01bada926f50/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/kitsune-chibi-2"
+  },
+  {
+    "id": "lime-muse",
+    "slug": "lime-muse",
+    "displayName": "Lime Muse",
+    "description": "A compact adult anime mascot pet with bright green ponytail hair, green eyes, lime cropped athletic top, glossy black shorts, and black buckle boots.",
+    "kind": "creature",
+    "tags": [
+      "girl",
+      "sporty",
+      "green hair"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_aa9fc2e15e58/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/lime-muse"
+  },
+  {
+    "id": "sageblade-2",
+    "slug": "sageblade-2",
+    "displayName": "Sageblade",
+    "description": "A simplified chibi anime elf swordswoman in sage-green hooded fantasy attire.",
+    "kind": "creature",
+    "tags": [
+      "girl",
+      "archer",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_e28043589483/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/sageblade-2"
+  },
+  {
+    "id": "anime-knight",
+    "slug": "anime-knight",
+    "displayName": "Anime Knight",
+    "description": "A slightly chibi anime knight heroine with simplified silver armor, coral-red ponytail, black bow, sword, and reference-accurate outfit.",
+    "kind": "creature",
+    "tags": [
+      "knight",
+      "girl",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_36e994139667/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anime-knight"
+  },
+  {
+    "id": "neko-samurai-5",
+    "slug": "neko-samurai-5",
+    "displayName": "Neko Samurai",
+    "description": "A detailed slightly chibi anime cat-eared samurai girl with white hair, black-and-white robes, ornate gold trim, a fluffy tail, sandals, and an upright katana.",
+    "kind": "creature",
+    "tags": [
+      "neko",
+      "samurai",
+      "girl",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7568f9351f22/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/neko-samurai-5"
+  },
+  {
+    "id": "metal-chibi-girl",
+    "slug": "metal-chibi-girl",
+    "displayName": "Metal Chibi Girl",
+    "description": "A detailed chibi anime heavy-metal fashion mascot with dark hair and olive-black punk styling.",
+    "kind": "creature",
+    "tags": [
+      "metal",
+      "chibi",
+      "girl",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_38c771a2de62/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/metal-chibi-girl"
+  },
+  {
+    "id": "shimakaze-2",
+    "slug": "shimakaze-2",
+    "displayName": "Shimakaze",
+    "description": "A detailed pet-safe chibi anime mascot inspired by Shimakaze from Kantai Collection.",
+    "kind": "character",
+    "tags": [
+      "shimakaze",
+      "anime",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_bd16fa209430/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/shimakaze-2"
+  },
+  {
+    "id": "frieren-2",
+    "slug": "frieren-2",
+    "displayName": "Frieren",
+    "description": "A detailed compact anime elf mage pet inspired by Frieren, with silver twin-tail hair, green eyes, pointed ears, red earrings, and white-and-gold mage clothing.",
+    "kind": "character",
+    "tags": [
+      "frieren",
+      "anime",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7da7db3e6b9c/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/frieren-2"
+  },
+  {
+    "id": "aqua-heart",
+    "slug": "aqua-heart",
+    "displayName": "Aqua Heart",
+    "description": "A detailed pet-safe chibi anime girl mascot with heart sunglasses, black hair, turquoise ruffles, navy bows, and a cheerful beach-idol look.",
+    "kind": "creature",
+    "tags": [
+      "girl",
+      "anime",
+      "chibi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_f2720b1f20d9/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/aqua-heart"
+  },
+  {
+    "id": "sage-anime-girl",
+    "slug": "sage-anime-girl",
+    "displayName": "Sage",
+    "description": "A detailed anime-style blonde woman Codex pet with a sage-green headscarf, blue eyes, green outfit accents, and polished cel-shaded mascot proportions.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "girl",
+      "sage"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_1725ea5b314f/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/sage-anime-girl"
+  },
+  {
+    "id": "emogloom",
+    "slug": "emogloom",
+    "displayName": "EmoGloom",
+    "description": "A detailed anime emo-girl Codex pet with short purple hair, sleepy eyes, gothic casual outfit, plaid skirt, striped thigh-highs, and boots.",
+    "kind": "creature",
+    "tags": [
+      "emo",
+      "girl",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_c681812afbda/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/emogloom"
+  },
+  {
+    "id": "nightshade-2",
+    "slug": "nightshade-2",
+    "displayName": "Nightshade",
+    "description": "A detailed anime goth girl Codex pet with checker sleeves, black cargo pants, chains, platform boots, pale monochrome skin, black bob hair, fang grin, and magenta accents.",
+    "kind": "creature",
+    "tags": [
+      "goth",
+      "girl",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_4ad899ac3f71/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/nightshade-2"
+  },
+  {
+    "id": "carmine-2",
+    "slug": "carmine-2",
+    "displayName": "Carmine",
+    "description": "A detailed chibi pet interpretation of Carmine Art from Wizardry, preserving the cat-eared swordswoman identity from the reference.",
+    "kind": "creature",
+    "tags": [
+      "warrior",
+      "anime",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_027ffc2b7541/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/carmine-2"
+  },
+  {
+    "id": "chocobo",
+    "slug": "chocobo",
+    "displayName": "Chocobo",
+    "description": "A detailed golden chocobo-style fantasy bird companion prepared as a Codex pet.",
+    "kind": "creature",
+    "tags": [
+      "chocobo",
+      "final fantasy"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_5cbcb15d04d3/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/chocobo"
+  },
+  {
+    "id": "gigachad-2",
+    "slug": "gigachad-2",
+    "displayName": "Gigachad",
+    "description": "A detailed monochrome hyper-muscular Gigachad-style humanoid Codex pet with clean high-waisted dark jeans.",
+    "kind": "character",
+    "tags": [
+      "gigachad",
+      "meme",
+      "man"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_6e01a6ae5003/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/gigachad-2"
+  },
+  {
+    "id": "paprika-2",
+    "slug": "paprika-2",
+    "displayName": "Paprika",
+    "description": "A detailed chibi pet inspired by Paprika from the anime film, with vivid red-orange hair, red outfit energy, and a confident dreamlike expression.",
+    "kind": "character",
+    "tags": [
+      "paprika",
+      "anime",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_ebb5549e72d5/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/paprika-2"
+  },
+  {
+    "id": "sayaka-miki",
+    "slug": "sayaka-miki",
+    "displayName": "Sayaka Miki",
+    "description": "A detailed pet-safe chibi magical-girl inspired by Sayaka Miki from Puella Magi Madoka Magica.",
+    "kind": "character",
+    "tags": [
+      "sayaka miki",
+      "witch",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_d3653daabaf4/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/sayaka-miki"
+  },
+  {
+    "id": "rei-ayanami",
+    "slug": "rei-ayanami",
+    "displayName": "Rei Ayanami",
+    "description": "A detailed chibi anime pet inspired by Rei Ayanami, with a calm expression, pale blue bob hair, red eyes, and a sleek white futuristic bodysuit.",
+    "kind": "character",
+    "tags": [
+      "rai",
+      "evangelion",
+      "anime",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_dee044ec87fe/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/rei-ayanami"
+  },
+  {
+    "id": "asuka",
+    "slug": "asuka",
+    "displayName": "Asuka",
+    "description": "A detailed chibi pet inspired by Asuka from Evangelion for Codex pet animation.",
+    "kind": "creature",
+    "tags": [
+      "asuka",
+      "evangelion",
+      "girl",
+      "suit"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_54641bf2db8b/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/asuka"
+  },
+  {
+    "id": "l",
+    "slug": "l",
+    "displayName": "L",
+    "description": "Detailed chibi detective pet inspired by L from Death Note.",
+    "kind": "character",
+    "tags": [
+      "l",
+      "death note",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_ede118159f8a/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/l"
+  },
+  {
+    "id": "gorshok-2",
+    "slug": "gorshok-2",
+    "displayName": "Gorshok",
+    "description": "A detailed punk-rock Codex pet inspired by Mikhail Gorshenev's stage image: spiked hair, gothic makeup, black skull shirt, and intense mischievous expression.",
+    "kind": "character",
+    "tags": [
+      "actor",
+      "punk",
+      "rock"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_16efed43d2ac/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Rock",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/gorshok-2"
+  },
+  {
+    "id": "jinx-2",
+    "slug": "jinx-2",
+    "displayName": "jinx-2",
+    "description": "Serious detailed chibi pet version of Jinx from Arcane with long blue braids, punk straps, focused expression, and compact readable silhouette.",
+    "kind": "character",
+    "tags": [
+      "jinx",
+      "detailed",
+      "anime",
+      "arcane"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_36ec91047c90/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/jinx-2"
+  },
+  {
+    "id": "jane",
+    "slug": "jane",
+    "displayName": "Jane",
+    "description": "A compact chibi pixel pet inspired by Jane Doe from Zenless Zone Zero, with black bob hair, catlike ears, magenta-and-black outfit accents, fishnet sleeve motif, and a slim tail.",
+    "kind": "character",
+    "tags": [
+      "jane",
+      "chibi",
+      "zzz"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_5c13b542b7d6/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/jane"
+  },
+  {
+    "id": "serah",
+    "slug": "serah",
+    "displayName": "Serah",
+    "description": "A tiny Codex pet inspired by Serah Farron's Final Fantasy XIII-2 outfit, simplified into a readable pixel-adjacent companion.",
+    "kind": "character",
+    "tags": [
+      "final fantasy",
+      "anime",
+      "serah",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_83c92d664c65/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/serah"
+  },
+  {
+    "id": "etna",
+    "slug": "etna",
+    "displayName": "Etna",
+    "description": "A detailed Codex-style chibi digital pet based on Etna from Disgaea, simplified into a compact demon mascot.",
+    "kind": "character",
+    "tags": [
+      "etna",
+      "disgaea",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_69fe2e200a19/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/etna"
+  },
+  {
+    "id": "xiangling",
+    "slug": "xiangling",
+    "displayName": "Xiangling",
+    "description": "A detailed Codex-style digital pet based on Xiangling from Genshin Impact.",
+    "kind": "character",
+    "tags": [
+      "xiangling",
+      "genshin-impact",
+      "chibi-chef"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_76124b2bb540/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/xiangling"
+  },
+  {
+    "id": "burnice",
+    "slug": "burnice",
+    "displayName": "Burnice",
+    "description": "A tiny chibi Codex pet inspired by Burnice White from Zenless Zone Zero.",
+    "kind": "character",
+    "tags": [
+      "chibi",
+      "pixel-art",
+      "burnice-inspired",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_a5e84e4c5ffa/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/burnice"
+  },
+  {
+    "id": "lou",
+    "slug": "lou",
+    "displayName": "Lou",
+    "description": "A tiny chibi Codex pet inspired by Lou MagMell from Code Vein 2.",
+    "kind": "character",
+    "tags": [
+      "lou-magmell",
+      "code-vein",
+      "chibi-fantasy",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_3050e2cceeb0/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/lou"
+  },
+  {
+    "id": "leon",
+    "slug": "leon",
+    "displayName": "Leon",
+    "description": "A compact masculine chibi survival agent clearly inspired by Leon Kennedy from Resident Evil.",
+    "kind": "character",
+    "tags": [
+      "leon",
+      "resident evil",
+      "man"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_4dee36a2adfa/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/leon"
+  },
+  {
+    "id": "maelle",
+    "slug": "maelle",
+    "displayName": "Maelle",
+    "description": "A tiny Codex digital pet version of Maelle from Clair Obscur: Expedition 33.",
+    "kind": "character",
+    "tags": [
+      "maelle",
+      "claire obscure",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_9119db122c65/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/maelle"
+  },
+  {
+    "id": "curator",
+    "slug": "curator",
+    "displayName": "Curator",
+    "description": "A tiny faceless hooded curator spirit with an elegant black cape-suit and quiet mystical presence.",
+    "kind": "character",
+    "tags": [
+      "curator",
+      "obscure",
+      "creepy"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_f3b36fb9bcbf/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "jrpg fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/curator"
+  },
+  {
+    "id": "aqua-2",
+    "slug": "aqua-2",
+    "displayName": "Aqua",
+    "description": "A tiny chibi Aqua from Konosuba companion with aqua-blue hair ornaments, ribbons, white-and-blue goddess outfit, chest bow, skirt, and blue boots.",
+    "kind": "character",
+    "tags": [
+      "aqua",
+      "chibi",
+      "konosuba"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_92a0ede0cfba/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/aqua-2"
+  },
+  {
+    "id": "aqua",
+    "slug": "aqua",
+    "displayName": "Aqua",
+    "description": "A serious non-chibi Codex pet based on Aqua, the blue-haired water goddess arch priest from KonoSuba.",
+    "kind": "character",
+    "tags": [
+      "aqua",
+      "konosuba",
+      "detailed"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_3e5574308f62/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/aqua"
+  },
+  {
+    "id": "megumin-3",
+    "slug": "megumin-3",
+    "displayName": "Megumin",
+    "description": "A tiny explosion-magic chibi spellcaster pet inspired by Megumin from KonoSuba.",
+    "kind": "character",
+    "tags": [
+      "megumin",
+      "konosuba",
+      "chibi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7bb411670a98/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/megumin-3"
+  },
+  {
+    "id": "megumin-detailed",
+    "slug": "megumin-detailed",
+    "displayName": "megumin-detailed",
+    "description": "A serious non-chibi detailed Megumin mage pet inspired by KonoSuba, built as a compact sprite companion.",
+    "kind": "character",
+    "tags": [
+      "konosuba",
+      "megumin",
+      "detailed"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_c55d5694329c/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/megumin-detailed"
+  },
+  {
+    "id": "fischl-detailed",
+    "slug": "fischl-detailed",
+    "displayName": "fischl-detailed",
+    "description": "Detailed non-chibi Fischl-inspired Codex pet base with blonde hair, left eyepatch, purple-black gothic outfit, and Oz-inspired raven motifs.",
+    "kind": "character",
+    "tags": [
+      "detailed",
+      "fischl",
+      "genshin-impact",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7b47a0035da7/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/fischl-detailed"
+  },
+  {
+    "id": "ashe-detailed",
+    "slug": "ashe-detailed",
+    "displayName": "ashe-detailed",
+    "description": "A serious adult-proportioned Codex pet inspired by Ashe from Final Fantasy XII in her pink skirt outfit.",
+    "kind": "character",
+    "tags": [
+      "final fantasy",
+      "ashe",
+      "detailed"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_733b384ab13f/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/ashe-detailed"
+  },
+  {
+    "id": "fischl",
+    "slug": "fischl",
+    "displayName": "Fischl",
+    "description": "A tiny raven-themed electro-princess companion based on Fischl from Genshin Impact.",
+    "kind": "character",
+    "tags": [
+      "genshin-impact",
+      "fischl",
+      "electro",
+      "archer."
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_57f422964715/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/fischl"
+  },
+  {
+    "id": "kasumi",
+    "slug": "kasumi",
+    "displayName": "Kasumi",
+    "description": "Kasumi from Dead or Alive as a high-quality non-chibi Codex pet base model.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "ninja",
+      "fighter"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_460214e3add5/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/kasumi"
+  },
+  {
+    "id": "amber-detailed",
+    "slug": "amber-detailed",
+    "displayName": "amber-detailed",
+    "description": "Serious detailed Amber-inspired Codex pet base model.",
+    "kind": "character",
+    "tags": [
+      "genshin-impact",
+      "amber",
+      "pyro-archer"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_a3dd36adccef/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/amber-detailed"
+  },
+  {
+    "id": "lady-d-2",
+    "slug": "lady-d-2",
+    "displayName": "Lady D",
+    "description": "A tiny gothic countess pet inspired by Lady Dimitrescu from Resident Evil Village.",
+    "kind": "character",
+    "tags": [
+      "gothic",
+      "vampire",
+      "countess"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_66768dd3ae4e/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/lady-d-2"
+  },
+  {
+    "id": "amber",
+    "slug": "amber",
+    "displayName": "Amber",
+    "description": "A bright chibi outrider archer inspired by Amber from Genshin Impact.",
+    "kind": "character",
+    "tags": [
+      "amber",
+      "genshin impact",
+      "chibi archer"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_a19a65ea0771/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/amber"
+  },
+  {
+    "id": "primaris",
+    "slug": "primaris",
+    "displayName": "Primaris",
+    "description": "A tiny chibi power-armored sci-fi warrior companion for focused coding sessions.",
+    "kind": "creature",
+    "tags": [
+      "warhammer-inspired",
+      "space-marine",
+      "armored",
+      "sci-fi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_d13fb39832e8/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "wh40k fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/primaris"
+  },
+  {
+    "id": "master-of-terra",
+    "slug": "master-of-terra",
+    "displayName": "Master of Terra",
+    "description": "A serious Codex pet inspired by the Emperor of Mankind: golden-armored sovereign warrior with red cloak, radiant halo, and flaming sword.",
+    "kind": "character",
+    "tags": [
+      "imperial",
+      "golden-armor",
+      "flaming-sword",
+      "grimdark",
+      "wh40k",
+      "detaiiled"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_ddab885ca6fa/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "wh40k fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/master-of-terra"
+  },
+  {
+    "id": "slaanesh",
+    "slug": "slaanesh",
+    "displayName": "Slaanesh",
+    "description": "A serious grimdark Slaanesh-inspired dark prince companion for Codex.",
+    "kind": "creature",
+    "tags": [
+      "grimdark",
+      "androgynous",
+      "chaos",
+      "slaanesh",
+      "wh40k"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_eed8428fc80f/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "wh40k fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/slaanesh"
+  },
+  {
+    "id": "emperor",
+    "slug": "emperor",
+    "displayName": "Emperor",
+    "description": "A refined chibi golden sci-fi emperor digital pet with ornate armor, a red cloak, and a stern commanding face.",
+    "kind": "character",
+    "tags": [
+      "warhammer-40k",
+      "emperor",
+      "gothic-sci-fi",
+      "golden-armor",
+      "chibi"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_f68734704bee/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "wh40k fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/emperor"
+  },
+  {
+    "id": "nurgle-2",
+    "slug": "nurgle-2",
+    "displayName": "Nurgle",
+    "description": "A grim, detailed Codex-style plague god pet themed around decay, disease, despair, and rebirth.",
+    "kind": "creature",
+    "tags": [
+      "plague",
+      "decay",
+      "despair",
+      "rebirth",
+      "wh40k"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_8b04e09dc7d5/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "wh40k fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/nurgle-2"
+  },
+  {
+    "id": "guardian",
+    "slug": "guardian",
+    "displayName": "Guardian",
+    "description": "A tiny armored space Guardian companion inspired by Destiny 2.",
+    "kind": "creature",
+    "tags": [
+      "guardian",
+      "sci-fi",
+      "armored"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_3ae6c340ffab/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/guardian"
+  },
+  {
+    "id": "jedi-blue-lightsaber",
+    "slug": "jedi-blue-lightsaber",
+    "displayName": "Jedi",
+    "description": "A compact detailed Jedi Codex pet with a crisp blue lightsaber.",
+    "kind": "character",
+    "tags": [
+      "jedi",
+      "star wars",
+      "man"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_eee68b547261/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "SW fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/jedi-blue-lightsaber"
+  },
+  {
+    "id": "gandalf-the-white-2",
+    "slug": "gandalf-the-white-2",
+    "displayName": "Gandalf the White",
+    "description": "A serious tiny white wizard pet with uncovered white hair, long white beard, white robes, stern face, and a pale silver-white staff.",
+    "kind": "creature",
+    "tags": [
+      "man",
+      "lotr",
+      "wizard"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_159435d931c9/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "LOTR fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/gandalf-the-white-2"
+  },
+  {
+    "id": "johnny",
+    "slug": "johnny",
+    "displayName": "Johnny",
+    "description": "A chibi pixel-art rocker with long black hair, a full beard, and dark sunglasses, wearing a sleeveless black tactical vest and dog tags. His left arm is a chrome cybernetic replacement with a red band. Inspired by Johnny Silverhand; he sways at idle and slumps forward, face hidden in his hair, on failure.",
+    "kind": "character",
+    "tags": [
+      "man",
+      "cyberpunk"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_66e5ca60f7dd/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/johnny"
+  },
+  {
+    "id": "grey-pilgrim-3",
+    "slug": "grey-pilgrim-3",
+    "displayName": "Grey Pilgrim",
+    "description": "A tiny gray wandering wizard pet with a wide pointed hat, long white beard, rough wooden staff, silver scarf, gray cloak, and black boots.",
+    "kind": "character",
+    "tags": [
+      "lotr",
+      "man",
+      "fictional"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_3b16d3e188e9/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "LOTR fan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/grey-pilgrim-3"
+  },
+  {
+    "id": "starlight",
+    "slug": "starlight",
+    "displayName": "Starlight",
+    "description": "A tiny chibi pixel pet inspired by Starlight from The Boys, with blonde hair, a white-and-gold star suit, and small glowing hands.",
+    "kind": "character",
+    "tags": [
+      "girl",
+      "tv",
+      "the boys"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_32042e6448eb/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/starlight"
+  },
+  {
+    "id": "daenerys",
+    "slug": "daenerys",
+    "displayName": "Daenerys",
+    "description": "A tiny silver-haired dragon queen companion with a calm regal stance.",
+    "kind": "character",
+    "tags": [
+      "girl",
+      "fictional",
+      "got"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_04181fb3ffa5/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/daenerys"
+  },
+  {
+    "id": "vi",
+    "slug": "vi",
+    "displayName": "Vi",
+    "description": "A tiny chibi brawler inspired by Violet from Arcane, with magenta undercut hair and oversized hextech punch gauntlets.",
+    "kind": "character",
+    "tags": [
+      "girl",
+      "arcane"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_d291e7426909/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/vi"
+  },
+  {
+    "id": "yunalesca",
+    "slug": "yunalesca",
+    "displayName": "Yunalesca",
+    "description": "A compact chibi Codex pet inspired by Lady Yunalesca from Final Fantasy X, with a pale summoner face, silver fan hair, black mantle, green cords, and dark violet rib blades.",
+    "kind": "character",
+    "tags": [
+      "ffx",
+      "girl",
+      "summoner"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_92439bf34daf/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/yunalesca"
+  },
+  {
+    "id": "anima",
+    "slug": "anima",
+    "displayName": "Anima",
+    "description": "A compact pixel-pet version of the Final Fantasy X Anima aeon with both restrained upper form and horned lower demon visible.",
+    "kind": "creature",
+    "tags": [
+      "ffx",
+      "aeon"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_bd27b3faac9e/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/anima"
+  },
+  {
+    "id": "alice",
+    "slug": "alice",
+    "displayName": "Alice",
+    "description": "A compact Codex-style chibi survival-horror heroine pet inspired by Alice from Resident Evil.",
+    "kind": "character",
+    "tags": [
+      "girl",
+      "fictional",
+      "resident_evil"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_29deb230f4dc/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/alice"
+  },
+  {
+    "id": "ashe-2",
+    "slug": "ashe-2",
+    "displayName": "Ashe Sword",
+    "description": "A tiny chibi digital pet of Final Fantasy XII's Ashe in her white jacket, pink skirt, shield, and sword costume.",
+    "kind": "character",
+    "tags": [
+      "ashe",
+      "sword",
+      "ffxii"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_5caeb34b327b/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/ashe-2"
+  },
+  {
+    "id": "viera",
+    "slug": "viera",
+    "displayName": "Viera",
+    "description": "A tiny rabbit-eared fantasy companion with calm forest-warrior poise.",
+    "kind": "character",
+    "tags": [
+      "viera",
+      "ffxii",
+      "final fantasy",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_b47dec9d1bb1/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/viera"
+  },
+  {
+    "id": "zero-two-2",
+    "slug": "zero-two-2",
+    "displayName": "Zero Two Red",
+    "description": "A compact chibi digital pet with pale pink hair, tiny white horns, and a red pilot bodysuit.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "girl",
+      "franxx"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_13c91f7cb137/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/zero-two-2"
+  },
+  {
+    "id": "tigran",
+    "slug": "tigran",
+    "displayName": "Tigran",
+    "description": "A friendly pixel-art chibi office companion.",
+    "kind": "character",
+    "tags": [
+      "man",
+      "office"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_505e2ffbe780/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "YetAnotherFan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/tigran"
+  },
+  {
+    "id": "ashe",
+    "slug": "ashe",
+    "displayName": "Ashe",
+    "description": "A compact chibi princess-warrior Codex pet inspired by Final Fantasy XII's Ashe.",
+    "kind": "character",
+    "tags": [
+      "ffxii",
+      "final fantasy",
+      "ashe",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_53fbc82affdf/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/ashe"
+  },
+  {
+    "id": "zero-two",
+    "slug": "zero-two",
+    "displayName": "Zero Two",
+    "description": "A compact Codex digital pet inspired by Zero Two from Darling in the Franxx.",
+    "kind": "character",
+    "tags": [
+      "anime",
+      "zero-two",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_0ef116d5a5c2/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/zero-two"
+  },
+  {
+    "id": "luna",
+    "slug": "luna",
+    "displayName": "Luna",
+    "description": "A small blue anthropomorphic female wolf furry companion with a friendly focused personality.",
+    "kind": "creature",
+    "tags": [
+      "furry",
+      "wolf",
+      "female"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_714dc3c95b6f/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/luna"
+  },
+  {
+    "id": "fran",
+    "slug": "fran",
+    "displayName": "Fran",
+    "description": "A tiny Viera sky-pirate companion inspired by Final Fantasy XII's Fran.",
+    "kind": "character",
+    "tags": [
+      "ffxii",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_b3c2e8a900a6/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/fran"
+  },
+  {
+    "id": "jinx",
+    "slug": "jinx",
+    "displayName": "Jinx",
+    "description": "A tiny chaotic blue-braided Jinx-inspired Codex companion.",
+    "kind": "character",
+    "tags": [
+      "girl",
+      "punk",
+      "arcane"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_bc22d995992f/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/jinx"
+  },
+  {
+    "id": "ovi",
+    "slug": "ovi",
+    "displayName": "Ovi",
+    "description": "A compact hockey-star Codex pet inspired by Aleksandr Ovechkin.",
+    "kind": "character",
+    "tags": [
+      "hockey",
+      "chibi",
+      "man"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_7668e331e918/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "YetAnotherFan",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/ovi"
+  },
+  {
+    "id": "maybe-baby-2-2",
+    "slug": "maybe-baby-2-2",
+    "displayName": "Maybe Baby",
+    "description": "Fictional pop-punk Codex digital pet inspired by the name Maybe Baby, wearing the attached pink-headphones punk outfit.",
+    "kind": "character",
+    "tags": [
+      "girl",
+      "pink-punk",
+      "headphones",
+      "chibi-pop"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_b1df1f77eaf6/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/maybe-baby-2-2"
+  },
+  {
+    "id": "lain",
+    "slug": "lain",
+    "displayName": "Lain",
+    "description": "A quiet wired chibi companion in Lain's school uniform.",
+    "kind": "character",
+    "tags": [
+      "lain",
+      "girl",
+      "anime"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_113f8511a2b1/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "stephano",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/lain"
+  },
+  {
+    "id": "rikku-3",
+    "slug": "rikku-3",
+    "displayName": "Rikku X-2",
+    "description": "A tiny chibi digital pet inspired by FFX-2 Rikku, nimble and upbeat with goggles and a scarf.",
+    "kind": "creature",
+    "tags": [
+      "ffx",
+      "ffx-2",
+      "girl",
+      "rikku"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_340bfbde2006/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/rikku-3"
+  },
+  {
+    "id": "yuna",
+    "slug": "yuna",
+    "displayName": "Yuna",
+    "description": "A tiny pixel-art-adjacent Codex companion inspired by FFX-2 Yuna's cheerful gunner look.",
+    "kind": "character",
+    "tags": [
+      "ffx",
+      "ffx-2",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_85da3b2b9f17/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/yuna"
+  },
+  {
+    "id": "ffx-yuna",
+    "slug": "ffx-yuna",
+    "displayName": "Yuna",
+    "description": "A compact Codex digital pet inspired by Final Fantasy X's Yuna.",
+    "kind": "character",
+    "tags": [
+      "ffx",
+      "yuna",
+      "girl"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_a74331491171/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/ffx-yuna"
+  },
+  {
+    "id": "rikku",
+    "slug": "rikku",
+    "displayName": "Rikku",
+    "description": "A tiny cheerful Rikku-inspired fantasy thief-engineer companion in Codex digital pet style.",
+    "kind": "character",
+    "tags": [
+      "ffx",
+      "girl",
+      "rikku"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_8b10cb9d1069/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/rikku"
+  },
+  {
+    "id": "auron",
+    "slug": "auron",
+    "displayName": "Auron",
+    "description": "A compact Codex-style guardian swordsman pet inspired by FFX Auron.",
+    "kind": "character",
+    "tags": [
+      "ffx",
+      "auron",
+      "samurai"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_17caa4915f0b/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "Tidus",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/auron"
+  },
+  {
+    "id": "crawlstack-polished",
+    "slug": "crawlstack-polished",
+    "displayName": "Crawlstack",
+    "description": "A pixel-art crawler built from dark armored segments, each carrying a cream skull-like mask with teal-green eyes. It idles with a soft bob, runs with an undulating centipede gait, waves with its front legs, and wriggles on its back when it fails.",
+    "kind": "creature",
+    "tags": [
+      "creepy"
+    ],
+    "spritesheetUrl": "https://pets.ydb-qdrant.tech/api/assets/asset_a7d5672ff4c5/spritesheet.webp",
+    "rows": 9,
+    "source": "codex",
+    "submittedBy": "astandrik",
+    "pageUrl": "https://pets.ydb-qdrant.tech/pets/crawlstack-polished"
+  },
+  {
+    "id": "kim-catsuragi",
+    "slug": "kim-catsuragi",
+    "displayName": "Kim Catsuragi",
+    "description": "An unofficial fan-made pixel pet inspired by Lieutenant Kim Kitsuragi: composed, observant, and always carrying his black notebook. Disco Elysium",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "game",
+      "pixel"
+    ],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1790866759527/kim-catsuragi/spritesheet.webp",
+    "rows": 11,
+    "source": "codex-share",
+    "submittedBy": "trdelnik",
+    "pageUrl": "https://codex-pets.net/pets/kim-catsuragi"
+  },
+  {
+    "id": "orihime-tybw",
+    "slug": "orihime-tybw",
+    "displayName": "井上织姬 · 千年血战篇",
+    "description": "橙色长发、六花发饰与白色战斗服的温柔守护者。",
+    "kind": "person",
+    "tags": [
+      "anime",
+      "cute"
+    ],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1790152805344/orihime-tybw/spritesheet.webp",
+    "rows": 11,
+    "source": "codex-share",
+    "submittedBy": "RyanCraftX",
+    "pageUrl": "https://codex-pets.net/pets/orihime-tybw"
+  },
+  {
+    "id": "powerpet",
+    "slug": "powerpet",
+    "displayName": "PowerPet",
+    "description": "A cute chibi pet inspired by Power from Chainsaw Man, playful and feral with tiny blood-weapon flair.",
+    "kind": "person",
+    "tags": [],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1777912438306/powerpet/spritesheet.webp",
+    "rows": 9,
+    "source": "codex-share",
+    "submittedBy": "rudoduro",
+    "pageUrl": "https://codex-pets.net/pets/powerpet"
+  },
+  {
+    "id": "calico-cat",
+    "slug": "calico-cat",
+    "displayName": "Calico Cat",
+    "description": "A cute calico cat providing user support",
+    "kind": "animal",
+    "tags": [
+      "cute",
+      "animated",
+      "soft"
+    ],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1777979027156/calico-cat/spritesheet.webp",
+    "rows": 9,
+    "source": "codex-share",
+    "submittedBy": "kona",
+    "pageUrl": "https://codex-pets.net/pets/calico-cat"
+  },
+  {
+    "id": "corgi",
+    "slug": "corgi",
+    "displayName": "Corgi",
+    "description": "A cute chibi corgi companion for Codex.",
+    "kind": "animal",
+    "tags": [
+      "cute"
+    ],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1777768204515/corgi/spritesheet.webp",
+    "rows": 9,
+    "source": "codex-share",
+    "submittedBy": "Jerry",
+    "pageUrl": "https://codex-pets.net/pets/corgi"
+  },
+  {
+    "id": "slime",
+    "slug": "slime",
+    "displayName": "Slime",
+    "description": "A cheerful blue singing jelly blob with pink cheeks, music notes, and no limbs.",
+    "kind": "object",
+    "tags": [
+      "mascot"
+    ],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1778380444808/slime/spritesheet.webp",
+    "rows": 9,
+    "source": "codex-share",
+    "submittedBy": "Zhiling Ye",
+    "pageUrl": "https://codex-pets.net/pets/slime"
+  },
+  {
+    "id": "hamster",
+    "slug": "hamster",
+    "displayName": "Hamster",
+    "description": "A polished white desk buddy with a pink nose, smug stare, and judgmental little presence.",
+    "kind": "creature",
+    "tags": [
+      "hand-drawn",
+      "animated",
+      "cute",
+      "weird",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1779942858085/hamster/spritesheet.webp",
+    "rows": 9,
+    "source": "codex-share",
+    "submittedBy": "lokyfile",
+    "pageUrl": "https://codex-pets.net/pets/hamster"
+  },
+  {
+    "id": "bunny",
+    "slug": "bunny",
+    "displayName": "Bunny",
+    "description": "A white cute looking rabbit",
+    "kind": "object",
+    "tags": [
+      "cute",
+      "animal",
+      "soft"
+    ],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1777734953255/bunny/spritesheet.webp",
+    "rows": 9,
+    "source": "codex-share",
+    "submittedBy": "aditya",
+    "pageUrl": "https://codex-pets.net/pets/bunny"
+  },
+  {
+    "id": "fox",
+    "slug": "fox",
+    "displayName": "Fox",
+    "description": "A small black-and-white hand-drawn fox-like Codex pet with sharp ears, simple eyes, white body, black mask, black tail with white tip, adapted into Codex digital pet sprite style.",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "cute",
+      "pixel"
+    ],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1777796974799/fox/spritesheet.webp",
+    "rows": 9,
+    "source": "codex-share",
+    "submittedBy": "mabyes1",
+    "pageUrl": "https://codex-pets.net/pets/fox"
+  },
+  {
+    "id": "otter",
+    "slug": "otter",
+    "displayName": "Otter",
+    "description": "A soft pastel animated otter pet holding a tiny lantern.",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1778815460757/otter/spritesheet.webp",
+    "rows": 9,
+    "source": "codex-share",
+    "submittedBy": "gjj666",
+    "pageUrl": "https://codex-pets.net/pets/otter"
+  },
+  {
+    "id": "panda",
+    "slug": "panda",
+    "displayName": "Panda",
+    "description": "A round sketch-style panda companion for Codex.",
+    "kind": "animal",
+    "tags": [
+      "pixel",
+      "cute",
+      "animated",
+      "mascot",
+      "hand-drawn"
+    ],
+    "spritesheetUrl": "https://codex-pets.net/assets/pets/v/1778057425748/panda/spritesheet.webp",
+    "rows": 9,
+    "source": "codex-share",
+    "submittedBy": "qiyifeng",
+    "pageUrl": "https://codex-pets.net/pets/panda"
+  },
+  {
+    "id": "miso-parkcheoljoo",
+    "slug": "miso-parkcheoljoo",
+    "displayName": "미소",
+    "description": "풍성한 검은 머리와 둥근 안경, 환한 미소와 검은 운동복을 갖춘 3D 캐릭터. 9가지 동작과 16방향 시선.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/miso-parkcheoljoo/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Parkcheoljoo",
+    "pageUrl": "https://openpets.sh/pets/miso-parkcheoljoo"
+  },
+  {
+    "id": "nubzuki",
+    "slug": "nubzuki",
+    "displayName": "(구)넙죽이",
+    "description": "KAIST 마스코트 (구)넙죽이 펫",
+    "kind": "creature",
+    "tags": [
+      "cute",
+      "animated",
+      "mascot",
+      "minimal"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/nubzuki/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "sanguineman",
+    "pageUrl": "https://openpets.sh/pets/nubzuki"
+  },
+  {
+    "id": "clawd-chef",
+    "slug": "clawd-chef",
+    "displayName": "Clawd Chef",
+    "description": "Claude Code's little crab Clawd. Whenever he's thinking or working, he puts on his chef's hat and stirs a bubbling pot - Claude is cooking!",
+    "kind": "creature",
+    "tags": [
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/clawd-chef/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Witschi262",
+    "pageUrl": "https://openpets.sh/pets/clawd-chef"
+  },
+  {
+    "id": "bmo-adventure-time",
+    "slug": "bmo-adventure-time",
+    "displayName": "BMO",
+    "description": "Petit robot turquoise joyeux, curieux et joueur, inspiré de BMO dans Adventure Time. Un compagnon animé au visage expressif et aux boutons colorés.",
+    "kind": "object",
+    "tags": [
+      "robot",
+      "retro",
+      "mascot",
+      "game",
+      "cute",
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/bmo-adventure-time/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Atshu",
+    "pageUrl": "https://openpets.sh/pets/bmo-adventure-time"
+  },
+  {
+    "id": "neuro-sama-v3",
+    "slug": "neuro-sama-v3",
+    "displayName": "Neuro-sama V3",
+    "description": "Bring Neuro-sama V3 to your desktop with Codex Mini!",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "mascot",
+      "pixel",
+      "soft",
+      "celeb"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/neuro-sama-v3/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Axenor",
+    "pageUrl": "https://openpets.sh/pets/neuro-sama-v3"
+  },
+  {
+    "id": "gray",
+    "slug": "gray",
+    "displayName": "Gray",
+    "description": "A wary woodland creature inspired by the dark forests of Valheim, now quietly keeping watch over your Codex tasks.",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/gray/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Luridan",
+    "pageUrl": "https://openpets.sh/pets/gray"
+  },
+  {
+    "id": "zi-gu-cat",
+    "slug": "zi-gu-cat",
+    "displayName": "zi_gu(지구)",
+    "description": "A cat with orange tabby stripes, white socks, and a yellow fur patch on the right side of its mouth when viewed from the front. While you work, it kneads with alternating front paws.",
+    "kind": "animal",
+    "tags": [
+      "cute",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/zi-gu-cat/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "JeeguBro",
+    "pageUrl": "https://openpets.sh/pets/zi-gu-cat"
+  },
+  {
+    "id": "debug-duck-v2",
+    "slug": "debug-duck-v2",
+    "displayName": "Debug Duck v2",
+    "description": "A squishy yellow rubber duck programmer for debugging sessions, upgraded with 16 clockwise look-direction animations.",
+    "kind": "animal",
+    "tags": [
+      "cute",
+      "pixel"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/debug-duck-v2/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "MBC",
+    "pageUrl": "https://openpets.sh/pets/debug-duck-v2"
+  },
+  {
+    "id": "ellie-pixel",
+    "slug": "ellie-pixel",
+    "displayName": "Ellie",
+    "description": "A cute pixel Ellie inspired by The Last of Us, with a tiny shooting loop. Enlarged sprite version with nine animation states and sixteen look directions.",
+    "kind": "object",
+    "tags": [
+      "game",
+      "cute",
+      "pixel",
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/ellie-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "muyahoyeol",
+    "pageUrl": "https://openpets.sh/pets/ellie-pixel"
+  },
+  {
+    "id": "clawd-svg",
+    "slug": "clawd-svg",
+    "displayName": "Clawd",
+    "description": "An unofficial Claude-inspired companion for Codex. https://github.com/godxxy1229/clawd-codex-pet",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "cute",
+      "mascot",
+      "pixel",
+      "robot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/clawd-svg/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "godxxy",
+    "pageUrl": "https://openpets.sh/pets/clawd-svg"
+  },
+  {
+    "id": "josuke-crazy-diamond",
+    "slug": "josuke-crazy-diamond",
+    "displayName": "Josuke & Crazy Diamond",
+    "description": "Josuke Higashikata with Crazy Diamond: pompadour panics, menacing waits and Dora Dora rushes while you work.",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/josuke-crazy-diamond/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "1_siot",
+    "pageUrl": "https://openpets.sh/pets/josuke-crazy-diamond"
+  },
+  {
+    "id": "jolyne-cujoh-stone-free",
+    "slug": "jolyne-cujoh-stone-free",
+    "displayName": "Jolyne & Stone Free",
+    "description": "Jolyne Cujoh with Stone Free: yare yare dawa sighs, menacing waits and Ora Ora rushes while you work.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/jolyne-cujoh-stone-free/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "1_siot",
+    "pageUrl": "https://openpets.sh/pets/jolyne-cujoh-stone-free"
+  },
+  {
+    "id": "hamjji",
+    "slug": "hamjji",
+    "displayName": "햄찌",
+    "description": "큰 헤드폰을 쓰고 노트북으로 함께 탐구하는 골든 햄스터",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/hamjji/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Parkcheoljoo",
+    "pageUrl": "https://openpets.sh/pets/hamjji"
+  },
+  {
+    "id": "pet-6abcd821e18081918d0183c471df2603",
+    "slug": "pet-6abcd821e18081918d0183c471df2603",
+    "displayName": "瑞克 Rick",
+    "description": "瑞克喝酒后坏笑并张望四周，包含九组动作、工作传送门和十六方向注视。",
+    "kind": "person",
+    "tags": [
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/pet-6abcd821e18081918d0183c471df2603/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "yayalili",
+    "pageUrl": "https://openpets.sh/pets/pet-6abcd821e18081918d0183c471df2603"
+  },
+  {
+    "id": "jonathan-joestar",
+    "slug": "jonathan-joestar",
+    "displayName": "Jonathan Joestar",
+    "description": "Jonathan Joestar: Hamon breathing, gentlemanly greetings and Sunlight Yellow Overdrive rushes while you work.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/jonathan-joestar/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "1_siot",
+    "pageUrl": "https://openpets.sh/pets/jonathan-joestar"
+  },
+  {
+    "id": "chen-su",
+    "slug": "chen-su",
+    "displayName": "辰宿",
+    "description": "黑发、蓝紫眼、清瘦脸型的 Q 版人形伙伴，佩戴银色圆环吊坠。完整九种动作、中性姿态和十六方向视线。",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/chen-su/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "ljxsz3462",
+    "pageUrl": "https://openpets.sh/pets/chen-su"
+  },
+  {
+    "id": "wen-wen",
+    "slug": "wen-wen",
+    "displayName": "玟玟",
+    "description": "A pink Chinese lion dance companion with dark purple accents, soft lavender fur edges, bright expressive eyes, and subtle cat-eye lashes.",
+    "kind": "creature",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/wen-wen/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "matthewclso",
+    "pageUrl": "https://openpets.sh/pets/wen-wen"
+  },
+  {
+    "id": "tuan-tuan",
+    "slug": "tuan-tuan",
+    "displayName": "團團",
+    "description": "A cute, round giant panda with bright eyes.",
+    "kind": "animal",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/tuan-tuan/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "matthewclso",
+    "pageUrl": "https://openpets.sh/pets/tuan-tuan"
+  },
+  {
+    "id": "jin-mao",
+    "slug": "jin-mao",
+    "displayName": "金毛",
+    "description": "A sleepy golden puppy companion with a raised pink paw and happy tongue-out grin.",
+    "kind": "animal",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/jin-mao/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "matthewclso",
+    "pageUrl": "https://openpets.sh/pets/jin-mao"
+  },
+  {
+    "id": "hong-dou",
+    "slug": "hong-dou",
+    "displayName": "紅豆",
+    "description": "A sweet, affectionate red panda with a bushy striped tail curled proudly around her front.",
+    "kind": "animal",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/hong-dou/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "matthewclso",
+    "pageUrl": "https://openpets.sh/pets/hong-dou"
+  },
+  {
+    "id": "jin-bao",
+    "slug": "jin-bao",
+    "displayName": "金寶",
+    "description": "A gold Chinese lion dance companion with big bright eyes, fluffy brows, and a festive rounded mask.",
+    "kind": "creature",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/jin-bao/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "matthewclso",
+    "pageUrl": "https://openpets.sh/pets/jin-bao"
+  },
+  {
+    "id": "hamburger-pixel",
+    "slug": "hamburger-pixel",
+    "displayName": "Hamburger",
+    "description": "A cheerful pixel-art hamburger companion.",
+    "kind": "object",
+    "tags": [
+      "pixel",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/hamburger-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "gogiari",
+    "pageUrl": "https://openpets.sh/pets/hamburger-pixel"
+  },
+  {
+    "id": "doraemon-gadgets",
+    "slug": "doraemon-gadgets",
+    "displayName": "Doraemon",
+    "description": "Doraemon with his secret gadgets: hovers on a Take-copter while waiting, studies with Memory Bread while working, and pops out of the pink Anywhere Door when done.",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "robot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/doraemon-gadgets/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "hyerin kim",
+    "pageUrl": "https://openpets.sh/pets/doraemon-gadgets"
+  },
+  {
+    "id": "clover",
+    "slug": "clover",
+    "displayName": "Clover",
+    "description": "A sweet green-eyed tabby with a white muzzle and pink nose, inspired by my cat.",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/clover/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Rabbit",
+    "pageUrl": "https://openpets.sh/pets/clover"
+  },
+  {
+    "id": "xiaonuan-camisole-20260930",
+    "slug": "xiaonuan-camisole-20260930",
+    "displayName": "home lady",
+    "description": "A cheerful brown-haired home lady with an oval face, wearing an ivory camisole dress, featuring nine animation states and sixteen look directions.",
+    "kind": "person",
+    "tags": [
+      "cute",
+      "pixel",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/xiaonuan-camisole-20260930/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "koko",
+    "pageUrl": "https://openpets.sh/pets/xiaonuan-camisole-20260930"
+  },
+  {
+    "id": "xiaonuan-office-20260930",
+    "slug": "xiaonuan-office-20260930",
+    "displayName": "office lady",
+    "description": "A cheerful brown-haired office lady wearing a white blouse, a navy scarf, and a dark pleated skirt, featuring nine animation states and sixteen look directions.",
+    "kind": "person",
+    "tags": [
+      "cute",
+      "mascot",
+      "pixel"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/xiaonuan-office-20260930/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "koko",
+    "pageUrl": "https://openpets.sh/pets/xiaonuan-office-20260930"
+  },
+  {
+    "id": "gpt-chan-bust",
+    "slug": "gpt-chan-bust",
+    "displayName": "gpt-chan",
+    "description": "은발과 파란 눈의 GPT 캐릭터.",
+    "kind": "object",
+    "tags": [
+      "anime",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/gpt-chan-bust/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "nokryong",
+    "pageUrl": "https://openpets.sh/pets/gpt-chan-bust"
+  },
+  {
+    "id": "wichu-friends",
+    "slug": "wichu-friends",
+    "displayName": "위츄와 친구들",
+    "description": "기본은 위츄, 이동과 점프는 팝츄, 기다림과 검토는 에츄, 실패 반응은 아츄가 함께하는 포근한 별 친구.",
+    "kind": "creature",
+    "tags": [
+      "cute",
+      "animated",
+      "soft",
+      "minimal"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/wichu-friends/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "chosky0106",
+    "pageUrl": "https://openpets.sh/pets/wichu-friends"
+  },
+  {
+    "id": "umbrella-corporation",
+    "slug": "umbrella-corporation",
+    "displayName": "Umbrella Corporation",
+    "description": "An animated red and cyan Umbrella Corporation emblem with articulated panels.",
+    "kind": "object",
+    "tags": [
+      "animated",
+      "game",
+      "weird"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/umbrella-corporation/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "huskymoonmoon",
+    "pageUrl": "https://openpets.sh/pets/umbrella-corporation"
+  },
+  {
+    "id": "gpt-chan",
+    "slug": "gpt-chan",
+    "displayName": "gpt-chan",
+    "description": "은발과 파란 눈의 GPT 캐릭터.",
+    "kind": "object",
+    "tags": [
+      "animated",
+      "cute",
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/gpt-chan/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "nokryong",
+    "pageUrl": "https://openpets.sh/pets/gpt-chan"
+  },
+  {
+    "id": "jotaro-star-platinum",
+    "slug": "jotaro-star-platinum",
+    "displayName": "Jotaro & Star Platinum",
+    "description": "Jotaro Kujo with Star Platinum: yare yare daze sighs, menacing waits and Ora Ora rushes while you work.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/jotaro-star-platinum/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "hyerin kim",
+    "pageUrl": "https://openpets.sh/pets/jotaro-star-platinum"
+  },
+  {
+    "id": "fern-fullbody",
+    "slug": "fern-fullbody",
+    "displayName": "Fern フェルン 葬送のフリーレン SousouNoFrieren 菲伦",
+    "description": "Full-body Fern with purple hair, tan cable-knit cardigan, black inner top, brown belted skirt, bare legs and brown ankle boots.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/fern-fullbody/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "digimon2",
+    "pageUrl": "https://openpets.sh/pets/fern-fullbody"
+  },
+  {
+    "id": "pochita",
+    "slug": "pochita",
+    "displayName": "Pochita",
+    "description": "A side-profile Pochita inspired by Chainsaw Man, with a white sclera, solid black pupil, and a short, broad chainsaw. Includes nine animations; the working loop pulls the tail starter cord and runs the chainsaw.",
+    "kind": "object",
+    "tags": [
+      "anime",
+      "cute",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/pochita/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "jay",
+    "pageUrl": "https://openpets.sh/pets/pochita"
+  },
+  {
+    "id": "sprout",
+    "slug": "sprout",
+    "displayName": "Sprout",
+    "description": "A curious, warm brown groundhog companion.",
+    "kind": "animal",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/sprout/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "fdsfsda",
+    "pageUrl": "https://openpets.sh/pets/sprout"
+  },
+  {
+    "id": "chainsmoker-cat-cig-hunter",
+    "slug": "chainsmoker-cat-cig-hunter",
+    "displayName": "Chainsmoker Cat",
+    "description": "An absolute cig fiend. Squats, pulls cursed faces, and loots pavement butts like legendary gear. No thoughts, just \"you gonna finish that?\" One brain cell. Zero spare smokes.",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/chainsmoker-cat-cig-hunter/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "ndelitski",
+    "pageUrl": "https://openpets.sh/pets/chainsmoker-cat-cig-hunter"
+  },
+  {
+    "id": "yamabuki-saaya",
+    "slug": "yamabuki-saaya",
+    "displayName": "Yamabuki Saaya",
+    "description": "A gentle chibi companion featuring Poppin’Party drummer Saaya Yamabuki in her “Standing on a Bustling Bridge” outfit.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/yamabuki-saaya/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "miyuki",
+    "pageUrl": "https://openpets.sh/pets/yamabuki-saaya"
+  },
+  {
+    "id": "dovahkiin",
+    "slug": "dovahkiin",
+    "displayName": "Dovahkiin",
+    "description": "A chibi dragonborn adventurer in a horned iron helmet, ready to help.",
+    "kind": "person",
+    "tags": [
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/dovahkiin/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Edos",
+    "pageUrl": "https://openpets.sh/pets/dovahkiin"
+  },
+  {
+    "id": "jiuba",
+    "slug": "jiuba",
+    "displayName": "九八",
+    "description": "九八是一只敦实的棕黑虎斑白猫：圆脸宽腮、黄绿色大眼、粉鼻头、白下巴白胸白肚；左前腿虎斑配白脚尖，右前腿从肩到爪全白。",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/jiuba/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "zcf",
+    "pageUrl": "https://openpets.sh/pets/jiuba"
+  },
+  {
+    "id": "angewomon",
+    "slug": "angewomon",
+    "displayName": "Angewomon",
+    "description": "Angewomon desktop pet.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "animated",
+      "cute",
+      "hand-drawn"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/angewomon/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Codex",
+    "pageUrl": "https://openpets.sh/pets/angewomon"
+  },
+  {
+    "id": "yadingding",
+    "slug": "yadingding",
+    "displayName": "鸭顶顶",
+    "description": "像素风小熊猫，头顶一只小黄鸭，陪你一起工作。 A pixel-art red panda with a little yellow duck on its head, keeping you company while you work.",
+    "kind": "animal",
+    "tags": [
+      "pixel",
+      "cute",
+      "animated",
+      "chaotic"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/yadingding/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Gagaga",
+    "pageUrl": "https://openpets.sh/pets/yadingding"
+  },
+  {
+    "id": "super-hama",
+    "slug": "super-hama",
+    "displayName": "Super Hama",
+    "description": "A cute superhero hamster with a pentagonal S emblem.",
+    "kind": "animal",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/super-hama/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "JebinKim",
+    "pageUrl": "https://openpets.sh/pets/super-hama"
+  },
+  {
+    "id": "round-eyes",
+    "slug": "round-eyes",
+    "displayName": "三月",
+    "description": "一只黄绿色圆眼睛的黑白奶牛猫，黑毛、白胸口、白胡须和少量白色脚尖。",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/round-eyes/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "hongtao",
+    "pageUrl": "https://openpets.sh/pets/round-eyes"
+  },
+  {
+    "id": "hello-kitty-pink",
+    "slug": "hello-kitty-pink",
+    "displayName": "Hello Kitty Pink",
+    "description": "A pastel pink-and-blue Hello Kitty themed Codex Pet.",
+    "kind": "object",
+    "tags": [
+      "animated",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/hello-kitty-pink/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "sso",
+    "pageUrl": "https://openpets.sh/pets/hello-kitty-pink"
+  },
+  {
+    "id": "chibi-2b",
+    "slug": "chibi-2b",
+    "displayName": "2B or not Chibi",
+    "description": "The tiny legend from NieR: Automata. Credits and huge shoutout to Daniel Gyovai for the original artwork which you can find here: www.pngitem.com/userpic/14975",
+    "kind": "person",
+    "tags": [
+      "celeb",
+      "anime",
+      "animated",
+      "cute",
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/chibi-2b/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Maria",
+    "pageUrl": "https://openpets.sh/pets/chibi-2b"
+  },
+  {
+    "id": "kodee",
+    "slug": "kodee",
+    "displayName": "Kodee",
+    "description": "The official Kotlin mascot, a friendly violet companion for coding.",
+    "kind": "animal",
+    "tags": [
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/kodee/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "yet",
+    "pageUrl": "https://openpets.sh/pets/kodee"
+  },
+  {
+    "id": "shione",
+    "slug": "shione",
+    "displayName": "doll_汐音",
+    "description": "箒を手にした、小さなBJDメイドの汐音。",
+    "kind": "person",
+    "tags": [
+      "cute",
+      "mascot",
+      "pixel",
+      "soft"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/shione/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "ExMikuPro",
+    "pageUrl": "https://openpets.sh/pets/shione"
+  },
+  {
+    "id": "thrall-wow",
+    "slug": "thrall-wow",
+    "displayName": "Thrall",
+    "description": "Former Warchief, master of the elements, and part-time world saver. Lok'tar Ogar!",
+    "kind": "person",
+    "tags": [
+      "celeb",
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/thrall-wow/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Edos",
+    "pageUrl": "https://openpets.sh/pets/thrall-wow"
+  },
+  {
+    "id": "kaneda",
+    "slug": "kaneda",
+    "displayName": "Kaneda",
+    "description": "Kaneda-inspired chibi pet with red outfit, rail gun and bike.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/kaneda/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "xodante",
+    "pageUrl": "https://openpets.sh/pets/kaneda"
+  },
+  {
+    "id": "pip-standout",
+    "slug": "pip-standout",
+    "displayName": "Pip Standout",
+    "description": "A small, curious white papier-mâché robot in Standout’s signature colors. From Standout — standout.se.",
+    "kind": "object",
+    "tags": [
+      "animated",
+      "cute",
+      "robot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/pip-standout/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "ar",
+    "pageUrl": "https://openpets.sh/pets/pip-standout"
+  },
+  {
+    "id": "robotocat",
+    "slug": "robotocat",
+    "displayName": "Robotocat",
+    "description": "Unofficial Robotocat fan-art pixel companion inspired by GitHub Octodex. AI-assisted animation with nine action states and sixteen gaze directions.",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "pixel",
+      "robot",
+      "cute",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/robotocat/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "hypnos",
+    "pageUrl": "https://openpets.sh/pets/robotocat"
+  },
+  {
+    "id": "hangyodon",
+    "slug": "hangyodon",
+    "displayName": "Hangyodon",
+    "description": "A sleepy blue fish friend with big pink lips, walking, waving, jumping and cheering while you work.",
+    "kind": "animal",
+    "tags": [
+      "cute",
+      "animated",
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/hangyodon/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "hyerin kim",
+    "pageUrl": "https://openpets.sh/pets/hangyodon"
+  },
+  {
+    "id": "white",
+    "slug": "white",
+    "displayName": "white",
+    "description": "A fluffy white cartoon puppy that curls into a cotton-candy ball while thinking and working.",
+    "kind": "animal",
+    "tags": [
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/white/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "jinsol",
+    "pageUrl": "https://openpets.sh/pets/white"
+  },
+  {
+    "id": "bubbleshell",
+    "slug": "bubbleshell",
+    "displayName": "Bubbleshell",
+    "description": "A stout blue spellcaster beast with balloon-like cheeks, bronze belly plates, a purple hooded cape, and a horned bronze helm. '",
+    "kind": "creature",
+    "tags": [
+      "cute",
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/bubbleshell/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "robot",
+    "pageUrl": "https://openpets.sh/pets/bubbleshell"
+  },
+  {
+    "id": "lena",
+    "slug": "lena",
+    "displayName": "Lena",
+    "description": "A poised silver-haired chibi tactical commander inspired by Vladilena Milizé.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/lena/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "vuasancoggo1234",
+    "pageUrl": "https://openpets.sh/pets/lena"
+  },
+  {
+    "id": "yui-sao",
+    "slug": "yui-sao",
+    "displayName": "Yui",
+    "description": "An adorable AI assistant in Navigation Pixie form. Always cheerful, caring, and ready to be the best, sweetest companion for anyone who takes her along!",
+    "kind": "person",
+    "tags": [
+      "anime",
+      "animated",
+      "cute",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/yui-sao/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Axkerman",
+    "pageUrl": "https://openpets.sh/pets/yui-sao"
+  },
+  {
+    "id": "flower-friend",
+    "slug": "flower-friend",
+    "displayName": "mangu",
+    "description": "A cheerful hand-drawn child character with a round face, yellow shirt, teal shorts, and a tiny flower.",
+    "kind": "object",
+    "tags": [
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/flower-friend/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "jinsol",
+    "pageUrl": "https://openpets.sh/pets/flower-friend"
+  },
+  {
+    "id": "linus",
+    "slug": "linus",
+    "displayName": "Linus",
+    "description": "A gentle gray-bearded homeless wilderness dweller in simple patched ochre leaf clothing, closely matching the supplied Linus references.",
+    "kind": "person",
+    "tags": [
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/linus/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "xiaohk",
+    "pageUrl": "https://openpets.sh/pets/linus"
+  },
+  {
+    "id": "agumon-bills-destro-pixel",
+    "slug": "agumon-bills-destro-pixel",
+    "displayName": "Agumon",
+    "description": "He is known for his massive appetite, unwavering loyalty, and a unique balance between being cute and fierce in battle.",
+    "kind": "creature",
+    "tags": [
+      "anime",
+      "mascot",
+      "animated",
+      "pixel",
+      "retro",
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/agumon-bills-destro-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "OctaviousBeyond",
+    "pageUrl": "https://openpets.sh/pets/agumon-bills-destro-pixel"
+  },
+  {
+    "id": "waldo",
+    "slug": "waldo",
+    "displayName": "Waldo",
+    "description": "En släthudad valross med bred nos, betar och morrhår som arbetar på sin laptop och sover när han vilar.",
+    "kind": "object",
+    "tags": [
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/waldo/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "ar",
+    "pageUrl": "https://openpets.sh/pets/waldo"
+  },
+  {
+    "id": "silksong-little-hornet",
+    "slug": "silksong-little-hornet",
+    "displayName": "童年大黄蜂",
+    "description": "Designed after Hornet from Hollow Knight: Silksong. Let this playful, adorable little Hornet keep you company.",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/silksong-little-hornet/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "bigli",
+    "pageUrl": "https://openpets.sh/pets/silksong-little-hornet"
+  },
+  {
+    "id": "akitsuki-airi",
+    "slug": "akitsuki-airi",
+    "displayName": "Akitsuki Airi",
+    "description": "a compact Codex digital pet based on Akitsuki Airi (あきつき あいり)",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/akitsuki-airi/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "xream",
+    "pageUrl": "https://openpets.sh/pets/akitsuki-airi"
+  },
+  {
+    "id": "rinnegan",
+    "slug": "rinnegan",
+    "displayName": "Rinnegan",
+    "description": "Sasuke's Rinnegan from Naruto. Change size to native resolution.",
+    "kind": "object",
+    "tags": [
+      "animated",
+      "anime",
+      "weird",
+      "minimal"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/rinnegan/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "tihkal96",
+    "pageUrl": "https://openpets.sh/pets/rinnegan"
+  },
+  {
+    "id": "rangiku-chibi-v2",
+    "slug": "rangiku-chibi-v2",
+    "displayName": "Rangiku 亂菊",
+    "description": "以松本亂菊為靈感、成熟自信又慵懶俏皮的橘金長髮桌面夥伴。",
+    "kind": "person",
+    "tags": [
+      "anime",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/rangiku-chibi-v2/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Leo",
+    "pageUrl": "https://openpets.sh/pets/rangiku-chibi-v2"
+  },
+  {
+    "id": "watchdog-man-pixel",
+    "slug": "watchdog-man-pixel",
+    "displayName": "Watchdog Man Pixel",
+    "description": "A big-headed pixel Watchdog Man seated front-facing in his white dog suit, with a calm human face inside the hood.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/watchdog-man-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "patrickxunuo",
+    "pageUrl": "https://openpets.sh/pets/watchdog-man-pixel"
+  },
+  {
+    "id": "garou-pixel",
+    "slug": "garou-pixel",
+    "displayName": "Garou Pixel",
+    "description": "Normal Garou with a calm neutral face, strong build, silver spikes and martial outfit.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/garou-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "patrickxunuo",
+    "pageUrl": "https://openpets.sh/pets/garou-pixel"
+  },
+  {
+    "id": "fubuki-pixel",
+    "slug": "fubuki-pixel",
+    "displayName": "Fubuki Pixel",
+    "description": "A big-headed pixel-chibi Fubuki with her dark bob, green eyes, white fur coat, and poised psychic style.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/fubuki-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "patrickxunuo",
+    "pageUrl": "https://openpets.sh/pets/fubuki-pixel"
+  },
+  {
+    "id": "tung-tung-tung-sahur",
+    "slug": "tung-tung-tung-sahur",
+    "displayName": "Tung Tung Tung Sahur",
+    "description": "A wooden sahur mascot who loops the six-seven palms-up gesture with deadpan aura-farming swagger.",
+    "kind": "creature",
+    "tags": [
+      "weird",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/tung-tung-tung-sahur/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "drjones",
+    "pageUrl": "https://openpets.sh/pets/tung-tung-tung-sahur"
+  },
+  {
+    "id": "cosmic-garou-pixel",
+    "slug": "cosmic-garou-pixel",
+    "displayName": "Cosmic Garou Pixel",
+    "description": "Cosmic Fear Garou with a star-filled dark body and extreme martial-arts stance.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/cosmic-garou-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "patrickxunuo",
+    "pageUrl": "https://openpets.sh/pets/cosmic-garou-pixel"
+  },
+  {
+    "id": "bartholomew",
+    "slug": "bartholomew",
+    "displayName": "Bartholomew",
+    "description": "Bartholomew Bear is a beloved, vintage-style plush teddy bear created by the luxury toy brand Jellycat.",
+    "kind": "animal",
+    "tags": [
+      "soft",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/bartholomew/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "iamboonnnnn",
+    "pageUrl": "https://openpets.sh/pets/bartholomew"
+  },
+  {
+    "id": "bartholomew-bear-67cdb9c6",
+    "slug": "bartholomew-bear-67cdb9c6",
+    "displayName": "Bartholomew Bear",
+    "description": "Bartholomew Bear is a beloved, vintage-style plush teddy bear created by the luxury toy brand Jellycat. Characterized by his signature tawny-tussled, toffee-coloured fur and an endearing, chubby tummy, this classic companion features a soft chocolate-brown nose, tiny rounded ears, and beaded bottom",
+    "kind": "animal",
+    "tags": [
+      "jellycat"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/bartholomew-bear-67cdb9c6/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "iamboonnnnn",
+    "pageUrl": "https://openpets.sh/pets/bartholomew-bear-67cdb9c6"
+  },
+  {
+    "id": "pumpkin",
+    "slug": "pumpkin",
+    "displayName": "Pumpkin",
+    "description": "A sassy, affectionate orange tabby girl who loves her mommy.",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "cute",
+      "celeb",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/pumpkin/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "neverabot",
+    "pageUrl": "https://openpets.sh/pets/pumpkin"
+  },
+  {
+    "id": "shuangli",
+    "slug": "shuangli",
+    "displayName": "霜璃",
+    "description": "White-haired violet-eyed dragon lady with pale horns, lilac wings, a scaled tail and a flowing white-lilac gown.",
+    "kind": "creature",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/shuangli/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "a12",
+    "pageUrl": "https://openpets.sh/pets/shuangli"
+  },
+  {
+    "id": "miu-goku-2417d942",
+    "slug": "miu-goku-2417d942",
+    "displayName": "MIU Goku",
+    "description": "Ultra Instint Goku",
+    "kind": "creature",
+    "tags": [
+      "pixel art"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/miu-goku-2417d942/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "BEM_DEV",
+    "pageUrl": "https://openpets.sh/pets/miu-goku-2417d942"
+  },
+  {
+    "id": "bolsonaro",
+    "slug": "bolsonaro",
+    "displayName": "Bolsonaro",
+    "description": "Caricatura animada de Jair Bolsonaro",
+    "kind": "person",
+    "tags": [
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/bolsonaro/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "edercampos",
+    "pageUrl": "https://openpets.sh/pets/bolsonaro"
+  },
+  {
+    "id": "yejin",
+    "slug": "yejin",
+    "displayName": "徐艺真",
+    "description": "长黑发、深蓝校服与酒红领结的桌面伙伴。",
+    "kind": "person",
+    "tags": [
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/yejin/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "wcly",
+    "pageUrl": "https://openpets.sh/pets/yejin"
+  },
+  {
+    "id": "mumen-rider-pixel",
+    "slug": "mumen-rider-pixel",
+    "displayName": "Mumen Rider Pixel",
+    "description": "A cute chunky-pixel Mumen Rider with an opaque mint visor and his classic bicycle.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/mumen-rider-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "patrickxunuo",
+    "pageUrl": "https://openpets.sh/pets/mumen-rider-pixel"
+  },
+  {
+    "id": "genos-pixel",
+    "slug": "genos-pixel",
+    "displayName": "Genos Pixel",
+    "description": "A big-headed pixel-chibi Genos with spiky blond hair, amber eyes, a black hero outfit, and compact mechanical arms.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/genos-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "patrickxunuo",
+    "pageUrl": "https://openpets.sh/pets/genos-pixel"
+  },
+  {
+    "id": "b-summer-custom",
+    "slug": "b-summer-custom",
+    "displayName": "Custom GIF Mix",
+    "description": "User-selected GIF motions from Cielty, B, Summer B, Zeta, and Tora.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/b-summer-custom/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Stillcool",
+    "pageUrl": "https://openpets.sh/pets/b-summer-custom"
+  },
+  {
+    "id": "merlin",
+    "slug": "merlin",
+    "displayName": "Merlin",
+    "description": "A nostalgic, kindly wizard in a blue star-and-moon robe and pointed hat.",
+    "kind": "object",
+    "tags": [
+      "animated",
+      "clippy",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/merlin/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kash",
+    "pageUrl": "https://openpets.sh/pets/merlin"
+  },
+  {
+    "id": "tatsumaki-pixel",
+    "slug": "tatsumaki-pixel",
+    "displayName": "Tatsumaki Pixel",
+    "description": "A big-head pixel-chibi Tatsumaki with short hooked emerald curls, stern green eyes, a black high-slit dress, and a floating esper attitude.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/tatsumaki-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "patrickxunuo",
+    "pageUrl": "https://openpets.sh/pets/tatsumaki-pixel"
+  },
+  {
+    "id": "tamamo",
+    "slug": "tamamo",
+    "displayName": "Tamamo no mae",
+    "description": "A chibi pink-haired fox girl who works, waits, celebrates, and keeps watch beside your Codex tasks.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/tamamo/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "pecg",
+    "pageUrl": "https://openpets.sh/pets/tamamo"
+  },
+  {
+    "id": "saitama-pixel",
+    "slug": "saitama-pixel",
+    "displayName": "Saitama Pixel",
+    "description": "A tiny pixel-chibi Saitama with an oversized bald head, yellow hero suit, white cape, and deadpan expression.",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/saitama-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "patrickxunuo",
+    "pageUrl": "https://openpets.sh/pets/saitama-pixel"
+  },
+  {
+    "id": "rhinorange-v2",
+    "slug": "rhinorange-v2",
+    "displayName": "Rhinorange",
+    "description": "A juicy little orange that works hard on your tasks and evolves into Rhinorange when the job is done.",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "cute",
+      "spooky",
+      "soft",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/rhinorange-v2/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "davideagosti62",
+    "pageUrl": "https://openpets.sh/pets/rhinorange-v2"
+  },
+  {
+    "id": "pulsebit-chibi-v2",
+    "slug": "pulsebit-chibi-v2",
+    "displayName": "Pulsebit",
+    "description": "A chibi DA62 elf coding on a laptop who transforms into a little heartbeat dragon when the task is done.",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "cute",
+      "pixel",
+      "spooky",
+      "mascot",
+      "hand-drawn",
+      "clippy"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/pulsebit-chibi-v2/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "davideagosti62",
+    "pageUrl": "https://openpets.sh/pets/pulsebit-chibi-v2"
+  },
+  {
+    "id": "noobkorea-nubi",
+    "slug": "noobkorea-nubi",
+    "displayName": "누비",
+    "description": "noobkorea의 코발트 블루와 크림빛 눈 모티프를 담은 작고 말랑말랑한 호기심쟁이 친구.",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/noobkorea-nubi/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "noobkorea",
+    "pageUrl": "https://openpets.sh/pets/noobkorea-nubi"
+  },
+  {
+    "id": "madaray",
+    "slug": "madaray",
+    "displayName": "Mada_V2",
+    "description": "A cocky theatrical crimson-armored chibi shinobi pet with long black hair, red tomoe eyes, smooth grounded running, and intimidating taunting expressions.",
+    "kind": "animal",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/madaray/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "bra611374",
+    "pageUrl": "https://openpets.sh/pets/madaray"
+  },
+  {
+    "id": "joayong",
+    "slug": "joayong",
+    "displayName": "조아용",
+    "description": "용인시의 밝고 사랑스러운 민트빛 용 친구. 팝콘을 안고 함께 응원해요.",
+    "kind": "object",
+    "tags": [
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/joayong/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "bonichic",
+    "pageUrl": "https://openpets.sh/pets/joayong"
+  },
+  {
+    "id": "modern-clippy",
+    "slug": "modern-clippy",
+    "displayName": "Modern Clippy",
+    "description": "A refreshed classic paperclip assistant preserving the original animation beats with crisp v2 rendering and 16 directional looks.",
+    "kind": "object",
+    "tags": [
+      "clippy",
+      "animated",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/modern-clippy/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "cl0ud6uru",
+    "pageUrl": "https://openpets.sh/pets/modern-clippy"
+  },
+  {
+    "id": "pinko",
+    "slug": "pinko",
+    "displayName": "핑코",
+    "description": "다정하고 호기심 많으며, 큰 보랏빛 코로 문제를 킁킁 찾아내는 핑크 수달형 코딩 친구.",
+    "kind": "object",
+    "tags": [
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/pinko/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "bonichic",
+    "pageUrl": "https://openpets.sh/pets/pinko"
+  },
+  {
+    "id": "haechi",
+    "slug": "haechi",
+    "displayName": "해치",
+    "description": "서울을 지켜주는 밝고 다정한 핑크 털복숭이 수호 친구.",
+    "kind": "object",
+    "tags": [
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/haechi/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "bonichic",
+    "pageUrl": "https://openpets.sh/pets/haechi"
+  },
+  {
+    "id": "lumi-pixel",
+    "slug": "lumi-pixel",
+    "displayName": "Lumi Pixel",
+    "description": "Join to Eternal Return https://playeternalreturn.com/main",
+    "kind": "person",
+    "tags": [
+      "cute",
+      "robot",
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/lumi-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "KeeUi",
+    "pageUrl": "https://openpets.sh/pets/lumi-pixel"
+  },
+  {
+    "id": "eternal-return-lumi",
+    "slug": "eternal-return-lumi",
+    "displayName": "Lumi",
+    "description": "Join to Eternal Return https://playeternalreturn.com/main",
+    "kind": "person",
+    "tags": [
+      "robot",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/eternal-return-lumi/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "KeeUi",
+    "pageUrl": "https://openpets.sh/pets/eternal-return-lumi"
+  },
+  {
+    "id": "amori-pixel",
+    "slug": "amori-pixel",
+    "displayName": "Amori Pixel",
+    "description": "Amori(@nin_amori)のドット絵ペット",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/amori-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "nin_amori",
+    "pageUrl": "https://openpets.sh/pets/amori-pixel"
+  },
+  {
+    "id": "mongchichi-plush-a770881",
+    "slug": "mongchichi-plush-a770881",
+    "displayName": "Mongchichi",
+    "description": "A fluffy baby monkey with soft brown fur and a red bib, inspired by the cozy charm of Monchhichi plush toys",
+    "kind": "object",
+    "tags": [
+      "animated",
+      "cute",
+      "soft"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/mongchichi-plush-a770881/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kim",
+    "pageUrl": "https://openpets.sh/pets/mongchichi-plush-a770881"
+  },
+  {
+    "id": "matcha-monchhichi",
+    "slug": "matcha-monchhichi",
+    "displayName": "Matcha Monchhichi",
+    "description": "A fluffy green matcha-themed mascot with playful work and review animations.",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/matcha-monchhichi/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "sso",
+    "pageUrl": "https://openpets.sh/pets/matcha-monchhichi"
+  },
+  {
+    "id": "panda-incense",
+    "slug": "panda-incense",
+    "displayName": "熊猫烧香",
+    "description": "手捧三炷香的怀旧小熊猫，陪你写代码、等构建，愿测试全绿。 A nostalgic panda with three incense sticks, wishing you passing builds and green tests. Nine expressive animations and 16 look directions.",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "cute",
+      "mascot",
+      "retro"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/panda-incense/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "deepdarkfantasy",
+    "pageUrl": "https://openpets.sh/pets/panda-incense"
+  },
+  {
+    "id": "sanqian",
+    "slug": "sanqian",
+    "displayName": "三千",
+    "description": "Sanqian is a soft golden tabby cat with a round face, oversized glossy eyes, pink nose, cream chest, subtle warm stripes, and a gentle painterly illustration style.",
+    "kind": "animal",
+    "tags": [
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/sanqian/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "hszjj221",
+    "pageUrl": "https://openpets.sh/pets/sanqian"
+  },
+  {
+    "id": "knowknow",
+    "slug": "knowknow",
+    "displayName": "KnowKnow",
+    "description": "aiKnow's friendly AI robot companion.",
+    "kind": "object",
+    "tags": [
+      "animated",
+      "cute",
+      "robot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/knowknow/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "chrisyu",
+    "pageUrl": "https://openpets.sh/pets/knowknow"
+  },
+  {
+    "id": "faust",
+    "slug": "faust",
+    "displayName": "Faust",
+    "description": "Faust is an elegant anime-style desktop pet designed for Codex. She reacts to your cursor with a subtle attention gesture, works continuously with her laptop during active tasks, and shows distinct animations for success, failure, review, and waiting states. With her calm express",
+    "kind": "person",
+    "tags": [
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/faust/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "Venice",
+    "pageUrl": "https://openpets.sh/pets/faust"
+  },
+  {
+    "id": "neon-gif-cat",
+    "slug": "neon-gif-cat",
+    "displayName": "Shoga Strings",
+    "description": "Shoga Strings pet based on the approved apricot and off-white character reference.",
+    "kind": "animal",
+    "tags": [
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/neon-gif-cat/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "sora",
+    "pageUrl": "https://openpets.sh/pets/neon-gif-cat"
+  },
+  {
+    "id": "tudou",
+    "slug": "tudou",
+    "displayName": "土豆",
+    "description": "一只乖巧、好奇、略黏人的奶油杏色卷毛小狗，穿薄荷绿胸背带。",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/tudou/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "sleepy-jerry",
+    "pageUrl": "https://openpets.sh/pets/tudou"
+  },
+  {
+    "id": "noxa",
+    "slug": "noxa",
+    "displayName": "Nox",
+    "description": "Goth demon girl in chibi style.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "pixel",
+      "retro",
+      "soft",
+      "spooky"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/noxa/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "Yamayza",
+    "pageUrl": "https://openpets.sh/pets/noxa"
+  },
+  {
+    "id": "lilith",
+    "slug": "lilith",
+    "displayName": "Lilith",
+    "description": "Uma bela personagem adulta gótica em pixel art, elegante, curvilínea e expressiva.",
+    "kind": "person",
+    "tags": [
+      "anime",
+      "cute",
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/lilith/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "vampirodoidao",
+    "pageUrl": "https://openpets.sh/pets/lilith"
+  },
+  {
+    "id": "lihua-cat",
+    "slug": "lihua-cat",
+    "displayName": "Lihua Cat",
+    "description": "A lifelike brown tabby kitten with large olive eyes, a pink nose, cream muzzle, and dark striped fur.",
+    "kind": "animal",
+    "tags": [
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/lihua-cat/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "ooooo",
+    "pageUrl": "https://openpets.sh/pets/lihua-cat"
+  },
+  {
+    "id": "xiao-he-ma",
+    "slug": "xiao-he-ma",
+    "displayName": "小河马",
+    "description": "保留黑色中式服装、惊讶张口表情与立式话筒的轻卡通人物桌宠",
+    "kind": "person",
+    "tags": [
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/xiao-he-ma/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "zhangrenni",
+    "pageUrl": "https://openpets.sh/pets/xiao-he-ma"
+  },
+  {
+    "id": "rabbit-q",
+    "slug": "rabbit-q",
+    "displayName": "Stayreal純真兔",
+    "description": "穿著PLAN A 外衣，滿載純真信念，讓SR兔寶成為你的桌寵。",
+    "kind": "animal",
+    "tags": [
+      "cute",
+      "soft",
+      "celeb"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/rabbit-q/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "sherlock0903",
+    "pageUrl": "https://openpets.sh/pets/rabbit-q"
+  },
+  {
+    "id": "pixel-cat",
+    "slug": "pixel-cat",
+    "displayName": "Pixel Cat",
+    "description": "A cream pixel cat with peach tabby markings, dark oval eyes, pink ears and nose, and a raised striped tail.",
+    "kind": "animal",
+    "tags": [
+      "pixel"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/pixel-cat/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "ooooo",
+    "pageUrl": "https://openpets.sh/pets/pixel-cat"
+  },
+  {
+    "id": "lovvy",
+    "slug": "lovvy",
+    "displayName": "Lovvy",
+    "description": "A springy Lovable-inspired builder with a big heart and endlessly curious eyes.",
+    "kind": "object",
+    "tags": [
+      "animated",
+      "cute",
+      "clippy"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/lovvy/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "bobbyio",
+    "pageUrl": "https://openpets.sh/pets/lovvy"
+  },
+  {
+    "id": "kawai-rami-original",
+    "slug": "kawai-rami-original",
+    "displayName": "河合罗美·原著比例",
+    "description": "Unofficial Kawai Rami fan pet with normal manga proportions, original eyelashes, and school uniform. Includes active work and 16 look directions.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/kawai-rami-original/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kaikai417",
+    "pageUrl": "https://openpets.sh/pets/kawai-rami-original"
+  },
+  {
+    "id": "komi-shouko-anime",
+    "slug": "komi-shouko-anime",
+    "displayName": "古见硝子·动漫版",
+    "description": "Anime-inspired Komi Shouko with narrow violet eyes, graceful full-body proportions and shy expressive animations.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/komi-shouko-anime/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kaikai417",
+    "pageUrl": "https://openpets.sh/pets/komi-shouko-anime"
+  },
+  {
+    "id": "tadano-hitohito",
+    "slug": "tadano-hitohito",
+    "displayName": "只野仁人",
+    "description": "Chibi pixel Tadano Hitohito desktop companion.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "pixel"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/tadano-hitohito/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kaikai417",
+    "pageUrl": "https://openpets.sh/pets/tadano-hitohito"
+  },
+  {
+    "id": "sanka-rea-417kkai",
+    "slug": "sanka-rea-417kkai",
+    "displayName": "散华礼弥",
+    "description": "白裙黑长发的像素风散华礼弥桌宠，带工作、思考、等待与开心跳跃动作。",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "pixel"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/sanka-rea-417kkai/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kaikai417",
+    "pageUrl": "https://openpets.sh/pets/sanka-rea-417kkai"
+  },
+  {
+    "id": "komi-shouko-manga",
+    "slug": "komi-shouko-manga",
+    "displayName": "古见硝子·漫画原作版",
+    "description": "Komi Shouko with manga-faithful proportions and shy expressive reactions.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/komi-shouko-manga/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kaikai417",
+    "pageUrl": "https://openpets.sh/pets/komi-shouko-manga"
+  },
+  {
+    "id": "kawai-rami",
+    "slug": "kawai-rami",
+    "displayName": "河合罗美",
+    "description": "Unofficial AI-generated Kawai Rami fan pet from Komi Cannot Communicate. Coding, thinking, waiting, happy jump and 16 gaze directions. Original character rights belong to their respective holders.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/kawai-rami/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kaikai417",
+    "pageUrl": "https://openpets.sh/pets/kawai-rami"
+  },
+  {
+    "id": "rumiko-manbagi",
+    "slug": "rumiko-manbagi",
+    "displayName": "万场木留美子",
+    "description": "像素 Q 版留美子，侧马尾与校服，含工作、思考、等待、跳跃及环视动作。",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "pixel"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/rumiko-manbagi/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kaikai417",
+    "pageUrl": "https://openpets.sh/pets/rumiko-manbagi"
+  },
+  {
+    "id": "luvvy",
+    "slug": "luvvy",
+    "displayName": "Luvvy",
+    "description": "A springy Lovable-inspired builder with a big heart and endlessly curious eyes.",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "clippy",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/luvvy/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "bobbyio",
+    "pageUrl": "https://openpets.sh/pets/luvvy"
+  },
+  {
+    "id": "misty",
+    "slug": "misty",
+    "displayName": "Misty",
+    "description": "A fluffy silver-gray tabby cat with blue-gray eyes, tufted ears, a pale chest, dark facial stripes, and an exceptionally full tail.",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/misty/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "oksunny",
+    "pageUrl": "https://openpets.sh/pets/misty"
+  },
+  {
+    "id": "dante-dmc",
+    "slug": "dante-dmc",
+    "displayName": "Dante DMC",
+    "description": "A confident chibi anime companion with layered white hair, pale blue-gray eyes, subtle stubble, a long crimson coat, black fingerless gloves, dark trousers, and black boots.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "game",
+      "cute",
+      "chaotic",
+      "celeb"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/dante-dmc/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "DantePao13",
+    "pageUrl": "https://openpets.sh/pets/dante-dmc"
+  },
+  {
+    "id": "claret-flint",
+    "slug": "claret-flint",
+    "displayName": "克拉蕾 · Claret Flint",
+    "description": "绝区零克拉蕾同人桌宠：金色双马尾、赤红巨斧，站立叉腰持斧，移动时前倾冲刺。Fan-made; not official.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/claret-flint/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "keyn",
+    "pageUrl": "https://openpets.sh/pets/claret-flint"
+  },
+  {
+    "id": "baby-penguin-eggshell",
+    "slug": "baby-penguin-eggshell",
+    "displayName": "Baby Penguin",
+    "description": "A fluffy baby penguin wearing a cracked eggshell cap, with playful animations and directional looks.",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/baby-penguin-eggshell/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "9b2n",
+    "pageUrl": "https://openpets.sh/pets/baby-penguin-eggshell"
+  },
+  {
+    "id": "yorkshire",
+    "slug": "yorkshire",
+    "displayName": "Yorkshire",
+    "description": "Um Yorkshire carinhoso e curioso, com pelagem preta e dourada e olhos castanhos expressivos.",
+    "kind": "animal",
+    "tags": [
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/yorkshire/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "lbkeppler",
+    "pageUrl": "https://openpets.sh/pets/yorkshire"
+  },
+  {
+    "id": "tailmon",
+    "slug": "tailmon",
+    "displayName": "Tailmon Digimon 数码兽 数码宝贝 迪路兽",
+    "description": "A spirited white feline companion with purple markings, oversized yellow gloves, and a golden tail ring. Digimon",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "game",
+      "mascot",
+      "pixel"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/tailmon/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "digimon",
+    "pageUrl": "https://openpets.sh/pets/tailmon"
+  },
+  {
+    "id": "bodygpt",
+    "slug": "bodygpt",
+    "displayName": "Soren",
+    "description": "A quietly playful, observant, weathered humanoid robot companion with a cyan-eyed visor, patterned scarf, pendant, cargo pants, sneakers, and wristwatch.",
+    "kind": "creature",
+    "tags": [
+      "robot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/bodygpt/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "DroidSunbath",
+    "pageUrl": "https://openpets.sh/pets/bodygpt"
+  },
+  {
+    "id": "gundam-aerial",
+    "slug": "gundam-aerial",
+    "displayName": "Gundam Aerial",
+    "description": "Миниатюрный Gundam Aerial — напарник для работы с кодом.",
+    "kind": "object",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "robot",
+      "mascot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/gundam-aerial/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "rzrs",
+    "pageUrl": "https://openpets.sh/pets/gundam-aerial"
+  },
+  {
+    "id": "somi-coton-v2",
+    "slug": "somi-coton-v2",
+    "displayName": "Somi, Coton",
+    "description": "2D Coton de Toulea with white fluffy fur and gentle eyes",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/somi-coton-v2/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kobeng",
+    "pageUrl": "https://openpets.sh/pets/somi-coton-v2"
+  },
+  {
+    "id": "whiterun-guard",
+    "slug": "whiterun-guard",
+    "displayName": "Whiterun Guard",
+    "description": "A steadfast guard of Skyrim, sworn to watch over your work.",
+    "kind": "person",
+    "tags": [
+      "game"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/whiterun-guard/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "DroidSunbath",
+    "pageUrl": "https://openpets.sh/pets/whiterun-guard"
+  },
+  {
+    "id": "java-xueli",
+    "slug": "java-xueli",
+    "displayName": "Java 猫猫",
+    "description": "A fluffy long-haired black-and-white tabby cat with yellow-green eyes, a white ruff, a dark plume tail, and a tiny brown beauty mark by the nose.",
+    "kind": "animal",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/java-xueli/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "xueli",
+    "pageUrl": "https://openpets.sh/pets/java-xueli"
+  },
+  {
+    "id": "borzoi",
+    "slug": "borzoi",
+    "displayName": "bori, Borzoi",
+    "description": "A gentle 2D Borzoi with a long snout and cream-colored fur. A small companion waiting nearby, running, and greeting.",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "anime",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/borzoi/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "kobeng",
+    "pageUrl": "https://openpets.sh/pets/borzoi"
+  },
+  {
+    "id": "komi-shouko-pixel",
+    "slug": "komi-shouko-pixel",
+    "displayName": "古见硝子·像素Q版",
+    "description": "Pixel chibi Komi Shouko with long purple-black hair, a navy school uniform and shy gestures. Unofficial fan art.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute",
+      "pixel"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/komi-shouko-pixel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kaikai417",
+    "pageUrl": "https://openpets.sh/pets/komi-shouko-pixel"
+  },
+  {
+    "id": "rush",
+    "slug": "rush",
+    "displayName": "Rush",
+    "description": "A confident training companion who meets every task with energy, focus, and a friendly smile.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "soft",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/rush/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "artulito",
+    "pageUrl": "https://openpets.sh/pets/rush"
+  },
+  {
+    "id": "itasca",
+    "slug": "itasca",
+    "displayName": "Itasca",
+    "description": "A cute cat with a larger-than-life personality who loves nothnig more than attention, going outside, and his little toy worm",
+    "kind": "object",
+    "tags": [],
+    "spritesheetUrl": "https://openpets.sh/api/pets/itasca/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "carsonbetta11",
+    "pageUrl": "https://openpets.sh/pets/itasca"
+  },
+  {
+    "id": "jaehyun-next-door",
+    "slug": "jaehyun-next-door",
+    "displayName": "Jaehyun Next Door",
+    "description": "An unofficial, fan-made desktop companion inspired by BOYNEXTDOOR Myung Jaehyun.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "cute",
+      "soft"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/jaehyun-next-door/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "ArvinZJC",
+    "pageUrl": "https://openpets.sh/pets/jaehyun-next-door"
+  },
+  {
+    "id": "iu-beside-you",
+    "slug": "iu-beside-you",
+    "displayName": "IU Beside You",
+    "description": "An unofficial, fan-made desktop companion inspired by IU.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "cute",
+      "soft"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/iu-beside-you/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "ArvinZJC",
+    "pageUrl": "https://openpets.sh/pets/iu-beside-you"
+  },
+  {
+    "id": "komi-shouko-round-eyes",
+    "slug": "komi-shouko-round-eyes",
+    "displayName": "古见硝子·圆眼Q版",
+    "description": "Round-eye chibi Komi Shouko with huge white eyes, purple dot pupils, cat-ear hair tufts and shy school-uniform gestures. Unofficial fan art.",
+    "kind": "person",
+    "tags": [
+      "animated",
+      "anime",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/komi-shouko-round-eyes/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "kaikai417",
+    "pageUrl": "https://openpets.sh/pets/komi-shouko-round-eyes"
+  },
+  {
+    "id": "yuanyuan",
+    "slug": "yuanyuan",
+    "displayName": "Yuanyuan",
+    "description": "A black-and-white Jack Russell puppy with a red collar.",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "cute",
+      "soft"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/yuanyuan/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "bobbyyuan",
+    "pageUrl": "https://openpets.sh/pets/yuanyuan"
+  },
+  {
+    "id": "milk-mochi-v1",
+    "slug": "milk-mochi-v1",
+    "displayName": "Milk Mochi v1",
+    "description": "A little milk-mochi friend who waddles softly, works at the keyboard, and reads through documents. v1 format with the 9 basic motions.",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "cute",
+      "mascot",
+      "soft"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/milk-mochi-v1/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "chosmini",
+    "pageUrl": "https://openpets.sh/pets/milk-mochi-v1"
+  },
+  {
+    "id": "milk-mochi-soft",
+    "slug": "milk-mochi-soft",
+    "displayName": "Milk Mochi v2",
+    "description": "A little milk-mochi friend who waddles softly, works at the keyboard, and reads through documents. v2 format.",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "cute",
+      "mascot",
+      "soft"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/milk-mochi-soft/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "chosmini",
+    "pageUrl": "https://openpets.sh/pets/milk-mochi-soft"
+  },
+  {
+    "id": "haaap",
+    "slug": "haaap",
+    "displayName": "Haaap (Kirby)",
+    "description": "A pink Kirby who keeps inhaling air while you work. 9 standard motions. Unofficial fan art.",
+    "kind": "creature",
+    "tags": [
+      "animated",
+      "cute",
+      "game",
+      "pixel"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/haaap/spritesheet",
+    "rows": 9,
+    "source": "openpets",
+    "submittedBy": "chosmini",
+    "pageUrl": "https://openpets.sh/pets/haaap"
+  },
+  {
+    "id": "tiebaojin-dog",
+    "slug": "tiebaojin-dog",
+    "displayName": "铁包金 · Dog 狗",
+    "description": "黑背金眉的中华田园犬，陪你工作、等待和庆祝。",
+    "kind": "animal",
+    "tags": [
+      "pixel",
+      "soft",
+      "cute"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/tiebaojin-dog/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "alex",
+    "pageUrl": "https://openpets.sh/pets/tiebaojin-dog"
+  },
+  {
+    "id": "mega-man",
+    "slug": "mega-man",
+    "displayName": "Mega Man",
+    "description": "A retro blue bomber who runs left and right, jumps, slides, and fires his arm buster.",
+    "kind": "object",
+    "tags": [
+      "anime",
+      "robot"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/mega-man/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "terhd",
+    "pageUrl": "https://openpets.sh/pets/mega-man"
+  },
+  {
+    "id": "happiest-man-alive",
+    "slug": "happiest-man-alive",
+    "displayName": "Happiest Man Alive",
+    "description": "A creepy floating face pet that watches the viewer, tracks the mouse, and reacts with eerie expressions when dragged, succeeding, or failing.",
+    "kind": "creature",
+    "tags": [
+      "cute",
+      "weird"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/happiest-man-alive/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "terhd",
+    "pageUrl": "https://openpets.sh/pets/happiest-man-alive"
+  },
+  {
+    "id": "ethel",
+    "slug": "ethel",
+    "displayName": "Ethel",
+    "description": "An OIIA-inspired gray-brown tabby cat with white muzzle, chest, and paw tips.",
+    "kind": "animal",
+    "tags": [
+      "cute",
+      "mascot",
+      "celeb"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/ethel/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "terhd",
+    "pageUrl": "https://openpets.sh/pets/ethel"
+  },
+  {
+    "id": "neuro-cluck",
+    "slug": "neuro-cluck",
+    "displayName": "NeuroCluck",
+    "description": "Powered by expired Codex limits, broken D’Addario strings, and the ongoing existential crisis of transformer models.",
+    "kind": "animal",
+    "tags": [
+      "animated",
+      "pixel",
+      "cute",
+      "retro"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/neuro-cluck/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "isakura313",
+    "pageUrl": "https://openpets.sh/pets/neuro-cluck"
+  },
+  {
+    "id": "shweta-red",
+    "slug": "shweta-red",
+    "displayName": "Shweta - Red",
+    "description": "Shweta Bajaj: Founder & CEO, entrepreneur, AI and leadership trainer, author, podcaster and startup mentor. Building ideas, working with people and creating meaningful impact through learning, business and innovation.",
+    "kind": "person",
+    "tags": [
+      "person",
+      "hand-drawn",
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/shweta-red/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "videokid",
+    "pageUrl": "https://openpets.sh/pets/shweta-red"
+  },
+  {
+    "id": "shweta-black",
+    "slug": "shweta-black",
+    "displayName": "Shweta - Black",
+    "description": "Shweta Bajaj: Founder & CEO, entrepreneur, AI and leadership trainer, author, podcaster and startup mentor. Building ideas, working with people and creating meaningful impact through learning, business and innovation.",
+    "kind": "person",
+    "tags": [
+      "person",
+      "hand-drawn",
+      "animated"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/shweta-black/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "videokid",
+    "pageUrl": "https://openpets.sh/pets/shweta-black"
+  },
+  {
+    "id": "kkukku",
+    "slug": "kkukku",
+    "displayName": "꾸꾸 (Kkukku)",
+    "description": "A friendly pixel-art blue-gray pigeon coding companion.",
+    "kind": "animal",
+    "tags": [
+      "mascot",
+      "pixel",
+      "cute",
+      "animated",
+      "retro"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/kkukku/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "saemhan",
+    "pageUrl": "https://openpets.sh/pets/kkukku"
+  },
+  {
+    "id": "konata-preview",
+    "slug": "konata-preview",
+    "displayName": "泉此方",
+    "description": "泉此方同人桌面宠物：身体起伏待机、闭眼叉腰、行走、拿面包与看漫画。",
+    "kind": "person",
+    "tags": [
+      "anime"
+    ],
+    "spritesheetUrl": "https://openpets.sh/api/pets/konata-preview/spritesheet",
+    "rows": 11,
+    "source": "openpets",
+    "submittedBy": "luutta",
+    "pageUrl": "https://openpets.sh/pets/konata-preview"
+  }
+]

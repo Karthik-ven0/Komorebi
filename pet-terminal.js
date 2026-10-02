@@ -24,6 +24,7 @@ const PetTerminal = (() => {
   let historyIndex = -1;
   let outputEl = null;
   let inputEl = null;
+  let catalogCache     = null; // local pre-bundled catalog (codex-catalog.json)
   let registryCache    = null; // codex gallery cache
   let openPetsCache    = null; // openpets.sh cache
 
@@ -78,31 +79,51 @@ const PetTerminal = (() => {
   }
 
   /* ===================================================
-     REGISTRY 1: pets.ydb-qdrant.tech (~161 pets)
+     CATALOG & REGISTRIES
      =================================================== */
+  async function fetchCatalog() {
+    if (catalogCache) return catalogCache;
+    try {
+      const res = await fetch('codex-catalog.json');
+      if (res.ok) {
+        catalogCache = await res.json();
+        return catalogCache;
+      }
+    } catch (e) {}
+    return [];
+  }
+
+  /* Registry 1: Codex Gallery (uses catalog first, fallback to dev proxy) */
   async function fetchRegistry() {
     if (registryCache) return registryCache;
-    try {
-      const res = await fetch(`${CODEX_PROXY}/api/manifest`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      registryCache = data.pets || [];
+    const catalog = await fetchCatalog();
+    if (catalog && catalog.length > 0) {
+      registryCache = catalog;
       return registryCache;
-    } catch (err) {
-      print(`⚠ Codex gallery unreachable: ${err.message}`, 'muted');
-      return [];
     }
+    if (IS_LOCAL) {
+      try {
+        const res = await fetch(`${CODEX_PROXY}/api/manifest`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        registryCache = data.pets || [];
+        return registryCache;
+      } catch (err) {
+        print(`⚠ Codex gallery unreachable: ${err.message}`, 'muted');
+        return [];
+      }
+    }
+    return [];
   }
 
   async function fetchPetBySlug(slug) {
     const pets = await fetchRegistry();
-    return pets.find(p => p.slug === slug) || null;
+    return pets.find(p => (p.slug || p.id) === slug) || null;
   }
 
-  /* ===================================================
-     REGISTRY 2: openpets.sh (~5,877 pets from Codex Pet Share)
-     =================================================== */
+  /* Registry 2: openpets.sh (~5,877 pets) */
   async function fetchOpenPets(query) {
+    if (!IS_LOCAL) return []; // avoid CORS failure on static hosts
     try {
       const url = query
         ? `${OPEN_PROXY}/api/pets?search=${encodeURIComponent(query)}&pageSize=15`
@@ -117,51 +138,77 @@ const PetTerminal = (() => {
   }
 
   async function fetchOpenPetById(id) {
+    if (!IS_LOCAL) return null;
     try {
       const res = await fetch(`${OPEN_PROXY}/api/pets/${encodeURIComponent(id)}`);
       if (!res.ok) return null;
       const data = await res.json();
-      // openpets wraps single-pet responses as { pet: {...} }
       return data.pet || data || null;
     } catch (err) {
       return null;
     }
   }
 
-  /* Combined search across both registries */
+  /* Combined search across catalog and live dev proxies */
   async function searchAllPets(query) {
-    const q = query.toLowerCase();
-    const [codexPets, openPets] = await Promise.all([
-      fetchRegistry(),
-      fetchOpenPets(query),
-    ]);
+    const q = (query || '').toLowerCase().trim();
+    if (!q) return [];
 
-    const codexMatches = codexPets.filter(p =>
-      p.slug.includes(q) ||
+    const catalog = await fetchCatalog();
+    const catalogMatches = catalog.filter(p =>
+      (p.slug || p.id || '').toLowerCase().includes(q) ||
       (p.displayName || '').toLowerCase().includes(q) ||
       (p.description || '').toLowerCase().includes(q) ||
       (p.tags || []).some(t => t.toLowerCase().includes(q))
-    ).map(p => ({ ...p, _source: 'codex' }));
+    ).map(p => ({ ...p, _source: p.source || 'catalog' }));
 
-    const openMatches = openPets.map(p => ({ ...p, _source: 'openpets' }));
+    if (catalogMatches.length > 0) {
+      return catalogMatches;
+    }
 
-    return [...codexMatches, ...openMatches];
+    if (IS_LOCAL) {
+      const [codexPets, openPets] = await Promise.all([
+        fetchRegistry(),
+        fetchOpenPets(query),
+      ]);
+      const codexMatches = codexPets.filter(p =>
+        (p.slug || p.id || '').toLowerCase().includes(q) ||
+        (p.displayName || '').toLowerCase().includes(q) ||
+        (p.description || '').toLowerCase().includes(q) ||
+        (p.tags || []).some(t => t.toLowerCase().includes(q))
+      ).map(p => ({ ...p, _source: 'codex' }));
+      const openMatches = openPets.map(p => ({ ...p, _source: 'openpets' }));
+      return [...codexMatches, ...openMatches];
+    }
+
+    return [];
   }
 
-  /* Find a pet by slug/id across both registries */
+  /* Find a pet by slug/id across catalog and registries */
   async function findPetAnywhere(slug) {
-    // Try codex gallery first
-    const codexPet = await fetchPetBySlug(slug);
-    if (codexPet) return { pet: codexPet, source: 'codex' };
+    const q = (slug || '').toLowerCase().trim();
 
-    // Try openpets by exact id
-    const openPet = await fetchOpenPetById(slug);
-    if (openPet) return { pet: openPet, source: 'openpets' };
+    // 1. Check local catalog first (instant, works on GitHub Pages & offline)
+    const catalog = await fetchCatalog();
+    const exact = catalog.find(p => (p.slug || p.id || '').toLowerCase() === q);
+    if (exact) return { pet: exact, source: 'catalog' };
 
-    // Fuzzy search openpets
-    const results = await fetchOpenPets(slug);
-    const exact = results.find(p => p.id === slug || p.id.includes(slug));
-    if (exact) return { pet: exact, source: 'openpets' };
+    // Partial match in catalog
+    const partial = catalog.find(p => (p.slug || p.id || '').toLowerCase().includes(q) || (p.displayName || '').toLowerCase().includes(q));
+    if (partial) return { pet: partial, source: 'catalog' };
+
+    // 2. Fall back to live dev server proxy if local
+    if (IS_LOCAL) {
+      const codexPet = await fetchPetBySlug(q);
+      if (codexPet) return { pet: codexPet, source: 'codex' };
+
+      const openPet = await fetchOpenPetById(q);
+      if (openPet) return { pet: openPet, source: 'openpets' };
+
+      const results = await fetchOpenPets(q);
+      const openMatch = results.find(p => p.id === q || p.id.includes(q));
+      if (openMatch) return { pet: openMatch, source: 'openpets' };
+    }
 
     return null;
   }
@@ -202,7 +249,7 @@ const PetTerminal = (() => {
     const activeId = loadActivePet();
     const activePet = installed.find(p => (p.slug || p.id) === activeId);
     print(`  Active: ${activePet ? (activePet.emoji || '🐾') + ' ' + activePet.displayName : activeId}`, 'success');
-    print(`  Installed: ${installed.length} · Registry: pets.ydb-qdrant.tech (160+ pets)`, 'info');
+    print(`  Installed: ${installed.length} · Catalog: 300+ Codex & OpenPets`, 'info');
     printSpacer();
     print('  Type <span class="cmd-highlight">help</span> for commands, <span class="cmd-highlight">search &lt;query&gt;</span> to browse pets', 'system');
     print('  Install with: <span class="cmd-highlight">install &lt;slug&gt;</span> (e.g. install fennec-fox)', 'muted');
@@ -342,16 +389,26 @@ const PetTerminal = (() => {
     print(`📦 Found: ${petName} [${source}] — "${(pet.description || '').substring(0, 80)}"`, 'system');
     print(`  Installing ${petName}...`, 'info');
 
-    // Build the full spritesheet URL based on which registry it came from
-    let spriteUrl;
-    if (source === 'openpets') {
-      // openpets.sh uses /api/pets/<id>/spritesheet (returns the webp directly)
-      spriteUrl = `${OPEN_PROXY}/api/pets/${encodeURIComponent(petId)}/spritesheet`;
+    // Build the full spritesheet URL based on which registry / source it came from
+    let spriteUrl = pet.spritesheetUrl || pet.sprite;
+    if (source === 'catalog') {
+      spriteUrl = pet.spritesheetUrl;
+      // If local, rewrite to proxy if applicable
+      if (IS_LOCAL) {
+        if (spriteUrl.includes('pets.ydb-qdrant.tech/api/assets/')) {
+          spriteUrl = '/codex-proxy/api/assets/' + spriteUrl.split('/api/assets/')[1];
+        } else if (spriteUrl.includes('openpets.sh/api/pets/')) {
+          spriteUrl = '/openpets-proxy/api/pets/' + spriteUrl.split('/api/pets/')[1];
+        }
+      }
+    } else if (source === 'openpets') {
+      spriteUrl = IS_LOCAL
+        ? `${OPEN_PROXY}/api/pets/${encodeURIComponent(petId)}/spritesheet`
+        : `https://openpets.sh/api/pets/${encodeURIComponent(petId)}/spritesheet`;
     } else {
-      // codex gallery: /api/assets/<hash>/spritesheet.webp
       spriteUrl = pet.spritesheetUrl.startsWith('http')
-        ? CODEX_PROXY + '/api/assets/' + pet.spritesheetUrl.split('/api/assets/')[1]
-        : CODEX_PROXY + pet.spritesheetUrl;
+        ? (IS_LOCAL ? CODEX_PROXY + '/api/assets/' + pet.spritesheetUrl.split('/api/assets/')[1] : pet.spritesheetUrl)
+        : (IS_LOCAL ? CODEX_PROXY + pet.spritesheetUrl : 'https://pets.ydb-qdrant.tech' + pet.spritesheetUrl);
     }
 
     print(`  ├─ Downloading spritesheet...`, 'muted');
@@ -359,15 +416,15 @@ const PetTerminal = (() => {
     try {
       await new Promise((resolve, reject) => {
         const img = new Image();
-        img.crossOrigin = 'anonymous';
+        // Do NOT set img.crossOrigin = 'anonymous' to avoid CORS rejection on external CDNs
         img.onload = resolve;
         img.onerror = () => reject(new Error('Image load failed'));
         img.src = spriteUrl;
       });
 
       const tags = pet.tags || [];
-      const rows = (pet.validationReport && pet.validationReport.spriteVersionNumber === 2) ? 11
-                 : tags.includes('v2') ? 11 : 9;
+      const rows = pet.rows || ((pet.validationReport && pet.validationReport.spriteVersionNumber === 2) ? 11
+                 : tags.includes('v2') ? 11 : 9);
 
       print(`  ├─ Spritesheet verified ✓ (v${rows === 11 ? 2 : 1} format, ${(pet.tags || []).slice(0,4).join(', ') || 'no tags'})`, 'muted');
       print(`  ├─ Registering pet...`, 'muted');
@@ -526,8 +583,9 @@ const PetTerminal = (() => {
     let pet = installed.find(p => (p.slug || p.id) === slug);
 
     if (!pet) {
-      print(`🔍 Looking up "${slug}" in gallery...`, 'info');
-      pet = await fetchPetBySlug(slug);
+      print(`🔍 Looking up "${slug}" in catalog...`, 'info');
+      const found = await findPetAnywhere(slug);
+      if (found) pet = found.pet;
     }
 
     if (!pet) { print(`✗ Pet "${escTerminal(slug)}" not found`, 'error'); return; }
