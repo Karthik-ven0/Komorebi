@@ -281,20 +281,37 @@
       // 3.5. Create Interactive Floating Touch Bar for Mobile & Desktop
       this.actionBarEl = document.createElement('div');
       this.actionBarEl.className = 'km-pet-action-bar';
+      this.actionBarEl.setAttribute('role', 'toolbar');
+      this.actionBarEl.setAttribute('aria-label', 'Companion Actions');
       this.actionBarEl.innerHTML = `
-        <button class="km-act-btn" data-act="wave" title="Wave / Hello">👋</button>
-        <button class="km-act-btn" data-act="jump" title="Jump / Celebrate">✨</button>
-        <button class="km-act-btn" data-act="review" title="Review / Study">📖</button>
-        <button class="km-act-btn" data-act="failed" title="Pout / Disappointed">🌧️</button>
-        <button class="km-act-btn" data-act="waiting" title="Rest / Waiting">🍵</button>
+        <button class="km-act-btn" data-act="wave" title="Wave / Hello [W / 1]">👋<span class="km-act-key">1</span></button>
+        <button class="km-act-btn" data-act="jump" title="Jump / Celebrate [J / 2]">✨<span class="km-act-key">2</span></button>
+        <button class="km-act-btn" data-act="review" title="Review / Study [R / 3]">📖<span class="km-act-key">3</span></button>
+        <button class="km-act-btn" data-act="failed" title="Pout / Disappointed [F / 4]">🌧️<span class="km-act-key">4</span></button>
+        <button class="km-act-btn" data-act="waiting" title="Rest / Waiting [S / 5]">🍵<span class="km-act-key">5</span></button>
+        <button class="km-act-btn" data-act="run" title="Run / Sprint [X / 6]">⚡<span class="km-act-key">6</span></button>
+        <button class="km-act-btn km-act-close" title="Close Menu" aria-label="Close Menu">✕</button>
       `;
       this.actionBarEl.addEventListener('click', (e) => {
+        const closeBtn = e.target.closest('.km-act-close');
+        if (closeBtn) {
+          e.stopPropagation();
+          this._hideActionBar();
+          return;
+        }
         const btn = e.target.closest('.km-act-btn');
         if (btn && btn.dataset.act) {
           e.stopPropagation();
           this.playAction(btn.dataset.act);
-          this._hideActionBar();
+          clearTimeout(this._actionBarHideTimer);
+          this._actionBarHideTimer = setTimeout(() => this._hideActionBar(), 1500);
         }
+      });
+      this.actionBarEl.addEventListener('mouseenter', () => {
+        clearTimeout(this._actionBarHideTimer);
+      });
+      this.actionBarEl.addEventListener('mouseleave', () => {
+        this._actionBarHideTimer = setTimeout(() => this._hideActionBar(), 2000);
       });
       document.body.appendChild(this.actionBarEl);
 
@@ -370,7 +387,7 @@
     }
 
     _attachInputListeners() {
-      // Touch/Pointer down directly on Maomao (Drag to Reposition on Mobile)
+      // Touch/Pointer down directly on Maomao (Drag or Long-Press)
       this.canvas.addEventListener('pointerdown', (e) => {
         if (this.settings.draggable !== false) {
           this.isDragging = true;
@@ -385,6 +402,19 @@
           this.canvas.style.cursor = 'grabbing';
           this._updateBadge('Carried 🐾');
           try { this.canvas.setPointerCapture(e.pointerId); } catch(err) {}
+
+          // Long-press detection on mobile / touch (hold for 450ms)
+          clearTimeout(this._longPressTimer);
+          this._longPressTimer = setTimeout(() => {
+            if (this.isDragging && this.dragDistance < 12) {
+              if (navigator.vibrate) {
+                try { navigator.vibrate([25, 20, 25]); } catch(err) {}
+              }
+              this.playAction('wave', 3000, `Held with love! 👋 ${this.petName} purrs happily`);
+              this._showActionBar(6000);
+            }
+          }, 450);
+
           e.preventDefault();
         }
       });
@@ -392,7 +422,11 @@
       // Pointer move on Maomao while dragging
       window.addEventListener('pointermove', (e) => {
         if (this.isDragging) {
-          this.dragDistance += Math.hypot(e.clientX - this.dragStartX, e.clientY - this.dragStartY);
+          const moveDist = Math.hypot(e.clientX - this.dragStartX, e.clientY - this.dragStartY);
+          this.dragDistance += moveDist;
+          if (this.dragDistance > 10) {
+            clearTimeout(this._longPressTimer);
+          }
           this.x = e.clientX - this.dragOffsetX;
           this.y = e.clientY - this.dragOffsetY;
           this._clampPosition();
@@ -408,23 +442,34 @@
         }
       }, { passive: true });
 
-      // Pointer up (Release drag, Tap, Double-Tap, or Flick Up)
+      // Pointer up (Release drag, Tap, Double-Tap, or Flick Up/Down)
       window.addEventListener('pointerup', (e) => {
+        clearTimeout(this._longPressTimer);
+
         if (this.isDragging) {
           this.isDragging = false;
           this.canvas.style.cursor = 'grab';
 
-          const flickUp = (this.dragStartY - e.clientY > 35) && (Math.abs(e.clientX - this.dragStartX) < 60);
+          const deltaY = this.dragStartY - e.clientY;
+          const deltaX = Math.abs(e.clientX - this.dragStartX);
+          const flickUp = (deltaY > 30) && (deltaX < 70);
+          const flickDown = (deltaY < -35) && (deltaX < 70);
 
           if (flickUp) {
-            // Flicked upward on touch -> high energetic jump!
+            // Flicked upward on touch / mouse -> high energetic jump!
             this.playAction('jump', 3200, `Wheee! High jump with ${this.petName}! ✨`);
+            this._showActionBar(3000);
+          } else if (flickDown) {
+            // Flicked downward -> cozy sit down / rest
+            this.playAction('waiting', 3000, `Settled down cozy 🍵`);
+            this._showActionBar(3000);
           } else if (this.dragDistance < 14) {
             // Short tap on companion
             const now = Date.now();
             if (now - (this._lastTapTime || 0) < 360) {
               // Double tap -> Joyful Jump celebration!
               this.playAction('jump', 3200, `Double tap! ${this.petName} is super excited! ⭐`);
+              this._showActionBar(3000);
               this._lastTapTime = 0;
             } else {
               this._lastTapTime = now;
@@ -440,6 +485,140 @@
 
             this.playAction('jump', 900); // landing hop
           }
+        }
+      });
+
+      // Two-Finger Touch on Mobile Companion (Triggers Review / Study)
+      this.canvas.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches.length === 2) {
+          e.preventDefault();
+          this.playAction('review', 3500, `Two-finger touch! ${this.petName} is studying 📖`);
+          this._showActionBar(4000);
+        }
+      }, { passive: false });
+
+      // Cursor Hover on Companion Canvas
+      this.canvas.addEventListener('mouseenter', () => {
+        this._showActionBar(4500);
+        if (!this.isActionLocked && (this.row === ROWS.WAITING || this.row === ROWS.IDLE)) {
+          this._updateBadge('Pet me! 🐾');
+        }
+      });
+
+      this.canvas.addEventListener('mouseleave', () => {
+        clearTimeout(this._actionBarHideTimer);
+        this._actionBarHideTimer = setTimeout(() => this._hideActionBar(), 2500);
+        if (!this.isActionLocked && (this.row === ROWS.WAITING || this.row === ROWS.IDLE)) {
+          this._updateBadge(this.petName);
+        }
+      });
+
+      // Mouse Wheel on Companion Canvas (Scroll Up = Jump, Scroll Down = Rest)
+      this.canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.deltaY < 0) {
+          this.playAction('jump', 2800, `Wheee! Hop up! ✨`);
+        } else {
+          this.playAction('waiting', 2800, `Sitting down cozy 🍵`);
+        }
+        this._showActionBar(3000);
+      }, { passive: false });
+
+      // Right-Click Context Menu on Companion Canvas
+      this.canvas.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.playAction('wave', 2500, `Hi there! Right-click menu opened 👋`);
+        this._showActionBar(6000);
+      });
+
+      // Double-Click on Companion Canvas
+      this.canvas.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.playAction('jump', 3200, `Double click! ${this.petName} is celebrating! ⭐`);
+        this._showActionBar(3500);
+      });
+
+      // Global Keyboard Shortcuts for Companion Animations
+      window.addEventListener('keydown', (e) => {
+        const target = e.target;
+        if (!target) return;
+        const tag = (target.tagName || '').toLowerCase();
+        const isInput = tag === 'input' || tag === 'textarea' || tag === 'select';
+        const isEditable = target.isContentEditable || (target.closest && target.closest('input, textarea, select, [contenteditable="true"], .terminal-input, .modal-content'));
+        if (isInput || isEditable) return;
+
+        // Ignore if modifier keys are pressed (e.g. Ctrl+R, Ctrl+S, Alt+Tab)
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+        // Ignore if companion is disabled in settings
+        if (this.settings.enabled === false) return;
+
+        const key = e.key.toLowerCase();
+        let handled = false;
+
+        switch (key) {
+          case '1':
+          case 'w':
+            this.playAction('wave', 3200, `Hi there! 👋 [W / 1]`);
+            handled = true;
+            break;
+          case '2':
+          case 'j':
+            this.playAction('jump', 3200, `Wheee! Jump! ✨ [J / 2]`);
+            handled = true;
+            break;
+          case '3':
+          case 'r':
+            this.playAction('review', 3500, `Studying notes carefully 📖 [R / 3]`);
+            handled = true;
+            break;
+          case '4':
+          case 'f':
+            this.playAction('failed', 3200, `Oops! Don't give up! 🌧️ [F / 4]`);
+            handled = true;
+            break;
+          case '5':
+          case 's':
+            this.playAction('waiting', 3000, `Resting peacefully 🍵 [S / 5]`);
+            handled = true;
+            break;
+          case '6':
+          case 'x':
+            this.playAction('run', 3200, `Zooming around! ⚡ [X / 6]`);
+            handled = true;
+            break;
+          case ' ': // Spacebar
+            if (tag !== 'button') {
+              this.playAction('jump', 2800, `Hop! ⭐ [Space]`);
+              handled = true;
+            }
+            break;
+          case 'p':
+            if (this.actionBarEl) {
+              if (this.actionBarEl.classList.contains('open')) {
+                this._hideActionBar();
+              } else {
+                this._showActionBar(6000);
+              }
+            }
+            handled = true;
+            break;
+          case 'h':
+          case '?':
+            if (typeof showToast === 'function') {
+              showToast(`🐾 ${this.petName} Hotkeys: 1/W: Wave • 2/J: Jump • 3/R: Study • 4/F: Pout • 5/S: Rest • 6/X: Run • Space: Hop • P: Menu`);
+            }
+            this._showActionBar(6000);
+            handled = true;
+            break;
+        }
+
+        if (handled) {
+          e.preventDefault();
+          this._showActionBar(4000);
         }
       });
 
@@ -527,26 +706,29 @@
     }
 
     _onPetClicked() {
-      // Cycle through rich gestures on successive taps:
-      // Wave -> Jump -> Review (Study) -> Failed (Pout) -> Rest
-      this._actionIndex = ((this._actionIndex || 0) + 1) % 5;
+      // Cycle through rich gestures on successive clicks/taps:
+      // Wave -> Jump -> Review (Study) -> Failed (Pout) -> Rest -> Run
+      this._actionIndex = ((this._actionIndex || 0) + 1) % 6;
       const actions = [
         { act: 'wave',    msg: `Hi there! 👋 ${this.petName} is with you!` },
         { act: 'jump',    msg: `Yay! ✨ Let's stay focused and energised!` },
         { act: 'review',  msg: `Reviewing notes & tasks carefully 📖` },
         { act: 'failed',  msg: `Don't give up! We've got this 💪` },
-        { act: 'waiting', msg: `Sitting cozy and ready for your focus session 🍵` }
+        { act: 'waiting', msg: `Sitting cozy and ready for your focus session 🍵` },
+        { act: 'run',     msg: `Zooming around! ⚡ Full of energy!` }
       ];
       const next = actions[this._actionIndex];
       this.playAction(next.act, 3200, next.msg);
-      this._showActionBar();
+      this._showActionBar(4000);
     }
 
-    _showActionBar() {
+    _showActionBar(autoHideMs = 4500) {
       if (!this.actionBarEl) return;
       this.actionBarEl.classList.add('open');
-      clearTimeout(this._actionBarTimer);
-      this._actionBarTimer = setTimeout(() => this._hideActionBar(), 4500);
+      clearTimeout(this._actionBarHideTimer);
+      if (autoHideMs > 0) {
+        this._actionBarHideTimer = setTimeout(() => this._hideActionBar(), autoHideMs);
+      }
     }
 
     _hideActionBar() {
@@ -590,9 +772,12 @@
       }
       if (this.actionBarEl) {
         const barX = Math.round(this.x + this.dispW / 2);
-        const barY = Math.max(6, Math.round(this.y - 38));
-        this.actionBarEl.style.left = Math.max(90, Math.min(window.innerWidth - 90, barX)) + 'px';
-        this.actionBarEl.style.top  = barY + 'px';
+        const barY = this.y > 54
+          ? Math.round(this.y - 42)
+          : Math.round(this.y + this.dispH + 30);
+        const halfWidth = 118;
+        this.actionBarEl.style.left = Math.max(halfWidth, Math.min(window.innerWidth - halfWidth, barX)) + 'px';
+        this.actionBarEl.style.top  = Math.max(8, Math.min(window.innerHeight - 44, barY)) + 'px';
       }
       if (this.bubbleEl) {
         const bX = Math.max(10, Math.min(window.innerWidth - 170, this.x + this.dispW / 2 - 20));

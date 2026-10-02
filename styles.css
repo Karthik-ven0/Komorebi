@@ -1998,6 +1998,7 @@ body.pet-disabled canvas {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  user-select: none;
 }
 
 .km-pet-action-bar.open {
@@ -2007,6 +2008,7 @@ body.pet-disabled canvas {
 }
 
 .km-act-btn {
+  position: relative;
   background: transparent;
   border: none;
   font-size: 15px;
@@ -2015,12 +2017,43 @@ body.pet-disabled canvas {
   cursor: pointer;
   border-radius: 12px;
   transition: transform 0.15s ease, background 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .km-act-btn:hover,
 .km-act-btn:active {
   transform: scale(1.22);
   background: rgba(0, 0, 0, 0.06);
+}
+
+.km-act-key {
+  position: absolute;
+  bottom: 0px;
+  right: 1px;
+  font-size: 7.5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+  color: #6B7280;
+  opacity: 0.65;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.km-act-close {
+  font-size: 10px;
+  font-weight: 700;
+  color: #9CA3AF;
+  padding: 4px 6px;
+  margin-left: 2px;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0 12px 12px 0;
+}
+
+.km-act-close:hover {
+  color: #EF4444;
 }
 
 [data-theme="dark"] .km-pet-action-bar,
@@ -2035,5 +2068,32 @@ body.dark-mode .km-pet-action-bar {
 body.dark-mode .km-act-btn:hover,
 body.dark-mode .km-act-btn:active {
   background: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .km-act-key,
+body.dark-mode .km-act-key {
+  color: #9CA3AF;
+}
+
+[data-theme="dark"] .km-act-close,
+body.dark-mode .km-act-close {
+  border-left-color: rgba(255, 255, 255, 0.12);
+  color: #6B7280;
+}
+
+@media (max-width: 639px) {
+  .km-pet-action-bar {
+    padding: 4px 6px;
+    gap: 4px;
+  }
+  .km-act-btn {
+    font-size: 17px;
+    padding: 6px 6px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+  .km-act-key {
+    display: none;
+  }
 }
 
