@@ -52,6 +52,10 @@
     greet    : ["Hi! How are you? 🌸","Hello there! 👋","Nice to meet you! 🌸","Maomao here! 🌿","How are you doing today? 🍵"],
     drag     : ["Wheee! 🎈","Up we go! ✨","Moving around~ 🐾"],
     tap      : ["Hi! How are you? 🌸","Looking right here! 👀","Noticed! ✨","I see you! 🌸"],
+    jump     : ["Yay! Let's go! ✨","Bouncy joy! 🎈","Woohoo! 🎉","Full of energy! ⭐"],
+    review   : ["Reviewing our notes... 📖","Deep in study mode 🍵","Checking tasks carefully 📝","Focusing on our goals! 🎯"],
+    failed   : ["Don't give up! 💪","We'll get it next time 🌧️","Take a deep breath 🌸","I believe in you! ✨"],
+    run      : ["Zooming over! ⚡","Right behind you! 💨","Catch me if you can! 🐾"]
   };
 
   class MaomaoPet {
@@ -274,6 +278,26 @@
       });
       document.body.appendChild(this.bubbleEl);
 
+      // 3.5. Create Interactive Floating Touch Bar for Mobile & Desktop
+      this.actionBarEl = document.createElement('div');
+      this.actionBarEl.className = 'km-pet-action-bar';
+      this.actionBarEl.innerHTML = `
+        <button class="km-act-btn" data-act="wave" title="Wave / Hello">👋</button>
+        <button class="km-act-btn" data-act="jump" title="Jump / Celebrate">✨</button>
+        <button class="km-act-btn" data-act="review" title="Review / Study">📖</button>
+        <button class="km-act-btn" data-act="failed" title="Pout / Disappointed">🌧️</button>
+        <button class="km-act-btn" data-act="waiting" title="Rest / Waiting">🍵</button>
+      `;
+      this.actionBarEl.addEventListener('click', (e) => {
+        const btn = e.target.closest('.km-act-btn');
+        if (btn && btn.dataset.act) {
+          e.stopPropagation();
+          this.playAction(btn.dataset.act);
+          this._hideActionBar();
+        }
+      });
+      document.body.appendChild(this.actionBarEl);
+
       // 4. Load Sprite (starts immediately with active pet from storage)
       const startLoop = () => {
         if (!this._loopStarted) {
@@ -384,29 +408,37 @@
         }
       }, { passive: true });
 
-      // Pointer up (Release drag or Tap)
+      // Pointer up (Release drag, Tap, Double-Tap, or Flick Up)
       window.addEventListener('pointerup', (e) => {
         if (this.isDragging) {
           this.isDragging = false;
           this.canvas.style.cursor = 'grab';
 
-          if (this.dragDistance < 10) {
-            // Short tap on Maomao -> Wave & talk!
-            this._onPetClicked();
+          const flickUp = (this.dragStartY - e.clientY > 35) && (Math.abs(e.clientX - this.dragStartX) < 60);
+
+          if (flickUp) {
+            // Flicked upward on touch -> high energetic jump!
+            this.playAction('jump', 3200, `Wheee! High jump with ${this.petName}! ✨`);
+          } else if (this.dragDistance < 14) {
+            // Short tap on companion
+            const now = Date.now();
+            if (now - (this._lastTapTime || 0) < 360) {
+              // Double tap -> Joyful Jump celebration!
+              this.playAction('jump', 3200, `Double tap! ${this.petName} is super excited! ⭐`);
+              this._lastTapTime = 0;
+            } else {
+              this._lastTapTime = now;
+              this._onPetClicked();
+            }
           } else {
-            // Dropped onto surface -> Save pinned position & land
+            // Dropped onto surface -> Save pinned position & landing hop
             this.pinnedX = this.x;
             this.pinnedY = this.y;
             try {
               localStorage.setItem('loop_db_pet_pinned_pos', JSON.stringify({ x: this.x, y: this.y }));
             } catch(err) {}
 
-            this.row = ROWS.JUMP; // Little landing hop
-            this.frame = 0;
-            setTimeout(() => {
-              this.row = ROWS.WAITING;
-              this._updateBadge('Waiting');
-            }, 500);
+            this.playAction('jump', 900); // landing hop
           }
         }
       });
@@ -495,18 +527,32 @@
     }
 
     _onPetClicked() {
-      this.row = ROWS.WAVE;
-      this.frame = 0;
-      this.isLooking = false;
-      this._showBubble('greet');
-      this._updateBadge('Hi! 🌸');
+      // Cycle through rich gestures on successive taps:
+      // Wave -> Jump -> Review (Study) -> Failed (Pout) -> Rest
+      this._actionIndex = ((this._actionIndex || 0) + 1) % 5;
+      const actions = [
+        { act: 'wave',    msg: `Hi there! 👋 ${this.petName} is with you!` },
+        { act: 'jump',    msg: `Yay! ✨ Let's stay focused and energised!` },
+        { act: 'review',  msg: `Reviewing notes & tasks carefully 📖` },
+        { act: 'failed',  msg: `Don't give up! We've got this 💪` },
+        { act: 'waiting', msg: `Sitting cozy and ready for your focus session 🍵` }
+      ];
+      const next = actions[this._actionIndex];
+      this.playAction(next.act, 3200, next.msg);
+      this._showActionBar();
+    }
 
-      setTimeout(() => {
-        if (!this.isDragging) {
-          this.row = ROWS.WAITING;
-          this._updateBadge('Waiting');
-        }
-      }, 2200);
+    _showActionBar() {
+      if (!this.actionBarEl) return;
+      this.actionBarEl.classList.add('open');
+      clearTimeout(this._actionBarTimer);
+      this._actionBarTimer = setTimeout(() => this._hideActionBar(), 4500);
+    }
+
+    _hideActionBar() {
+      if (this.actionBarEl) {
+        this.actionBarEl.classList.remove('open');
+      }
     }
 
     /**
@@ -542,9 +588,16 @@
         this.badgeEl.style.left = Math.max(30, Math.min(window.innerWidth - 30, badgeX)) + 'px';
         this.badgeEl.style.top  = Math.min(window.innerHeight - 30, badgeY) + 'px';
       }
+      if (this.actionBarEl) {
+        const barX = Math.round(this.x + this.dispW / 2);
+        const barY = Math.max(6, Math.round(this.y - 38));
+        this.actionBarEl.style.left = Math.max(90, Math.min(window.innerWidth - 90, barX)) + 'px';
+        this.actionBarEl.style.top  = barY + 'px';
+      }
       if (this.bubbleEl) {
         const bX = Math.max(10, Math.min(window.innerWidth - 170, this.x + this.dispW / 2 - 20));
-        const bY = Math.max(10, this.y - 42);
+        const hasBar = this.actionBarEl && this.actionBarEl.classList.contains('open');
+        const bY = Math.max(10, this.y - (hasBar ? 64 : 42));
         this.bubbleEl.style.left = Math.round(bX) + 'px';
         this.bubbleEl.style.top  = Math.round(bY) + 'px';
       }
@@ -611,16 +664,23 @@
 
         if (needsWalking && distToTarget > 8) {
           this.isMoving = true;
-          const spd = Math.min(this.speed * 1.4, Math.max(2.8, distToTarget * 0.14));
+          this.isActionLocked = false;
+          const spd = Math.min(this.speed * 1.45, Math.max(2.8, distToTarget * 0.14));
           this.x += (moveDx / distToTarget) * spd;
           this.y += (moveDy / distToTarget) * spd;
 
           this.facingRight = moveDx > 0;
-          // Always use WALK_R row; _draw() will flip horizontally when facingRight is false
-          this.row = ROWS.WALK_R;
+          // When chasing fast from a distance, switch to RUN animation row!
+          if (distToTarget > 60 || spd > 3.8) {
+            this.row = ROWS.RUN;
+            this.frameDelay = 4;
+            this._updateBadge('Running ⚡');
+          } else {
+            this.row = ROWS.WALK_R;
+            this.frameDelay = 5;
+            this._updateBadge(this.petName || 'Maomao');
+          }
           this.isLooking = false;
-          this.frameDelay = 5;
-          this._updateBadge(this.petName || 'Maomao');
         } else {
           this.isMoving = false;
           const timeSinceInput = Date.now() - this.lastInputTime;
@@ -632,18 +692,20 @@
             this.frame = look.col;
             this.isLooking = true;
             this._updateBadge(this.isScribbling ? 'Watching 🌀' : 'Noticed 👀');
-          } else if (timeSinceInput < 2400 && this.hasInputMoved) {
+          } else if (timeSinceInput < 2400 && this.hasInputMoved && !this.isActionLocked) {
             // Track cursor/touch with 16 look directions (Row 9 col 0 = Image 1 when looking up)
             const look = this._getLookDirection(petCenterX, petCenterY, this.cursorX, this.cursorY);
             this.row = look.row;
             this.frame = look.col;
             this.isLooking = true;
             this._updateBadge('Looking ✨');
-          } else {
-            this.row = ROWS.WAITING; // Waiting pose (Image 2)
+          } else if (!this.isActionLocked) {
+            if (this.row !== ROWS.WAITING && this.row !== ROWS.IDLE) {
+              this.row = ROWS.WAITING;
+              this._updateBadge(this.petName);
+            }
             this.isLooking = false;
             this.frameDelay = 12;
-            this._updateBadge('Waiting');
           }
         }
       }
@@ -779,6 +841,110 @@
       } else {
         this.badgeEl.style.color = '#10B981';
         this.badgeEl.style.borderColor = 'rgba(16,185,129,0.25)';
+      }
+    }
+
+    /**
+     * playAction(action, durationMs, customMsg)
+     * Triggers any Codex animation row: 'jump', 'wave', 'review', 'failed', 'waiting', 'run', 'idle'
+     */
+    playAction(action, durationMs = 3000, customMsg = null) {
+      const act = (action || '').toLowerCase().trim();
+      let targetRow = ROWS.WAVE;
+      let badgeText = 'Hi! 🌸';
+      let bubbleType = 'greet';
+
+      switch (act) {
+        case 'jump':
+        case 'joy':
+        case 'celebrate':
+        case 'bounce':
+          targetRow = ROWS.JUMP;
+          badgeText = 'Jumping! ✨';
+          bubbleType = 'jump';
+          break;
+        case 'wave':
+        case 'greet':
+        case 'hello':
+          targetRow = ROWS.WAVE;
+          badgeText = 'Waving! 👋';
+          bubbleType = 'greet';
+          break;
+        case 'review':
+        case 'study':
+        case 'read':
+        case 'focus':
+        case 'book':
+          targetRow = ROWS.REVIEW;
+          badgeText = 'Studying 📖';
+          bubbleType = 'review';
+          break;
+        case 'failed':
+        case 'fail':
+        case 'sad':
+        case 'upset':
+        case 'pout':
+          targetRow = ROWS.FAILED;
+          badgeText = 'Oops! 🌧️';
+          bubbleType = 'failed';
+          break;
+        case 'waiting':
+        case 'wait':
+        case 'rest':
+        case 'cozy':
+          targetRow = ROWS.WAITING;
+          badgeText = this.petName || 'Maomao';
+          bubbleType = 'idle';
+          break;
+        case 'run':
+        case 'fast':
+          targetRow = ROWS.RUN;
+          badgeText = 'Running ⚡';
+          bubbleType = 'run';
+          break;
+        case 'idle':
+          targetRow = ROWS.IDLE;
+          badgeText = this.petName || 'Maomao';
+          bubbleType = 'idle';
+          break;
+        default:
+          targetRow = ROWS.WAVE;
+          badgeText = 'Hi! 🌸';
+          break;
+      }
+
+      this.isActionLocked = true;
+      this.row = targetRow;
+      this.frame = 0;
+      this.isLooking = false;
+      this.frameDelay = (act === 'run' || act === 'jump') ? 5 : 7;
+      this._updateBadge(badgeText);
+
+      if (customMsg) {
+        if (this.bubbleEl) {
+          const currentName = this.petName || 'Maomao';
+          this.bubbleEl.textContent = customMsg.replace(/\bMaomao\b/g, currentName);
+          this.bubbleEl.style.opacity = '1';
+          this.bubbleEl.style.transform = 'scale(1) translateY(0)';
+          clearTimeout(this._bubbleTimeout);
+          this._bubbleTimeout = setTimeout(() => {
+            this.bubbleEl.style.opacity = '0';
+            this.bubbleEl.style.transform = 'scale(0.85) translateY(4px)';
+          }, 3000);
+        }
+      } else {
+        this._showBubble(bubbleType);
+      }
+
+      clearTimeout(this._actionLockTimer);
+      if (durationMs > 0) {
+        this._actionLockTimer = setTimeout(() => {
+          this.isActionLocked = false;
+          if (!this.isDragging && !this.isMoving) {
+            this.row = ROWS.WAITING;
+            this._updateBadge(this.petName);
+          }
+        }, durationMs);
       }
     }
 

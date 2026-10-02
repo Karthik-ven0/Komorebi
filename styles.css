@@ -1979,3 +1979,61 @@ body.pet-disabled canvas {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* --- Interactive Floating Pet Action Bar (Touch & Mobile Friendly) --- */
+.km-pet-action-bar {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 3px 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  z-index: 195;
+  transform: translateX(-50%) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.km-pet-action-bar.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1);
+}
+
+.km-act-btn {
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  line-height: 1;
+  padding: 4px 5px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.km-act-btn:hover,
+.km-act-btn:active {
+  transform: scale(1.22);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .km-pet-action-bar,
+body.dark-mode .km-pet-action-bar {
+  background: rgba(28, 31, 38, 0.95);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .km-act-btn:hover,
+[data-theme="dark"] .km-act-btn:active,
+body.dark-mode .km-act-btn:hover,
+body.dark-mode .km-act-btn:active {
+  background: rgba(255, 255, 255, 0.12);
+}
+

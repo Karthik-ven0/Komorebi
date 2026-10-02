@@ -494,10 +494,14 @@ const App = {
     const keeper = document.getElementById('timer-media-keeper');
     if (keeper) keeper.play().catch(() => {});
 
-    // React with Maomao companion
+    // React with companion
     if (window._maomao && this.settings.petEnabled !== false) {
-      window._maomao.row = 6; // WAITING
-      window._maomao._updateBadge('Focusing 🌿');
+      if (typeof window._maomao.playAction === 'function') {
+        window._maomao.playAction('review', 0, 'Focus time! Reviewing our goals 📖');
+      } else {
+        window._maomao.row = 8;
+        window._maomao._updateBadge('Studying 📖');
+      }
     }
 
     this.startTimerTicks();
@@ -531,8 +535,12 @@ const App = {
     this.saveTimerState();
 
     if (window._maomao && this.settings.petEnabled !== false) {
-      window._maomao.row = 6;
-      window._maomao._updateBadge('Paused');
+      if (typeof window._maomao.playAction === 'function') {
+        window._maomao.playAction('failed', 3000, 'Paused! Catch your breath, we can continue anytime 💪');
+      } else {
+        window._maomao.row = 5;
+        window._maomao._updateBadge('Paused');
+      }
     }
 
     this.updateDialDisplay();
@@ -580,15 +588,13 @@ const App = {
 
     // Companion reaction
     if (window._maomao && this.settings.petEnabled !== false) {
-      window._maomao.row = 4; // JUMP / CELEBRATE
-      window._maomao.frame = 0;
-      window._maomao._updateBadge('Great job! 🌸');
-      setTimeout(() => {
-        if (window._maomao) {
-          window._maomao.row = 6;
-          window._maomao._updateBadge('Resting ☕');
-        }
-      }, 2200);
+      if (typeof window._maomao.playAction === 'function') {
+        window._maomao.playAction('jump', 4500, 'Session complete! Fantastic job! 🎉');
+      } else {
+        window._maomao.row = 4;
+        window._maomao.frame = 0;
+        window._maomao._updateBadge('Great job! 🌸');
+      }
     }
 
     // Open calm completion modal
@@ -787,15 +793,13 @@ const App = {
         this.setIntent(null);
       }
       if (window._maomao && this.settings.petEnabled !== false) {
-        window._maomao.row = 4; // JUMP
-        window._maomao.frame = 0;
-        window._maomao._updateBadge('Nice! 🌸');
-        setTimeout(() => {
-          if (window._maomao) {
-            window._maomao.row = 6;
-            window._maomao._updateBadge('Waiting');
-          }
-        }, 1800);
+        if (typeof window._maomao.playAction === 'function') {
+          window._maomao.playAction('jump', 2800, 'Task done! You are doing amazing! ⭐');
+        } else {
+          window._maomao.row = 4;
+          window._maomao.frame = 0;
+          window._maomao._updateBadge('Nice! 🌸');
+        }
       }
     }
     this.saveTasks(tasks);

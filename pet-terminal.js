@@ -354,7 +354,7 @@ const PetTerminal = (() => {
     print('    theme dark|light|toggle', 'system');
     printSpacer();
     print('  <span class="cmd-highlight">Utility:</span>', 'info');
-    print('    status  pet greet  pet speak  clear  version', 'system');
+    print('    pet wave|jump|review|fail|wait|run|speak|reset', 'system');
     printSpacer();
     print('╰──────────────────────────────────────╯', 'info');
   }
@@ -707,15 +707,35 @@ const PetTerminal = (() => {
 
   function cmdPetAction(args) {
     const sub = (args[0] || '').toLowerCase();
-    if (sub === 'greet' || sub === 'wave') {
-      if (window._maomao) { window._maomao._onPetClicked(); print('👋 Waving!', 'success'); }
+    if (!window._maomao) return;
+    const pet = window._maomao;
+
+    if (['wave', 'greet', 'hello'].includes(sub)) {
+      pet.playAction('wave');
+      print('👋 Companion is waving hello!', 'success');
+    } else if (['jump', 'joy', 'celebrate', 'bounce'].includes(sub)) {
+      pet.playAction('jump');
+      print('✨ Companion is jumping with joy!', 'success');
+    } else if (['review', 'study', 'read', 'focus'].includes(sub)) {
+      pet.playAction('review');
+      print('📖 Companion is studying notes & herbs!', 'success');
+    } else if (['failed', 'fail', 'sad', 'pout'].includes(sub)) {
+      pet.playAction('failed');
+      print('🌧️ Companion is feeling disappointed / encouraging!', 'info');
+    } else if (['wait', 'waiting', 'rest', 'cozy'].includes(sub)) {
+      pet.playAction('waiting');
+      print('🍵 Companion is sitting cozy in waiting pose!', 'info');
+    } else if (['run', 'fast'].includes(sub)) {
+      pet.playAction('run');
+      print('⚡ Companion is running fast!', 'info');
     } else if (sub === 'speak') {
       printPetSpeak('I\'m here for you! Let\'s focus together 🌸');
-      if (window._maomao) window._maomao._showBubble('greet');
+      pet._showBubble('greet');
     } else if (sub === 'reset') {
-      if (window._maomao) { window._maomao.resetToCorner(); print('↺ Reset position', 'info'); }
+      pet.resetToCorner();
+      print('↺ Reset companion position to corner', 'info');
     } else {
-      print('🐾 pet greet | speak | reset', 'info');
+      print('🐾 Pet actions: <span class="cmd-highlight">pet wave | jump | review | fail | wait | run | speak | reset</span>', 'info');
     }
   }
 
